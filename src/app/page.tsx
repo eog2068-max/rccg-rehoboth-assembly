@@ -17,8 +17,13 @@ export default function Home() {
 
         {/* Church Name — Full official name */}
         <div className="space-y-3">
-          <h1 className="text-3xl md:text-5xl font-bold text-[#1A237E] tracking-tight leading-tight">
-            Redeemed Christian Church of God
+          <h1 className="text-3xl md:text-5xl font-bold text-[#1A237E] tracking-tight leading-tight text-center">
+            <span className="md:hidden">
+              Redeemed Christian Church<br />of God
+            </span>
+            <span className="hidden md:inline">
+              Redeemed Christian Church of God
+            </span>
           </h1>
           <p className="text-xl md:text-2xl text-[#1A237E]/70 font-medium">
             (Rehoboth Assembly Parish)
