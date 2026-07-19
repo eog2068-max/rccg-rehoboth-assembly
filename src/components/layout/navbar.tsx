@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Radio } from "lucide-react";
+import { Menu, Radio } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -45,33 +45,43 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const isScrolled = scrolled;
+
   return (
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        scrolled
-          ? "bg-white/80 backdrop-blur-xl shadow-lg shadow-black/5 border-b border-[#1A237E]/10"
-          : "bg-transparent"
+        isScrolled
+          ? "bg-white/95 backdrop-blur-xl shadow-lg shadow-black/5 border-b border-[#1A237E]/10"
+          : "bg-[#0D1557]/80 backdrop-blur-md"
       )}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-18">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 shrink-0">
-            <Image
-              src="/rccg-logo.png"
-              alt="Redeemed Christian Church of God"
-              width={40}
-              height={40}
-              className="h-10 w-auto"
-              priority
-            />
+        <div className="flex items-center justify-between h-16 md:h-20">
+          {/* Logo + Church Name */}
+          <Link href="/" className="flex items-center gap-3 shrink-0">
+            <div className="relative h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/90 p-0.5 shadow-md">
+              <Image
+                src="/rccg-logo.png"
+                alt="Redeemed Christian Church of God"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
             <div className="hidden lg:block">
-              <p className="text-sm font-bold text-[#1A237E] leading-tight">
-                Redeemed Christian Church
-                <span className="hidden xl:inline"> of God</span>
+              <p className={cn(
+                "text-sm font-bold leading-tight transition-colors",
+                isScrolled ? "text-[#1A237E]" : "text-white"
+              )}>
+                Redeemed Christian Church of God
               </p>
-              <p className="text-xs text-gray-500 leading-tight">(Rehoboth Assembly Parish)</p>
+              <p className={cn(
+                "text-xs leading-tight transition-colors",
+                isScrolled ? "text-gray-500" : "text-blue-200/80"
+              )}>
+                (Rehoboth Assembly Parish)
+              </p>
             </div>
           </Link>
 
@@ -83,9 +93,13 @@ export function Navbar() {
                 href={item.href}
                 className={cn(
                   "px-3 py-2 text-sm font-medium rounded-lg transition-colors",
-                  pathname === item.href
-                    ? "text-[#1A237E] bg-[#1A237E]/5"
-                    : "text-gray-600 hover:text-[#1A237E] hover:bg-[#1A237E]/5"
+                  isScrolled
+                    ? pathname === item.href
+                      ? "text-[#1A237E] bg-[#F0F4FF] font-semibold"
+                      : "text-gray-600 hover:text-[#1A237E] hover:bg-[#F0F4FF]"
+                    : pathname === item.href
+                      ? "text-white bg-white/15 font-semibold"
+                      : "text-white/80 hover:text-white hover:bg-white/10"
                 )}
               >
                 {item.label}
@@ -93,11 +107,11 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* Desktop Watch Live + Mobile Menu */}
+          {/* Right side: Watch Live + Mobile Menu */}
           <div className="flex items-center gap-3">
             <Button
               asChild
-              className="hidden sm:inline-flex bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-xl px-5 font-semibold"
+              className="hidden sm:inline-flex bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-xl px-5 font-semibold shadow-md"
             >
               <Link href="/media?tab=livestream">
                 <Radio className="size-4" />
@@ -108,25 +122,29 @@ export function Navbar() {
             {/* Mobile Hamburger */}
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="xl:hidden text-[#1A237E]"
+                <button
+                  className={cn(
+                    "xl:hidden p-2 rounded-lg transition-colors",
+                    isScrolled
+                      ? "text-[#1A237E] hover:bg-[#F0F4FF]"
+                      : "text-white hover:bg-white/10"
+                  )}
                   aria-label="Open menu"
                 >
-                  <Menu className="size-5" />
-                </Button>
+                  <Menu className="size-6" />
+                </button>
               </SheetTrigger>
               <SheetContent side="right" className="w-80 overflow-y-auto">
                 <SheetHeader className="mb-4 mt-2">
-                  <SheetTitle className="text-[#1A237E] flex items-center gap-2">
-                    <Image
-                      src="/rccg-logo.png"
-                      alt="RCCG"
-                      width={32}
-                      height={32}
-                      className="h-8 w-auto"
-                    />
+                  <SheetTitle className="text-[#1A237E] flex items-center gap-3">
+                    <div className="relative h-8 w-8 rounded-full bg-[#F0F4FF] p-0.5">
+                      <Image
+                        src="/rccg-logo.png"
+                        alt="Redeemed Christian Church of God"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
                     Rehoboth Assembly Parish
                   </SheetTitle>
                 </SheetHeader>

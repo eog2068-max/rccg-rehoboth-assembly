@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 md:pt-20">
       {/* Background gradient placeholder */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#0D1557] via-[#1A237E] to-[#283593]" />
 
@@ -34,14 +34,15 @@ export function HeroSection() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="mb-8"
         >
-          <Image
-            src="/rccg-logo.png"
-            alt="Redeemed Christian Church of God Logo"
-            width={120}
-            height={120}
-            className="h-24 w-24 md:h-28 md:w-28 mx-auto drop-shadow-2xl brightness-0 invert"
-            priority
-          />
+          <div className="relative h-28 w-28 md:h-36 md:w-36 mx-auto rounded-2xl bg-white/10 backdrop-blur-sm p-2 shadow-2xl">
+            <Image
+              src="/rccg-logo.png"
+              alt="Redeemed Christian Church of God Logo"
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
         </motion.div>
 
         {/* Church Name */}
@@ -51,14 +52,7 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
-            <span className="md:hidden block">
-              Redeemed Christian Church
-              <br />
-              of God
-            </span>
-            <span className="hidden md:inline">
-              Redeemed Christian Church of God
-            </span>
+            Redeemed Christian Church of God
           </h1>
           <p className="text-lg md:text-2xl text-blue-100/80 font-medium mt-2 md:mt-3">
             (Rehoboth Assembly Parish)
