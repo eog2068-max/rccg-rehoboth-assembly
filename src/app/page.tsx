@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Camera } from "lucide-react";
 
 export default function Home() {
   return (
@@ -35,6 +36,19 @@ export default function Home() {
         <div className="space-y-2 text-gray-500 text-sm md:text-base">
           <p>Silla-Zeka Plaza, Adebayo Adedeji Street</p>
           <p>Utako, FCT, Abuja, Nigeria</p>
+        </div>
+
+        {/* Church Building Photo Placeholder */}
+        <div className="w-full max-w-lg mx-auto">
+          <div className="relative w-full aspect-video rounded-2xl border-2 border-dashed border-[#1A237E]/20 bg-white/60 flex flex-col items-center justify-center gap-3 overflow-hidden">
+            {/* Replace "/church-building.jpg" with the actual image path when ready */}
+            {/* <Image src="/church-building.jpg" alt="Rehoboth Assembly Parish Building" fill className="object-cover rounded-2xl" /> */}
+            <div className="flex flex-col items-center gap-2 text-[#1A237E]/30">
+              <Camera className="w-10 h-10" />
+              <p className="text-sm font-medium">Church Building Photo</p>
+              <p className="text-xs">To be uploaded</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
