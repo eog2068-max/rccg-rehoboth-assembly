@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-white p-6">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#F0F4FF] p-6">
       <div className="text-center space-y-8 max-w-2xl mx-auto">
         {/* Logo */}
         <div className="relative w-40 h-40 mx-auto">
