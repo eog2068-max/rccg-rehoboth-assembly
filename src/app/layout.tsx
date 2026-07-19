@@ -29,15 +29,15 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "RCCG Rehoboth Assembly | Utako, Abuja",
-    template: "%s | RCCG Rehoboth Assembly",
+    default: "Redeemed Christian Church of God | Rehoboth Assembly Parish",
+    template: "%s | Redeemed Christian Church of God",
   },
   description:
-    "The Redeemed Christian Church of God, Rehoboth Assembly Parish - Silla-Zeka Plaza, Adebayo Adedeji Street, Utako, FCT, Abuja, Nigeria. Worship with us!",
+    "Redeemed Christian Church of God, Rehoboth Assembly Parish - Silla-Zeka Plaza, Adebayo Adedeji Street, Utako, FCT, Abuja, Nigeria. Worship with us!",
   keywords: [
-    "RCCG",
     "Redeemed Christian Church of God",
-    "Rehoboth Assembly",
+    "RCCG",
+    "Rehoboth Assembly Parish",
     "Church in Abuja",
     "Church in Utako",
     "Christian church Nigeria",
@@ -45,9 +45,9 @@ export const metadata: Metadata = {
     "Prayer",
     "Sermons",
   ],
-  authors: [{ name: "RCCG Rehoboth Assembly" }],
-  creator: "RCCG Rehoboth Assembly",
-  publisher: "RCCG Rehoboth Assembly",
+  authors: [{ name: "Redeemed Christian Church of God, Rehoboth Assembly Parish" }],
+  creator: "Redeemed Christian Church of God, Rehoboth Assembly Parish",
+  publisher: "Redeemed Christian Church of God, Rehoboth Assembly Parish",
   formatDetection: {
     telephone: true,
     email: true,
@@ -64,10 +64,10 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "RCCG Rehoboth Assembly | Utako, Abuja",
+    title: "Redeemed Christian Church of God | Rehoboth Assembly Parish",
     description:
-      "The Redeemed Christian Church of God, Rehoboth Assembly Parish - Worship with us in Utako, Abuja.",
-    siteName: "RCCG Rehoboth Assembly",
+      "Redeemed Christian Church of God, Rehoboth Assembly Parish - Silla-Zeka Plaza, Adebayo Adedeji Street, Utako, Abuja. Worship with us.",
+    siteName: "Redeemed Christian Church of God - Rehoboth Assembly",
     type: "website",
     locale: "en_NG",
     images: [
@@ -81,9 +81,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "RCCG Rehoboth Assembly",
+    title: "Redeemed Christian Church of God - Rehoboth Assembly Parish",
     description:
-      "The Redeemed Christian Church of God, Rehoboth Assembly Parish - Utako, Abuja.",
+      "Redeemed Christian Church of God, Rehoboth Assembly Parish - Utako, Abuja.",
     images: ["/icons/icon-192x192.png"],
   },
   robots: {

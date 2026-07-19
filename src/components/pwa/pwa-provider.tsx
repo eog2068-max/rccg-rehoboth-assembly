@@ -133,10 +133,10 @@ export function PWAProvider({ children }: { children: React.ReactNode }) {
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
                 <Download className="h-5 w-5 text-[#1A237E]" />
-                Install RCCG Rehoboth App
+                Install Rehoboth Assembly App
               </DialogTitle>
               <DialogDescription>
-                Add RCCG Rehoboth Assembly to your home screen for quick access
+                Add Rehoboth Assembly Parish to your home screen for quick access
                 and an app-like experience. You&apos;ll be able to access
                 content even offline.
               </DialogDescription>
