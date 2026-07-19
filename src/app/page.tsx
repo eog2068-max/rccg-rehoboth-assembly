@@ -1,56 +1,39 @@
-import Image from "next/image";
-import { Camera } from "lucide-react";
+import { Navbar } from "@/components/layout/navbar";
+import { Footer } from "@/components/layout/footer";
+import { HeroSection } from "@/components/home/hero-section";
+import { CountdownSection } from "@/components/home/countdown-section";
+import { LatestSermon } from "@/components/home/latest-sermon";
+import { PastorsWelcome } from "@/components/home/pastors-welcome";
+import { UpcomingEvents } from "@/components/home/upcoming-events";
+import { DepartmentsPreview } from "@/components/home/departments-preview";
+import { DevotionalPreview } from "@/components/home/devotional-preview";
+import { AnnouncementPreview } from "@/components/home/announcement-preview";
+import { PhotoGalleryPreview } from "@/components/home/photo-gallery-preview";
+import { VideoGalleryPreview } from "@/components/home/video-gallery-preview";
+import { Testimonies } from "@/components/home/testimonies";
+import { GivingSection } from "@/components/home/giving-section";
+import { LocationMap } from "@/components/home/location-map";
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#F0F4FF] p-6">
-      <div className="text-center space-y-8 max-w-2xl mx-auto">
-        {/* Logo */}
-        <div className="relative w-40 h-40 mx-auto">
-          <Image
-            src="/rccg-logo.png"
-            alt="Redeemed Christian Church of God Logo"
-            fill
-            className="object-contain"
-            priority
-          />
-        </div>
-
-        {/* Church Name — Full official name */}
-        <div className="space-y-3">
-          <h1 className="text-3xl md:text-5xl font-bold text-[#1A237E] tracking-tight leading-tight text-center">
-            <span className="md:hidden">
-              Redeemed Christian Church<br />of God
-            </span>
-            <span className="hidden md:inline">
-              Redeemed Christian Church of God
-            </span>
-          </h1>
-          <p className="text-xl md:text-2xl text-[#1A237E]/70 font-medium">
-            (Rehoboth Assembly Parish)
-          </p>
-          <div className="w-24 h-1 bg-[#D32F2F] mx-auto rounded-full" />
-        </div>
-
-        {/* Address — placeholder, number to be added later */}
-        <div className="space-y-2 text-gray-500 text-sm md:text-base">
-          <p>Silla-Zeka Plaza, Adebayo Adedeji Street</p>
-          <p>Utako, FCT, Abuja, Nigeria</p>
-        </div>
-
-        {/* Church Building Photo Placeholder */}
-        <div className="w-full max-w-lg mx-auto">
-          <div className="relative w-full aspect-video rounded-2xl border-2 border-dashed border-[#1A237E]/20 bg-white/60 flex flex-col items-center justify-center gap-3 overflow-hidden">
-            {/* Replace "/church-building.jpg" with the actual image path when ready */}
-            {/* <Image src="/church-building.jpg" alt="Rehoboth Assembly Parish Building" fill className="object-cover rounded-2xl" /> */}
-            <div className="flex flex-col items-center gap-2 text-[#1A237E]/30">
-              <Camera className="w-10 h-10" />
-              <p className="text-sm font-medium">Church Building Photo</p>
-              <p className="text-xs">To be uploaded</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <>
+      <Navbar />
+      <main>
+        <HeroSection />
+        <CountdownSection />
+        <LatestSermon />
+        <PastorsWelcome />
+        <UpcomingEvents />
+        <DepartmentsPreview />
+        <DevotionalPreview />
+        <AnnouncementPreview />
+        <PhotoGalleryPreview />
+        <VideoGalleryPreview />
+        <Testimonies />
+        <GivingSection />
+        <LocationMap />
+      </main>
+      <Footer />
+    </>
   );
 }
