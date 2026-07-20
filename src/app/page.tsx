@@ -1,5 +1,3 @@
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
 import { HeroSection } from "@/components/home/hero-section";
 import { CountdownSection } from "@/components/home/countdown-section";
 import { LatestSermon } from "@/components/home/latest-sermon";
@@ -17,23 +15,19 @@ import { LocationMap } from "@/components/home/location-map";
 export default function Home() {
   return (
     <>
-      <Navbar />
-      <main>
-        <HeroSection />
-        <CountdownSection />
-        <LatestSermon />
-        <PastorsWelcome />
-        <UpcomingEvents />
-        <DepartmentsPreview />
-        <DevotionalPreview />
-        <AnnouncementPreview />
-        <PhotoGalleryPreview />
-        <VideoGalleryPreview />
-        <Testimonies />
-        <GivingSection />
-        <LocationMap />
-      </main>
-      <Footer />
+      <HeroSection />
+      <CountdownSection />
+      <LatestSermon />
+      <PastorsWelcome />
+      <UpcomingEvents />
+      <DepartmentsPreview />
+      <DevotionalPreview />
+      <AnnouncementPreview />
+      <PhotoGalleryPreview />
+      <VideoGalleryPreview />
+      <Testimonies />
+      <GivingSection />
+      <LocationMap />
     </>
   );
 }
