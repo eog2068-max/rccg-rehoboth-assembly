@@ -12,9 +12,11 @@ export function PastorsWelcome() {
           {/* Pastor Photo Placeholder */}
           <div className="shrink-0">
             <div className="w-40 h-40 md:w-52 md:h-52 rounded-full bg-gradient-to-br from-[#1A237E]/10 to-[#1A237E]/5 border-2 border-[#1A237E]/10 flex flex-col items-center justify-center">
-              <span className="text-4xl md:text-5xl font-bold text-[#1A237E]/20">SP</span>
-              <Camera className="size-5 text-[#1A237E]/20 mt-1" />
+              <Camera className="size-8 text-[#1A237E]/20 mb-1" />
+              <span className="text-xs text-[#1A237E]/30 font-medium">Photo Placeholder</span>
             </div>
+            <p className="text-center mt-3 font-bold text-[#1A237E] text-sm">Pastor [Name]</p>
+            <p className="text-center text-xs text-gray-500">Senior Pastor</p>
           </div>
 
           {/* Welcome Message */}

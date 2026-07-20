@@ -34,12 +34,12 @@ export function HeroSection() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="mb-8"
         >
-          <div className="relative h-28 w-28 md:h-36 md:w-36 mx-auto rounded-2xl bg-white/10 backdrop-blur-sm p-2 shadow-2xl">
+          <div className="relative h-44 w-44 md:h-56 md:w-56 mx-auto rounded-3xl bg-white/10 backdrop-blur-sm p-3 shadow-2xl">
             <Image
               src="/rccg-logo.png"
               alt="Redeemed Christian Church of God Logo"
               fill
-              sizes="144px"
+              sizes="224px"
               className="object-contain"
               priority
             />
@@ -69,14 +69,25 @@ export function HeroSection() {
         />
 
         {/* Tagline */}
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-base md:text-xl text-blue-100/70 mt-5 font-light tracking-wide"
+          className="mt-6 max-w-2xl mx-auto"
         >
-          A Place of Destiny Fulfillment
-        </motion.p>
+          <p className="text-base md:text-lg text-blue-100/80 leading-relaxed font-light">
+            Step into a family where God&rsquo;s presence is real, His Word transforms lives,
+          </p>
+          <p className="text-base md:text-lg text-blue-100/80 leading-relaxed font-light">
+            and every worship experience draws you closer to your divine purpose.
+          </p>
+          <p className="text-base md:text-lg text-blue-100/80 leading-relaxed font-light">
+            Whether you are new to faith or seasoned in the Word, you belong here.
+          </p>
+          <p className="text-base md:text-lg text-blue-100/90 leading-relaxed font-semibold mt-1">
+            Your journey to destiny fulfillment starts at Rehoboth Assembly.
+          </p>
+        </motion.div>
 
         {/* CTA Buttons */}
         <motion.div

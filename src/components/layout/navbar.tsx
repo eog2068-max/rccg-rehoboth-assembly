@@ -52,17 +52,15 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled
-          ? "bg-white/95 backdrop-blur-xl shadow-lg shadow-black/5 border-b border-[#1A237E]/10"
-          : "bg-[#0D1557]/80 backdrop-blur-md"
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#EBF3FF]/95 backdrop-blur-xl border-b border-[#1A237E]/10",
+        isScrolled && "shadow-lg shadow-black/5"
       )}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo + Church Name */}
           <Link href="/" className="flex items-center gap-3 shrink-0">
-            <div className="relative h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/90 p-0.5 shadow-md">
+            <div className="relative h-10 w-10 md:h-12 md:w-12 rounded-full bg-white p-0.5 shadow-md">
               <Image
                 src="/rccg-logo.png"
                 alt="Redeemed Christian Church of God"
@@ -73,16 +71,10 @@ export function Navbar() {
               />
             </div>
             <div className="hidden lg:block">
-              <p className={cn(
-                "text-sm font-bold leading-tight transition-colors",
-                isScrolled ? "text-[#1A237E]" : "text-white"
-              )}>
+              <p className="text-sm font-bold leading-tight text-[#1A237E]">
                 Redeemed Christian Church of God
               </p>
-              <p className={cn(
-                "text-xs leading-tight transition-colors",
-                isScrolled ? "text-gray-500" : "text-blue-200/80"
-              )}>
+              <p className="text-xs leading-tight text-gray-500">
                 (Rehoboth Assembly Parish)
               </p>
             </div>
@@ -96,13 +88,9 @@ export function Navbar() {
                 href={item.href}
                 className={cn(
                   "px-3 py-2 text-sm font-medium rounded-lg transition-colors",
-                  isScrolled
-                    ? pathname === item.href
-                      ? "text-[#1A237E] bg-[#F0F4FF] font-semibold"
-                      : "text-gray-600 hover:text-[#1A237E] hover:bg-[#F0F4FF]"
-                    : pathname === item.href
-                      ? "text-white bg-white/15 font-semibold"
-                      : "text-white/80 hover:text-white hover:bg-white/10"
+                  pathname === item.href
+                    ? "text-[#1A237E] bg-[#1A237E]/10 font-semibold"
+                    : "text-gray-600 hover:text-[#1A237E] hover:bg-[#1A237E]/5"
                 )}
               >
                 {item.label}
@@ -126,12 +114,7 @@ export function Navbar() {
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
                 <button
-                  className={cn(
-                    "xl:hidden p-2 rounded-lg transition-colors",
-                    isScrolled
-                      ? "text-[#1A237E] hover:bg-[#F0F4FF]"
-                      : "text-white hover:bg-white/10"
-                  )}
+                  className="xl:hidden p-2 rounded-lg transition-colors text-[#1A237E] hover:bg-[#1A237E]/5"
                   aria-label="Open menu"
                 >
                   <Menu className="size-6" />
