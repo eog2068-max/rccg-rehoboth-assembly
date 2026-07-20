@@ -52,7 +52,7 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#EBF3FF]/95 backdrop-blur-xl border-b border-[#1A237E]/10",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#DBEAFE] border-b border-[#1A237E]/15",
         isScrolled && "shadow-lg shadow-black/5"
       )}
     >

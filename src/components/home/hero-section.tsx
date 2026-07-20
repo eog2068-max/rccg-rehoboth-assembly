@@ -34,12 +34,12 @@ export function HeroSection() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="mb-8"
         >
-          <div className="relative h-44 w-44 md:h-56 md:w-56 mx-auto rounded-3xl bg-white/10 backdrop-blur-sm p-3 shadow-2xl">
+          <div className="relative h-48 w-48 md:h-64 md:w-64 mx-auto rounded-full bg-white p-2 shadow-2xl shadow-black/30">
             <Image
               src="/rccg-logo.png"
               alt="Redeemed Christian Church of God Logo"
               fill
-              sizes="224px"
+              sizes="256px"
               className="object-contain"
               priority
             />
@@ -69,25 +69,17 @@ export function HeroSection() {
         />
 
         {/* Tagline */}
-        <motion.div
+        <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-6 max-w-2xl mx-auto"
+          className="mt-6 max-w-2xl mx-auto text-base md:text-lg text-blue-100/80 leading-relaxed font-light"
         >
-          <p className="text-base md:text-lg text-blue-100/80 leading-relaxed font-light">
-            Step into a family where God&rsquo;s presence is real, His Word transforms lives,
-          </p>
-          <p className="text-base md:text-lg text-blue-100/80 leading-relaxed font-light">
-            and every worship experience draws you closer to your divine purpose.
-          </p>
-          <p className="text-base md:text-lg text-blue-100/80 leading-relaxed font-light">
-            Whether you are new to faith or seasoned in the Word, you belong here.
-          </p>
-          <p className="text-base md:text-lg text-blue-100/90 leading-relaxed font-semibold mt-1">
-            Your journey to destiny fulfillment starts at Rehoboth Assembly.
-          </p>
-        </motion.div>
+          Step into a family where God&rsquo;s presence is real and His Word transforms lives.
+          Every worship experience here draws you closer to your divine purpose.
+          Whether you are new to faith or seasoned in the Word, you belong here.
+          Your journey to destiny fulfillment starts at Rehoboth Assembly.
+        </motion.p>
 
         {/* CTA Buttons */}
         <motion.div
