@@ -39,6 +39,7 @@ export function HeroSection() {
               src="/rccg-logo.png"
               alt="Redeemed Christian Church of God Logo"
               fill
+              sizes="144px"
               className="object-contain"
               priority
             />

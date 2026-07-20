@@ -35,9 +35,11 @@ const navItems = [
 export function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
@@ -45,7 +47,7 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isScrolled = scrolled;
+  const isScrolled = mounted && scrolled;
 
   return (
     <header
@@ -65,6 +67,7 @@ export function Navbar() {
                 src="/rccg-logo.png"
                 alt="Redeemed Christian Church of God"
                 fill
+                sizes="40px"
                 className="object-contain"
                 priority
               />
@@ -142,6 +145,7 @@ export function Navbar() {
                         src="/rccg-logo.png"
                         alt="Redeemed Christian Church of God"
                         fill
+                        sizes="32px"
                         className="object-contain"
                       />
                     </div>
