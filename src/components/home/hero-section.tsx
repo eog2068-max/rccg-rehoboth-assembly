@@ -34,12 +34,12 @@ export function HeroSection() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="mb-8"
         >
-          <div className="relative h-48 w-48 md:h-64 md:w-64 mx-auto rounded-full bg-white p-2 shadow-2xl shadow-black/30">
+          <div className="relative h-64 w-64 md:h-80 md:w-80 lg:h-96 lg:w-96 mx-auto rounded-full bg-white p-3 shadow-2xl shadow-black/30">
             <Image
               src="/rccg-logo.png"
               alt="Redeemed Christian Church of God Logo"
               fill
-              sizes="256px"
+              sizes="384px"
               className="object-contain"
               priority
             />
