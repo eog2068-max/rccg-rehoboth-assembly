@@ -64,4 +64,24 @@ Stage Summary:
 - RCCG brand colors consistently applied throughout
 - All navigation links point to correct routes
 - Professional placeholder content (no lorem ipsum)
-- Pre-existing pwa-provider.tsx lint error not modified (per instructions)
+- Pre-existing pwa-provider.tsx lint error not modified (per instructions)---
+Task ID: 12
+Agent: Main Agent
+Task: Build Members Gallery page (Prompt #12)
+
+Work Log:
+- Read existing patterns from departments page, page-banner, section-wrapper
+- Created /src/components/members/member-card.tsx — card with photo area, role/department badges, admin hover overlay with Edit/Remove buttons
+- Created /src/components/members/members-gallery.tsx — main gallery with 12 mock members, search bar, department filter dropdown, grid/list view toggle, results count, empty state
+- Created /src/components/members/add-member-modal.tsx — admin-only modal with photo upload placeholder, name, role select, department select, bio textarea, form validation
+- Created /src/components/members/members-cta.tsx — dark CTA section "You Belong Here" with Join Our Family + Visit Us buttons
+- Created /src/app/members/page.tsx — page entry with PageBanner, MembersGallery, MembersCTA
+- Admin controls are gated behind `isAdmin` state (false by default, will wire to Supabase auth)
+- Production build passed clean, /members route statically generated
+- No hydration issues — no conditional className switching
+
+Stage Summary:
+- Members Gallery fully built at /members
+- 12 mock members across 10 departments with search, filter, grid/list views
+- Admin-only Add Member modal ready (gated, will connect to Supabase auth)
+- All files: page.tsx, members-gallery.tsx, member-card.tsx, add-member-modal.tsx, members-cta.tsx
