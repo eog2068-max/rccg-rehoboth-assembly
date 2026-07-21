@@ -130,3 +130,25 @@ Stage Summary:
 - Albums view + All Photos masonry view + inside-album square grid
 - Search, category filter, view mode toggle
 - Zero hydration errors
+---
+Task ID: 15
+Agent: Main Agent
+Task: Build Video Gallery page (Prompt #15)
+
+Work Log:
+- Created /src/components/videos/video-data.ts — 6 sermon series, 26 mock videos across Sermon/Service/Special categories with full metadata
+- Created /src/components/videos/featured-video.tsx — 21:9 cinematic hero with featured badge, title, meta (speaker, date, duration, views), play button, decorative gradients
+- Created /src/components/videos/video-card.tsx — VideoCard (thumbnail with duration/category badge, hover overlay) + SeriesCard (gradient cover with video count, active border state)
+- Created /src/components/videos/video-player-modal.tsx — full modal with 16:9 player, keyboard nav (arrows, Esc, P for playlist), Like/Share buttons, slide-out playlist sidebar with now-playing indicator, video description
+- Created /src/components/videos/video-gallery-main.tsx — 3 views: Featured hero + Series grid (default), Inside Series, All Videos flat grid. Search, category filter pills, results count, empty state
+- Created /src/components/videos/video-cta.tsx — dark CTA "Watch Us Live Every Sunday" linking to Live Stream and Sermon Library
+- Created /src/app/videos/page.tsx — page entry with PageBanner, VideoGalleryMain, VideoCTA
+- Production build clean, /videos route statically generated
+
+Stage Summary:
+- Video Gallery fully built at /videos
+- 6 sermon series with 26 videos (Walking in Destiny, Prayer, Grace Life, Family, Spiritual Warfare, Sunday Services)
+- Featured video hero (21:9 cinematic), series cards with gradient covers
+- Full video player modal with playlist sidebar, keyboard nav, like/share
+- Search + category filter + series drill-down + flat all-videos view
+- Zero hydration errors
