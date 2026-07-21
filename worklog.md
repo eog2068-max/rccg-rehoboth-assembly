@@ -152,3 +152,28 @@ Stage Summary:
 - Full video player modal with playlist sidebar, keyboard nav, like/share
 - Search + category filter + series drill-down + flat all-videos view
 - Zero hydration errors
+---
+Task ID: 16
+Agent: Main Agent
+Task: Build Sermon Library page (Prompt #16)
+
+Work Log:
+- Created /src/components/sermons/sermon-data.ts — 5 sermon series, 24 mock sermons with full metadata (title, speaker, date, duration, category, description, scriptures, tags, notes, hasAudio/hasVideo/hasNotes flags). 6 categories (Sunday Service, Bible Study, Special Programme, Friday Prayer, Midweek Service). 4 sort options. allSpeakers derived array.
+- Created /src/components/sermons/featured-sermon.tsx — hero card with gradient visual area + play button, series badge, title, meta (speaker, date, duration), description, scripture reference chips, 3 action buttons (Watch Video, Listen Audio, Read Notes) conditionally shown based on available formats.
+- Created /src/components/sermons/sermon-series-grid.tsx — responsive grid of series cards with gradient covers, sermon count, date range, hover effects.
+- Created /src/components/sermons/sermon-card.tsx — sermon card with category badge, format badges (Audio/Video/Notes), title, meta row, description (2-line clamp), scripture chips (max 3 + overflow count), series tag, active state ring.
+- Created /src/components/sermons/sermon-player-modal.tsx — full modal with: audio progress bar with scrubbing, play/pause/skip controls, volume control with mute toggle, keyboard shortcuts (Space, arrows, Esc), sermon info with scripture chips, format badges with toggleable notes panel (animated expand/collapse), full sermon notes display with Download/Share actions, playlist/up-next list with current indicator, auto-advance timer simulation.
+- Created /src/components/sermons/sermon-library.tsx — 3-view orchestrator: Home (featured + series grid + quick stats), Series (series header + filtered sermons), All Sermons (flat list). Search by title/speaker/scripture/tags. Category filter pills, expandable filters panel (sort by, speaker dropdown), results count, active filter badge count, clear all filters, empty state.
+- Created /src/components/sermons/sermon-cta.tsx — dark CTA "The Word of God is Living and Powerful" linking to Live Service and Contact.
+- Created /src/app/sermons/page.tsx — page entry with PageBanner, SermonLibrary, SermonCTA.
+- Fixed build error: reordered filteredSermons before playlistSermons to avoid temporal dead zone reference.
+- Production build clean, /sermons route statically generated.
+
+Stage Summary:
+- Sermon Library fully built at /sermons
+- 24 sermons across 5 series with full metadata, 11 with detailed notes
+- 3 views: Library Home (featured + series), Series drill-down, All Sermons flat list
+- Rich search (title, speaker, scripture, topic) + category filter + sort + speaker filter
+- Full audio player modal with progress, controls, notes toggle, playlist navigation
+- Quick stats bar (total sermons, series, speakers, with-notes count)
+- Zero hydration/parse errors
