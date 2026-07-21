@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -34,33 +34,15 @@ const navItems = [
 
 export function Navbar() {
   const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const isScrolled = mounted && scrolled;
-
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#DBEAFE] border-b border-[#1A237E]/15",
-        isScrolled && "shadow-lg shadow-black/5"
-      )}
-    >
+    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#EBF3FF] border-b border-[#1A237E]/10">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo + Church Name */}
           <Link href="/" className="flex items-center gap-3 shrink-0">
-            <div className="relative h-10 w-10 md:h-12 md:w-12 rounded-full bg-white p-0.5 shadow-md">
+            <div className="relative h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/90 p-0.5 shadow-md">
               <Image
                 src="/rccg-logo.png"
                 alt="Redeemed Christian Church of God"

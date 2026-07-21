@@ -75,10 +75,7 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="mt-6 max-w-2xl mx-auto text-base md:text-lg text-blue-100/80 leading-relaxed font-light"
         >
-          Step into a family where God&rsquo;s presence is real and His Word transforms lives.
-          Every worship experience here draws you closer to your divine purpose.
-          Whether you are new to faith or seasoned in the Word, you belong here.
-          Your journey to destiny fulfillment starts at Rehoboth Assembly.
+          Experience God&rsquo;s presence where His Word transforms lives and worship draws you closer to your divine purpose.
         </motion.p>
 
         {/* CTA Buttons */}
