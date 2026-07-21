@@ -85,3 +85,26 @@ Stage Summary:
 - 12 mock members across 10 departments with search, filter, grid/list views
 - Admin-only Add Member modal ready (gated, will connect to Supabase auth)
 - All files: page.tsx, members-gallery.tsx, member-card.tsx, add-member-modal.tsx, members-cta.tsx
+---
+Task ID: 13
+Agent: Main Agent
+Task: Build Media Center page (Prompt #13)
+
+Work Log:
+- Created /src/components/media/media-center.tsx — main hub with shadcn Tabs (Live Stream, Videos, Photos, Audio), reads ?tab= from URL for direct linking
+- Created /src/components/media/live-stream-section.tsx — 16:9 video player placeholder, live/offline indicator, 3 service schedule cards (Sunday, Wednesday Bible Study, Friday Prayer), info bar
+- Created /src/components/media/video-gallery.tsx — 9 mock sermon videos, search bar, category filter pills (Sunday Service, Bible Study, Friday Prayer, Special Programme), video cards with play button/duration/category badge, click-to-open modal player
+- Created /src/components/media/photo-gallery.tsx — 12 mock photos, masonry grid layout (varying aspect ratios), search + category filter (Services, Events, Ministry, Outreach), hover overlays with title/date, lightbox with left/right navigation
+- Created /src/components/media/audio-gallery.tsx — 10 mock audio tracks (sermons, worship, prayer), table-style track list with play/pause, type filter pills, mini player bar (fixed bottom) with controls and volume slider
+- Created /src/components/media/media-cta.tsx — dark CTA "Never Miss a Moment" linking to Sermon Library and Contact
+- Created /src/app/media/page.tsx — page entry with Suspense boundary (needed for useSearchParams), PageBanner, MediaCenter, MediaCTA
+- Navbar "Watch Live" button links to /media?tab=livestream which auto-opens the Live Stream tab
+- Production build clean, all routes statically generated
+
+Stage Summary:
+- Media Center fully built at /media with 4 tabs
+- Live Stream: player placeholder + 3 service schedule cards
+- Videos: 9 mock videos with search, filter, modal player
+- Photos: 12 mock photos in masonry grid with lightbox
+- Audio: 10 mock tracks with play controls, mini player bar
+- Zero hydration errors
