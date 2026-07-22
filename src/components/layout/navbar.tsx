@@ -19,14 +19,14 @@ const navItems = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Leadership", href: "/leadership" },
-  { label: "Departments", href: "/departments" },
-  { label: "Members Gallery", href: "/members" },
   { label: "Sermons", href: "/sermons" },
-  { label: "Media", href: "/media" },
+  { label: "Live", href: "/live" },
   { label: "Events", href: "/events" },
+  { label: "Devotionals", href: "/devotionals" },
+  { label: "Testimonies", href: "/testimonies" },
   { label: "Prayer", href: "/prayer" },
   { label: "Join a Ministry", href: "/join-ministry" },
-  { label: "Devotionals", href: "/devotionals" },
+  { label: "Gallery", href: "/gallery" },
   { label: "Announcements", href: "/announcements" },
   { label: "Giving", href: "/giving" },
   { label: "Contact", href: "/contact" },
@@ -86,7 +86,7 @@ export function Navbar() {
               asChild
               className="hidden sm:inline-flex bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-xl px-5 font-semibold shadow-md"
             >
-              <Link href="/media?tab=livestream">
+              <Link href="/live">
                 <Radio className="size-4" />
                 Watch Live
               </Link>
@@ -138,7 +138,7 @@ export function Navbar() {
                       asChild
                       className="w-full bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-xl font-semibold"
                     >
-                      <Link href="/media?tab=livestream" onClick={() => setMobileOpen(false)}>
+                      <Link href="/live" onClick={() => setMobileOpen(false)}>
                         <Radio className="size-4" />
                         Watch Live
                       </Link>

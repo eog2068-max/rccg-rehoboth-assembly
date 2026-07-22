@@ -1,11 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Radio, ArrowRight } from "lucide-react";
+import { Heart, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-export function SermonCTA() {
+export function GivingCTA() {
   return (
     <section className="relative py-16 md:py-20 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-[#0D1557] via-[#1A237E] to-[#283593]" />
@@ -22,14 +22,14 @@ export function SermonCTA() {
           transition={{ duration: 0.6 }}
         >
           <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center mx-auto mb-6">
-            <Radio className="size-8 text-white/80" />
+            <Heart className="size-8 text-white/80" />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
-            The Word of God is Living and Powerful
+            Your Generosity Changes Lives
           </h2>
           <p className="mt-4 text-lg text-blue-200/80 max-w-xl mx-auto leading-relaxed">
-            Never miss a message. Subscribe to our sermon notifications and receive the latest
-            teachings directly. Let the Word of God transform your life daily.
+            Every gift you give makes an eternal impact. As you sow into the Kingdom of God, know
+            that He who sees in secret will reward you openly.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
             <Button
@@ -37,9 +37,9 @@ export function SermonCTA() {
               size="lg"
               className="bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-xl h-12 px-8 font-semibold shadow-lg"
             >
-              <Link href="/live">
-                <Radio className="size-4" />
-                Watch Live Service
+              <Link href="/giving">
+                <Heart className="size-4 mr-2" />
+                Give Now
               </Link>
             </Button>
             <Button
@@ -49,7 +49,7 @@ export function SermonCTA() {
               className="border-white/30 text-white hover:bg-white/10 hover:text-white rounded-xl h-12 px-8 font-semibold"
             >
               <Link href="/contact">
-                <ArrowRight className="size-4" />
+                <ArrowRight className="size-4 mr-2" />
                 Contact Us
               </Link>
             </Button>

@@ -38,9 +38,9 @@ export function AnnouncementsCTA() {
               size="lg"
               className="bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-xl h-12 px-8 font-semibold shadow-lg"
             >
-              <Link href="/events">
+              <Link href="/announcements">
                 <Bell className="size-4 mr-2" />
-                Subscribe to Notifications
+                View Latest Updates
               </Link>
             </Button>
             <Button

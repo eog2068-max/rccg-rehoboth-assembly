@@ -107,11 +107,14 @@ export function EventCard({ event, index, onOpen, variant = "default" }: EventCa
                 </Button>
               ) : (
                 <Button
+                  asChild
                   variant="outline"
                   className="border-[#1A237E]/20 text-[#1A237E] hover:bg-[#F0F4FF] rounded-xl h-10 px-6 text-sm font-semibold"
                 >
-                  <Calendar className="size-4 mr-1.5" />
-                  Add to Calendar
+                  <Link href="/events">
+                    <Calendar className="size-4 mr-1.5" />
+                    View Details
+                  </Link>
                 </Button>
               )}
             </div>
@@ -229,12 +232,15 @@ export function EventCard({ event, index, onOpen, variant = "default" }: EventCa
             </Button>
           ) : (
             <Button
+              asChild
               variant="outline"
               size="sm"
               className="border-gray-200 text-gray-600 hover:bg-gray-50 rounded-lg h-9 px-4 text-xs font-semibold"
             >
-              <Calendar className="size-3.5 mr-1" />
-              Details
+              <Link href="/events">
+                <Calendar className="size-3.5 mr-1" />
+                View Details
+              </Link>
             </Button>
           )}
         </div>

@@ -31,7 +31,7 @@ export function PhotoGalleryPreview() {
 
         <div className="text-center mt-10">
           <Link
-            href="/members"
+            href="/gallery"
             className="inline-flex items-center gap-1.5 text-[#D32F2F] font-semibold hover:gap-2.5 transition-all text-sm"
           >
             View Full Gallery

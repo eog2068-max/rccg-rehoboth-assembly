@@ -177,7 +177,7 @@ export const quickActions: QuickAction[] = [
     label: "Add Sermon",
     icon: "BookOpen",
     description: "Upload a new sermon to the library",
-    href: "/admin/sermons/new",
+    href: "#",
     color: "#1A237E",
   },
   {
@@ -185,7 +185,7 @@ export const quickActions: QuickAction[] = [
     label: "Create Event",
     icon: "Calendar",
     description: "Schedule a new church event",
-    href: "/admin/events/new",
+    href: "#",
     color: "#2E7D32",
   },
   {
@@ -193,7 +193,7 @@ export const quickActions: QuickAction[] = [
     label: "New Announcement",
     icon: "Megaphone",
     description: "Post a new announcement",
-    href: "/admin/announcements/new",
+    href: "#",
     color: "#D32F2F",
   },
   {
@@ -201,7 +201,7 @@ export const quickActions: QuickAction[] = [
     label: "View Prayer Requests",
     icon: "MessageSquare",
     description: "Review submitted prayer requests",
-    href: "/admin/prayer-requests",
+    href: "#",
     color: "#6A1B9A",
   },
   {
@@ -209,7 +209,7 @@ export const quickActions: QuickAction[] = [
     label: "Review Testimonies",
     icon: "Star",
     description: "Approve or moderate testimonies",
-    href: "/admin/testimonies",
+    href: "#",
     color: "#E65100",
   },
   {
@@ -217,7 +217,7 @@ export const quickActions: QuickAction[] = [
     label: "Manage Members",
     icon: "Users",
     description: "View and manage member records",
-    href: "/admin/members",
+    href: "#",
     color: "#00695C",
   },
   {
@@ -225,7 +225,7 @@ export const quickActions: QuickAction[] = [
     label: "Media Upload",
     icon: "Image",
     description: "Upload photos, videos, or audio",
-    href: "/admin/media/upload",
+    href: "#",
     color: "#1565C0",
   },
   {
@@ -233,7 +233,7 @@ export const quickActions: QuickAction[] = [
     label: "Send Newsletter",
     icon: "Mail",
     description: "Compose and send church newsletter",
-    href: "/admin/newsletter",
+    href: "#",
     color: "#AD1457",
   },
 ];

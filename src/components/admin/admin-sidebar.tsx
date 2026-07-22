@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard,
@@ -99,14 +100,15 @@ export function AdminSidebar({ activeItem, isOpen, onClose }: AdminSidebarProps)
           {navItems.map((item) => {
             const IconComponent = iconMap[item.icon];
             const isActive = activeItem === item.label;
+            const isDashboard = item.href === "/admin";
 
             return (
-              <a
+              <Link
                 key={item.label}
-                href={item.href}
+                href={isDashboard ? item.href : "#"}
                 onClick={(e) => {
-                  if (item.href === "/admin") {
-                    e.preventDefault();
+                  e.preventDefault();
+                  if (isDashboard) {
                     onClose();
                   }
                 }}
@@ -138,7 +140,7 @@ export function AdminSidebar({ activeItem, isOpen, onClose }: AdminSidebarProps)
                     </motion.span>
                   )}
                 </AnimatePresence>
-              </a>
+              </Link>
             );
           })}
         </nav>

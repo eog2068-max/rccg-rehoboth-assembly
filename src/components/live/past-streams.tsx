@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Play, Clock, Eye, Calendar } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -10,12 +11,12 @@ export function PastStreams() {
     <div>
       <div className="flex items-center justify-between mb-5">
         <h3 className="text-lg font-bold text-[#1A237E]">Recent Service Replays</h3>
-        <a
+        <Link
           href="/videos"
           className="text-sm text-[#1A237E] hover:text-[#0D1557] font-medium transition-colors"
         >
           View All Videos
-        </a>
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

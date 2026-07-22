@@ -1,7 +1,8 @@
 "use client";
 
-import { Quote } from "lucide-react";
+import { Quote, ArrowRight, Heart } from "lucide-react";
 import { SectionWrapper, SectionTitle } from "./section-wrapper";
+import Link from "next/link";
 
 const testimonies = [
   {
@@ -46,6 +47,22 @@ export function Testimonies() {
               </div>
             </div>
           ))}
+        </div>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <Link
+            href="/testimonies"
+            className="inline-flex items-center gap-1.5 text-[#1A237E] font-semibold hover:gap-2.5 transition-all text-sm"
+          >
+            View All Testimonies
+            <ArrowRight className="size-4" />
+          </Link>
+          <Link
+            href="/testimonies"
+            className="inline-flex items-center gap-1.5 text-[#D32F2F] font-semibold hover:gap-2.5 transition-all text-sm"
+          >
+            <Heart className="size-4" />
+            Share Your Testimony
+          </Link>
         </div>
       </div>
     </SectionWrapper>

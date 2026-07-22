@@ -90,7 +90,7 @@ export function HeroSection() {
             size="lg"
             className="col-span-2 sm:col-span-1 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-xl h-12 text-base font-semibold"
           >
-            <Link href="/media?tab=livestream">
+            <Link href="/live">
               <Radio className="size-4" />
               Watch Live
             </Link>
@@ -122,7 +122,7 @@ export function HeroSection() {
             size="lg"
             className="bg-white text-[#1A237E] hover:bg-white/90 rounded-xl h-12 text-base font-semibold"
           >
-            <Link href="/about">
+            <Link href="/join-ministry">
               <UserPlus className="size-4" />
               Join Us
             </Link>

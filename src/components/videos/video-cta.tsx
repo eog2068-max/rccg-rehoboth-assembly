@@ -38,7 +38,7 @@ export function VideoCTA() {
               size="lg"
               className="bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-xl h-12 px-8 font-semibold shadow-lg"
             >
-              <Link href="/media?tab=livestream">
+              <Link href="/live">
                 <Play className="size-4 fill-white" />
                 Watch Live Now
               </Link>
