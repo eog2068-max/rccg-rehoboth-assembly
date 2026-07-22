@@ -1,0 +1,707 @@
+diff --git a/.env.example b/.env.example
+old mode 100644
+new mode 100755
+diff --git a/download/rccg-rehoboth-assembly.zip b/download/rccg-rehoboth-assembly.zip
+new file mode 100755
+index 0000000..0818f09
+Binary files /dev/null and b/download/rccg-rehoboth-assembly.zip differ
+diff --git a/src/app/giving/page.tsx b/src/app/giving/page.tsx
+old mode 100644
+new mode 100755
+diff --git a/src/components/announcements/announcements-data.ts b/src/components/announcements/announcements-data.ts
+index 1b84a29..0d729f5 100755
+--- a/src/components/announcements/announcements-data.ts
++++ b/src/components/announcements/announcements-data.ts
+@@ -110,7 +110,7 @@ export const mockAnnouncements: Announcement[] = [
+   {
+     id: "ann-001",
+     title: "Special Thanksgiving Service This Sunday",
+-    body: "Brethren, we warmly invite you to our Special Thanksgiving Service holding this Sunday by 8:00 AM at the main auditorium. This is a season to return all glory to God for His faithfulness, provision, and protection over our families and the church throughout the first half of the year. Come with your thanksgiving offerings, testimonies, and a heart full of gratitude. There will be special ministrations from the choir and the children's department. Let us come together to celebrate the goodness of the Lord. Remember, every good and perfect gift comes from above.",
++    body: "Brethren, we warmly invite you to our Special Thanksgiving Service holding this Sunday by 7:00 AM at the main auditorium. This is a season to return all glory to God for His faithfulness, provision, and protection over our families and the church throughout the first half of the year. Come with your thanksgiving offerings, testimonies, and a heart full of gratitude. There will be special ministrations from the choir and the children's department. Let us come together to celebrate the goodness of the Lord. Remember, every good and perfect gift comes from above.",
+     category: "service",
+     priority: "high",
+     date: "2025-07-17",
+diff --git a/src/components/contact/contact-data.ts b/src/components/contact/contact-data.ts
+index 779a4f4..311eb40 100755
+--- a/src/components/contact/contact-data.ts
++++ b/src/components/contact/contact-data.ts
+@@ -45,41 +45,32 @@ export interface ServiceTime {
+ }
+ 
+ export const serviceTimes: ServiceTime[] = [
+-  {
+-    id: "sunday-school",
+-    name: "Sunday School",
+-    day: "Sunday",
+-    dayIndex: 0,
+-    startTime: "8:30 AM",
+-    endTime: "9:15 AM",
+-    description: "In-depth Bible study for all ages",
+-  },
+   {
+     id: "sunday-first",
+-    name: "Sunday First Service",
++    name: "Sunday Service",
+     day: "Sunday",
+     dayIndex: 0,
+     startTime: "7:00 AM",
+-    endTime: "9:00 AM",
++    endTime: "10:00 AM",
+     description: "Praise, worship and the Word",
+   },
+   {
+-    id: "sunday-second",
+-    name: "Sunday Second Service",
+-    day: "Sunday",
+-    dayIndex: 0,
+-    startTime: "9:30 AM",
+-    endTime: "12:00 PM",
+-    description: "Main worship service",
++    id: "tuesday-bible",
++    name: "Tuesday Bible Study",
++    day: "Tuesday",
++    dayIndex: 2,
++    startTime: "5:30 PM",
++    endTime: "7:00 PM",
++    description: "Digging deeper into God's Word",
+   },
+   {
+-    id: "wednesday-bible",
+-    name: "Wednesday Bible Study",
+-    day: "Wednesday",
+-    dayIndex: 3,
+-    startTime: "6:00 PM",
+-    endTime: "8:00 PM",
+-    description: "Digging deeper into God's Word",
++    id: "thursday-faith-clinic",
++    name: "Thursday Faith Clinic",
++    day: "Thursday",
++    dayIndex: 4,
++    startTime: "5:30 PM",
++    endTime: "7:00 PM",
++    description: "Faith-building teachings and prayers for healing and breakthroughs",
+   },
+   {
+     id: "friday-prayer",
+diff --git a/src/components/departments/departments-list.tsx b/src/components/departments/departments-list.tsx
+index 8f922ea..db28d6a 100755
+--- a/src/components/departments/departments-list.tsx
++++ b/src/components/departments/departments-list.tsx
+@@ -59,7 +59,7 @@ const departments: Department[] = [
+       "Bible quizzes and competitions",
+       "Annual Sunday School retreat",
+     ],
+-    meetingDay: "Sundays, 8:00 AM",
++    meetingDay: "Sundays, 7:00 AM",
+     accentColor: "text-[#1A237E]",
+     bgColor: "bg-[#1A237E]/10",
+   },
+diff --git a/src/components/events/events-data.ts b/src/components/events/events-data.ts
+index 9fe7c53..7ab8bef 100755
+--- a/src/components/events/events-data.ts
++++ b/src/components/events/events-data.ts
+@@ -56,15 +56,15 @@ export const mockEvents: ChurchEvent[] = [
+   },
+   {
+     id: "ev2",
+-    title: "Wednesday Bible Study",
++    title: "Tuesday Bible Study",
+     description: "In-depth, systematic study of the Word of God. This term we are studying the Book of Romans \u2014 exploring the righteousness of God, faith, grace, and the transformation power of the Gospel.",
+-    date: "2025-07-23",
+-    time: "18:00",
++    date: "2025-07-22",
++    time: "17:30",
+     endTime: "20:00",
+     venue: "Church Main Auditorium",
+     category: "Training",
+     isRecurring: true,
+-    recurringDay: "Every Wednesday",
++    recurringDay: "Every Tuesday",
+     registrationRequired: false,
+   },
+   {
+@@ -80,6 +80,19 @@ export const mockEvents: ChurchEvent[] = [
+     recurringDay: "Every Friday",
+     registrationRequired: false,
+   },
++  {
++    id: "ev3b",
++    title: "Thursday Faith Clinic",
++    description: "A special time of faith-building teachings, prayers, and declarations for divine healing, breakthroughs, and supernatural interventions. Come expecting miracles.",
++    date: "2025-07-24",
++    time: "17:30",
++    endTime: "19:00",
++    venue: "Church Main Auditorium",
++    category: "Service",
++    isRecurring: true,
++    recurringDay: "Every Thursday",
++    registrationRequired: false,
++  },
+   {
+     id: "ev4",
+     title: "Annual Convention 2025",
+diff --git a/src/components/giving/giving-cta.tsx b/src/components/giving/giving-cta.tsx
+old mode 100644
+new mode 100755
+diff --git a/src/components/giving/giving-data.ts b/src/components/giving/giving-data.ts
+old mode 100644
+new mode 100755
+diff --git a/src/components/giving/giving-main.tsx b/src/components/giving/giving-main.tsx
+old mode 100644
+new mode 100755
+index adc1771..6046712
+--- a/src/components/giving/giving-main.tsx
++++ b/src/components/giving/giving-main.tsx
+@@ -420,21 +420,28 @@ export function GivingMain() {
+                         <div className="w-2 h-2 rounded-full bg-[#D32F2F] mt-1.5 shrink-0" />
+                         <div>
+                           <p className="text-sm font-semibold text-gray-800">Sunday Services</p>
+-                          <p className="text-xs text-gray-500">First Service: 8:00 AM &middot; Second Service: 10:30 AM</p>
++                          <p className="text-xs text-gray-500">Service: 7:00 AM</p>
+                         </div>
+                       </div>
+                       <div className="flex items-start gap-3">
+                         <div className="w-2 h-2 rounded-full bg-[#1A237E] mt-1.5 shrink-0" />
+                         <div>
+-                          <p className="text-sm font-semibold text-gray-800">Wednesday Bible Study</p>
+-                          <p className="text-xs text-gray-500">6:00 PM &middot; 8:00 PM</p>
++                          <p className="text-sm font-semibold text-gray-800">Tuesday Bible Study</p>
++                          <p className="text-xs text-gray-500">5:30 PM</p>
++                        </div>
++                      </div>
++                      <div className="flex items-start gap-3">
++                        <div className="w-2 h-2 rounded-full bg-[#D32F2F] mt-1.5 shrink-0" />
++                        <div>
++                          <p className="text-sm font-semibold text-gray-800">Thursday Faith Clinic</p>
++                          <p className="text-xs text-gray-500">5:30 PM</p>
+                         </div>
+                       </div>
+                       <div className="flex items-start gap-3">
+                         <div className="w-2 h-2 rounded-full bg-[#2E7D32] mt-1.5 shrink-0" />
+                         <div>
+                           <p className="text-sm font-semibold text-gray-800">Friday Prayer Meeting</p>
+-                          <p className="text-xs text-gray-500">6:00 PM &middot; 8:30 PM</p>
++                          <p className="text-xs text-gray-500">7:00 PM</p>
+                         </div>
+                       </div>
+                     </div>
+diff --git a/src/components/home/announcement-preview.tsx b/src/components/home/announcement-preview.tsx
+index 6bcd5f7..f9a59c2 100755
+--- a/src/components/home/announcement-preview.tsx
++++ b/src/components/home/announcement-preview.tsx
+@@ -7,7 +7,7 @@ const announcements = [
+     title: "Weekly Programme Update",
+     date: "This Week",
+     excerpt:
+-      "Please note the updated schedule for this week's activities. Sunday services remain at 8:00 AM and 10:30 AM. Wednesday Bible Study continues at 6:00 PM.",
++      "Please note the updated schedule for this week's activities. Sunday services are at 7:00 AM. Tuesday Bible Study continues at 5:30 PM.",
+     icon: Megaphone,
+   },
+   {
+diff --git a/src/components/home/countdown-section.tsx b/src/components/home/countdown-section.tsx
+index 6c41c7b..3a61433 100755
+--- a/src/components/home/countdown-section.tsx
++++ b/src/components/home/countdown-section.tsx
+@@ -11,14 +11,46 @@ interface TimeLeft {
+   seconds: number;
+ }
+ 
+-function getNextSunday(): Date {
++interface ServiceSlot {
++  day: number; // 0=Sun ... 6=Sat
++  hour: number;
++  minute: number;
++  label: string;
++}
++
++const serviceSlots: ServiceSlot[] = [
++  { day: 0, hour: 7, minute: 0, label: "Sunday Worship Service" },
++  { day: 2, hour: 17, minute: 30, label: "Tuesday Digging Deep (Bible Study)" },
++  { day: 4, hour: 17, minute: 30, label: "Thursday Faith Clinic" },
++  { day: 5, hour: 19, minute: 0, label: "Friday Prayer Meeting" },
++];
++
++function getNextServiceTarget(): { targetDate: Date; label: string } {
+   const now = new Date();
+-  const dayOfWeek = now.getDay();
+-  const daysUntilSunday = dayOfWeek === 0 ? (now.getHours() >= 9 ? 7 : 0) : 7 - dayOfWeek;
+-  const nextSunday = new Date(now);
+-  nextSunday.setDate(now.getDate() + daysUntilSunday);
+-  nextSunday.setHours(9, 0, 0, 0);
+-  return nextSunday;
++  const currentDay = now.getDay();
++  const currentMinutes = now.getHours() * 60 + now.getMinutes();
++
++  for (let offset = 0; offset <= 7; offset++) {
++    const checkDay = (currentDay + offset) % 7;
++    for (const slot of serviceSlots) {
++      if (slot.day === checkDay) {
++        const serviceMinutes = slot.hour * 60 + slot.minute;
++        if (offset > 0 || serviceMinutes > currentMinutes) {
++          const target = new Date(now);
++          target.setDate(now.getDate() + offset);
++          target.setHours(slot.hour, slot.minute, 0, 0);
++          return { targetDate: target, label: slot.label };
++        }
++      }
++    }
++  }
++
++  // Fallback: next Sunday
++  const target = new Date(now);
++  const daysUntilSunday = currentDay === 0 ? 7 : 7 - currentDay;
++  target.setDate(now.getDate() + daysUntilSunday);
++  target.setHours(7, 0, 0, 0);
++  return { targetDate: target, label: "Sunday Worship Service" };
+ }
+ 
+ function calculateTimeLeft(targetDate: Date): TimeLeft {
+@@ -39,31 +71,34 @@ function calculateTimeLeft(targetDate: Date): TimeLeft {
+ 
+ function useCountdown() {
+   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+-  const targetRef = useRef<Date>(getNextSunday());
++  const [label, setLabel] = useState("Sunday Worship Service");
++  const targetRef = useRef<Date | null>(null);
+ 
+   useEffect(() => {
+-    // Set initial value
+-    setTimeLeft(calculateTimeLeft(targetRef.current));
++    const { targetDate, label: serviceLabel } = getNextServiceTarget();
++    targetRef.current = targetDate;
++    setLabel(serviceLabel);
++    setTimeLeft(calculateTimeLeft(targetDate));
+ 
+     const interval = setInterval(() => {
+-      setTimeLeft(calculateTimeLeft(targetRef.current));
++      setTimeLeft(calculateTimeLeft(targetDate));
+     }, 1000);
+ 
+     return () => clearInterval(interval);
+   }, []);
+ 
+-  return timeLeft;
++  return { timeLeft, label };
+ }
+ 
+ function CountdownBox({ value, label }: { value: number; label: string }) {
+   return (
+     <div className="flex flex-col items-center">
+-      <div className="bg-white rounded-2xl shadow-lg shadow-black/5 w-20 h-20 md:w-24 md:h-24 flex items-center justify-center border border-[#1A237E]/10">
+-        <span className="text-3xl md:text-4xl font-bold text-[#1A237E] tabular-nums" suppressHydrationWarning>
++      <div className="bg-white rounded-2xl shadow-lg shadow-black/5 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 flex items-center justify-center border border-[#1A237E]/10">
++        <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1A237E] tabular-nums" suppressHydrationWarning>
+           {String(value).padStart(2, "0")}
+         </span>
+       </div>
+-      <span className="text-xs md:text-sm font-medium text-gray-500 mt-2 uppercase tracking-wider">
++      <span className="text-[10px] sm:text-xs md:text-sm font-medium text-gray-500 mt-1.5 sm:mt-2 uppercase tracking-wider">
+         {label}
+       </span>
+     </div>
+@@ -71,37 +106,48 @@ function CountdownBox({ value, label }: { value: number; label: string }) {
+ }
+ 
+ export function CountdownSection() {
+-  const timeLeft = useCountdown();
++  const { timeLeft, label } = useCountdown();
+   const isZero = timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0;
+ 
+   return (
+     <SectionWrapper className="bg-[#F0F4FF] py-16 md:py-24">
+-      <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
++      <div className="max-w-4xl mx-auto px-3 sm:px-6 text-center">
+         <SectionTitle title="Next Service" subtitle="Counting down to our next worship gathering" />
+ 
+         {!isZero && (
+-          <div className="flex items-center justify-center gap-3 md:gap-6 mt-8">
+-            <CountdownBox value={timeLeft.days} label="Days" />
+-            <span className="text-2xl font-bold text-[#1A237E]/30 mt-[-20px]">:</span>
+-            <CountdownBox value={timeLeft.hours} label="Hours" />
+-            <span className="text-2xl font-bold text-[#1A237E]/30 mt-[-20px]">:</span>
+-            <CountdownBox value={timeLeft.minutes} label="Minutes" />
+-            <span className="text-2xl font-bold text-[#1A237E]/30 mt-[-20px]">:</span>
+-            <CountdownBox value={timeLeft.seconds} label="Seconds" />
+-          </div>
++          <>
++            <p className="mt-6 text-sm md:text-base font-semibold text-[#1A237E]">{label}</p>
++            <div className="flex items-center justify-center gap-1.5 sm:gap-2 md:gap-6 mt-6 px-1">
++              <CountdownBox value={timeLeft.days} label="Days" />
++              <span className="text-xl sm:text-2xl font-bold text-[#1A237E]/30 mt-[-16px] sm:mt-[-20px]">:</span>
++              <CountdownBox value={timeLeft.hours} label="Hours" />
++              <span className="text-xl sm:text-2xl font-bold text-[#1A237E]/30 mt-[-16px] sm:mt-[-20px]">:</span>
++              <CountdownBox value={timeLeft.minutes} label="Min" />
++              <span className="text-xl sm:text-2xl font-bold text-[#1A237E]/30 mt-[-16px] sm:mt-[-20px]">:</span>
++              <CountdownBox value={timeLeft.seconds} label="Sec" />
++            </div>
++          </>
+         )}
+ 
+-        <div className="mt-10 inline-flex items-center gap-2 bg-white rounded-xl px-5 py-3 shadow-md shadow-black/5 text-sm md:text-base text-gray-600">
+-          <Clock className="size-4 text-[#1A237E]" />
++        <div className="mt-8 sm:mt-10 inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 bg-white rounded-xl px-3 sm:px-5 py-2.5 sm:py-3 shadow-md shadow-black/5 text-xs sm:text-sm md:text-base text-gray-600 max-w-[95vw] sm:max-w-full">
++          <Clock className="size-3.5 sm:size-4 text-[#1A237E] shrink-0" />
+           <span>
+-            <strong className="text-[#1A237E]">Sundays:</strong> 8:00 AM &amp; 10:30 AM
++            <strong className="text-[#1A237E]">Sun:</strong> 7:00 AM
+           </span>
+-          <span className="text-gray-300 mx-1">|</span>
++          <span className="text-gray-300 mx-0.5 sm:mx-1">|</span>
+           <span>
+-            <strong className="text-[#1A237E]">Wednesdays:</strong> 6:00 PM (Bible Study)
++            <strong className="text-[#1A237E]">Tue:</strong> 5:30 PM
++          </span>
++          <span className="text-gray-300 mx-0.5 sm:mx-1">|</span>
++          <span>
++            <strong className="text-[#1A237E]">Thu:</strong> 5:30 PM
++          </span>
++          <span className="text-gray-300 mx-0.5 sm:mx-1">|</span>
++          <span>
++            <strong className="text-[#1A237E]">Fri:</strong> 7:00 PM
+           </span>
+         </div>
+       </div>
+     </SectionWrapper>
+   );
+-}
+\ No newline at end of file
++}
+diff --git a/src/components/home/hero-section.tsx b/src/components/home/hero-section.tsx
+index de2d925..8bd57b8 100755
+--- a/src/components/home/hero-section.tsx
++++ b/src/components/home/hero-section.tsx
+@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
+ 
+ export function HeroSection() {
+   return (
+-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 md:pt-20">
++    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-28">
+       {/* Background gradient placeholder */}
+       <div className="absolute inset-0 bg-gradient-to-br from-[#0D1557] via-[#1A237E] to-[#283593]" />
+ 
+@@ -32,14 +32,14 @@ export function HeroSection() {
+           initial={{ opacity: 0, scale: 0.8 }}
+           animate={{ opacity: 1, scale: 1 }}
+           transition={{ duration: 0.8, ease: "easeOut" }}
+-          className="mb-8"
++          className="mb-4"
+         >
+-          <div className="relative h-64 w-64 md:h-80 md:w-80 lg:h-96 lg:w-96 mx-auto rounded-full bg-white p-3 shadow-2xl shadow-black/30">
++          <div className="relative h-32 w-32 md:h-40 md:w-40 lg:h-48 lg:w-48 mx-auto rounded-full bg-white p-2 shadow-2xl shadow-black/30">
+             <Image
+               src="/rccg-logo.png"
+               alt="Redeemed Christian Church of God Logo"
+               fill
+-              sizes="384px"
++              sizes="192px"
+               className="object-contain"
+               priority
+             />
+@@ -83,7 +83,7 @@ export function HeroSection() {
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ duration: 0.8, delay: 0.8 }}
+-          className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 max-w-xl mx-auto px-2"
++          className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 max-w-xl mx-auto px-2"
+         >
+           <Button
+             asChild
+@@ -135,7 +135,7 @@ export function HeroSection() {
+         initial={{ opacity: 0 }}
+         animate={{ opacity: 1 }}
+         transition={{ delay: 1.5, duration: 1 }}
+-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
++        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 z-20"
+       >
+         <span className="text-white/40 text-xs tracking-wider uppercase">Scroll</span>
+         <motion.div
+diff --git a/src/components/home/upcoming-events.tsx b/src/components/home/upcoming-events.tsx
+index 440b82f..3f0c6b5 100755
+--- a/src/components/home/upcoming-events.tsx
++++ b/src/components/home/upcoming-events.tsx
+@@ -7,26 +7,34 @@ const events = [
+   {
+     title: "Sunday Worship Service",
+     date: "Every Sunday",
+-    time: "8:00 AM & 10:30 AM",
++    time: "7:00 AM",
+     venue: "Main Auditorium",
+     color: "bg-[#1A237E]",
+     colorLight: "bg-[#EBF0FA]",
+   },
+   {
+     title: "Midweek Bible Study",
+-    date: "Every Wednesday",
+-    time: "6:00 PM",
++    date: "Every Tuesday",
++    time: "5:30 PM",
+     venue: "Church Hall",
+     color: "bg-[#2E7D32]",
+     colorLight: "bg-[#E8F5E9]",
+   },
++  {
++    title: "Thursday Faith Clinic",
++    date: "Every Thursday",
++    time: "5:30 PM",
++    venue: "Church Hall",
++    color: "bg-[#D32F2F]",
++    colorLight: "bg-[#FFEBEE]",
++  },
+   {
+     title: "Special Thanksgiving Service",
+     date: "Last Sunday of the Month",
+-    time: "8:00 AM",
++    time: "7:00 AM",
+     venue: "Main Auditorium",
+-    color: "bg-[#D32F2F]",
+-    colorLight: "bg-[#FFEBEE]",
++    color: "bg-[#9C27B0]",
++    colorLight: "bg-[#F3E5F5]",
+   },
+ ];
+ 
+diff --git a/src/components/layout/footer.tsx b/src/components/layout/footer.tsx
+index bfa80e5..4237fbf 100755
+--- a/src/components/layout/footer.tsx
++++ b/src/components/layout/footer.tsx
+@@ -84,25 +84,28 @@ export function Footer() {
+                 <p className="font-semibold text-white">Sundays</p>
+                 <div className="flex items-center gap-2 text-blue-100/70 mt-1">
+                   <Clock className="size-3.5" />
+-                  <span>First Service: 8:00 AM</span>
++                  <span>Service: 7:00 AM</span>
+                 </div>
++              </div>
++              <div>
++                <p className="font-semibold text-white">Tuesdays</p>
+                 <div className="flex items-center gap-2 text-blue-100/70 mt-1">
+                   <Clock className="size-3.5" />
+-                  <span>Second Service: 10:30 AM</span>
++                  <span>Bible Study: 5:30 PM</span>
+                 </div>
+               </div>
+               <div>
+-                <p className="font-semibold text-white">Wednesdays</p>
++                <p className="font-semibold text-white">Thursdays</p>
+                 <div className="flex items-center gap-2 text-blue-100/70 mt-1">
+                   <Clock className="size-3.5" />
+-                  <span>Bible Study: 6:00 PM</span>
++                  <span>Faith Clinic: 5:30 PM</span>
+                 </div>
+               </div>
+               <div>
+                 <p className="font-semibold text-white">Fridays</p>
+                 <div className="flex items-center gap-2 text-blue-100/70 mt-1">
+                   <Clock className="size-3.5" />
+-                  <span>Prayer Meeting: 6:00 PM</span>
++                  <span>Prayer Meeting: 7:00 PM</span>
+                 </div>
+               </div>
+             </div>
+diff --git a/src/components/live/live-data.ts b/src/components/live/live-data.ts
+index 237c765..7a35280 100755
+--- a/src/components/live/live-data.ts
++++ b/src/components/live/live-data.ts
+@@ -22,32 +22,32 @@ export interface PastStream {
+ export const serviceSchedules: ServiceSchedule[] = [
+   {
+     id: "sun1",
+-    title: "First Sunday Service",
++    title: "Sunday Service",
+     day: "Sunday",
+-    time: "08:00",
++    time: "07:00",
+     endTime: "10:00",
+     description: "Praise, worship, the Word of God, and fellowship in His glorious presence. A time of refreshing and renewal.",
+     icon: "Radio",
+     streamType: "video",
+   },
+   {
+-    id: "sun2",
+-    title: "Second Sunday Service",
+-    day: "Sunday",
+-    time: "10:30",
+-    endTime: "13:00",
+-    description: "A deeper dive into the Word with extended worship, special ministrations, and altar calls for salvation and rededication.",
+-    icon: "Radio",
++    id: "tue",
++    title: "Tuesday Bible Study",
++    day: "Tuesday",
++    time: "17:30",
++    endTime: "19:00",
++    description: "In-depth, systematic study of the Bible for spiritual growth, revelation knowledge, and practical Christian living.",
++    icon: "BookOpen",
+     streamType: "video",
+   },
+   {
+-    id: "wed",
+-    title: "Wednesday Bible Study",
+-    day: "Wednesday",
+-    time: "18:00",
+-    endTime: "20:00",
+-    description: "In-depth, systematic study of the Bible for spiritual growth, revelation knowledge, and practical Christian living.",
+-    icon: "BookOpen",
++    id: "thu",
++    title: "Thursday Faith Clinic",
++    day: "Thursday",
++    time: "17:30",
++    endTime: "19:00",
++    description: "A special time of faith-building teachings, prayers, and declarations for divine healing, breakthroughs, and supernatural interventions.",
++    icon: "Sparkles",
+     streamType: "video",
+   },
+   {
+@@ -81,9 +81,9 @@ export const pastStreams: PastStream[] = [
+   },
+   {
+     id: "ps3",
+-    title: "Wednesday Bible Study - The Grace Life",
+-    date: "2025-07-02",
+-    duration: "1:45:00",
++    title: "Tuesday Bible Study - The Grace Life",
++    date: "2025-07-01",
++    duration: "1:30:00",
+     views: "156",
+     type: "Bible Study",
+   },
+@@ -105,9 +105,9 @@ export const pastStreams: PastStream[] = [
+   },
+   {
+     id: "ps6",
+-    title: "Wednesday Bible Study - Spiritual Warfare",
+-    date: "2025-06-25",
+-    duration: "1:50:00",
++    title: "Tuesday Bible Study - Spiritual Warfare",
++    date: "2025-06-24",
++    duration: "1:30:00",
+     views: "134",
+     type: "Bible Study",
+   },
+diff --git a/src/components/live/live-faq.tsx b/src/components/live/live-faq.tsx
+index ff4e6b4..8df4e27 100755
+--- a/src/components/live/live-faq.tsx
++++ b/src/components/live/live-faq.tsx
+@@ -7,7 +7,7 @@ import { ChevronDown, HelpCircle } from "lucide-react";
+ const faqs = [
+   {
+     q: "What time do services start?",
+-    a: "Our Sunday services hold at 8:00 AM and 10:30 AM (WAT). Wednesday Bible Study is at 6:00 PM, and Friday Prayer Meeting starts at 7:00 PM. All times are in West African Time (UTC+1).",
++    a: "Our Sunday Worship Service holds at 7:00 AM (WAT). Tuesday Digging Deep (Bible Study) is at 5:30 PM, Thursday Faith Clinic is at 5:30 PM, and Friday Prayer Meeting starts at 7:00 PM. All times are in West African Time (UTC+1).",
+     icon: "clock",
+   },
+   {
+diff --git a/src/components/media/live-stream-section.tsx b/src/components/media/live-stream-section.tsx
+index 7e83b6e..b9af596 100755
+--- a/src/components/media/live-stream-section.tsx
++++ b/src/components/media/live-stream-section.tsx
+@@ -30,7 +30,7 @@ export function LiveStreamSection() {
+             </span>
+             <span className="flex items-center gap-1.5">
+               <Clock className="size-4" />
+-              8:00 AM &amp; 10:30 AM
++              7:00 AM
+             </span>
+           </div>
+ 
+@@ -53,22 +53,29 @@ export function LiveStreamSection() {
+       </div>
+ 
+       {/* Service Schedule Cards */}
+-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
++      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+         {[
+           {
+             title: "Sunday Worship",
+-            time: "8:00 AM & 10:30 AM",
++            time: "7:00 AM",
+             day: "Every Sunday",
+             desc: "Praise, worship, Word, and fellowship in God's presence",
+             active: false,
+           },
+           {
+-            title: "Wednesday Bible Study",
+-            time: "6:00 PM",
+-            day: "Every Wednesday",
++            title: "Tuesday Bible Study",
++            time: "5:30 PM",
++            day: "Every Tuesday",
+             desc: "In-depth study of the Word for spiritual growth and revelation",
+             active: false,
+           },
++          {
++            title: "Thursday Faith Clinic",
++            time: "5:30 PM",
++            day: "Every Thursday",
++            desc: "Faith-building teachings, prayers, and declarations for healing and breakthroughs",
++            active: false,
++          },
+           {
+             title: "Friday Prayer Meeting",
+             time: "7:00 PM",
+diff --git a/src/components/sermons/sermon-data.ts b/src/components/sermons/sermon-data.ts
+index a5e25f9..c9f7018 100755
+--- a/src/components/sermons/sermon-data.ts
++++ b/src/components/sermons/sermon-data.ts
+@@ -197,7 +197,7 @@ export const mockSermons: Sermon[] = [
+     date: "2025-07-02",
+     duration: "55:40",
+     seriesId: "ss2",
+-    category: "Wednesday Bible Study",
++    category: "Tuesday Bible Study",
+     description: "The most powerful prayers are birthed in the secret place — that quiet, intimate communion with God where nobody else sees. Jesus modelled this lifestyle, rising early to pray in solitary places. This sermon teaches how to cultivate and maximise your personal prayer closet.",
+     scriptures: ["Matthew 6:6", "Mark 1:35", "Psalm 91:1"],
+     tags: ["prayer", "intimacy", "secret place"],
+@@ -229,7 +229,7 @@ export const mockSermons: Sermon[] = [
+     date: "2025-06-18",
+     duration: "48:05",
+     seriesId: "ss2",
+-    category: "Wednesday Bible Study",
++    category: "Tuesday Bible Study",
+     description: "The combination of fasting with prayer unlocks a dimension of spiritual power that prayer alone cannot reach. This teaching explores the different types of biblical fasts, the spiritual significance of fasting, and practical guidelines for effective fasting that produces breakthroughs.",
+     scriptures: ["Isaiah 58:6-8", "Matthew 6:16-18", "Joel 2:12-13"],
+     tags: ["fasting", "breakthrough", "spiritual power"],
+@@ -310,7 +310,7 @@ export const mockSermons: Sermon[] = [
+     date: "2025-05-11",
+     duration: "43:12",
+     seriesId: "ss3",
+-    category: "Wednesday Bible Study",
++    category: "Tuesday Bible Study",
+     description: "Just as physical growth requires intentional nourishment and exercise, spiritual growth in grace demands deliberate effort. This Bible Study message provides practical steps for growing in the grace and knowledge of our Lord Jesus Christ, moving from spiritual infancy to maturity.",
+     scriptures: ["2 Peter 3:18", "1 Peter 2:2", "Hebrews 5:12-14"],
+     tags: ["growth", "maturity", "spiritual development"],
+@@ -375,7 +375,7 @@ export const mockSermons: Sermon[] = [
+     date: "2025-04-17",
+     duration: "1:02:15",
+     seriesId: "ss4",
+-    category: "Wednesday Bible Study",
++    category: "Tuesday Bible Study",
+     description: "God has provided a complete set of spiritual armour for every believer. This comprehensive Bible Study message examines each piece of the armour — the belt of truth, breastplate of righteousness, shoes of the gospel, shield of faith, helmet of salvation, and sword of the Spirit.",
+     scriptures: ["Ephesians 6:13-17", "Romans 13:12", "2 Corinthians 6:7"],
+     tags: ["armour", "protection", "weapons"],
+@@ -472,7 +472,7 @@ export const mockSermons: Sermon[] = [
+     date: "2025-04-24",
+     duration: "35:15",
+     seriesId: "ss5",
+-    category: "Wednesday Bible Study",
++    category: "Tuesday Bible Study",
+     description: "The family altar — a time of collective worship, prayer, and Bible study within the home — is one of the most powerful spiritual practices a family can establish. This Bible Study provides a practical guide for starting and maintaining a vibrant family altar that transforms your home.",
+     scriptures: ["Joshua 24:15", "Psalm 133:1", "Matthew 18:20"],
+     tags: ["family devotion", "altar", "worship"],
+diff --git a/src/components/videos/video-cta.tsx b/src/components/videos/video-cta.tsx
+index 5083455..ab1edd4 100755
+--- a/src/components/videos/video-cta.tsx
++++ b/src/components/videos/video-cta.tsx
+@@ -28,8 +28,8 @@ export function VideoCTA() {
+             Watch Us Live Every Sunday
+           </h2>
+           <p className="mt-4 text-lg text-blue-200/80 max-w-xl mx-auto leading-relaxed">
+-            Can&apos;t make it to church? Join us live online every Sunday at 8:00 AM
+-            and 10:30 AM. Experience the same anointing, worship, and Word from
++            Can&apos;t make it to church? Join us live online every Sunday at 7:00 AM.
++            Experience the same anointing, worship, and Word from
+             wherever you are in the world.
+           </p>
+           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+diff --git a/tool-results/read_1784708704914_a4244049461c.txt b/tool-results/read_1784708704914_a4244049461c.txt
+old mode 100644
+new mode 100755
