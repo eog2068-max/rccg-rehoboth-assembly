@@ -53,7 +53,7 @@ export function LiveStreamSection() {
       </div>
 
       {/* Service Schedule Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {[
           {
             title: "Sunday Worship",
@@ -67,6 +67,13 @@ export function LiveStreamSection() {
             time: "5:30 PM",
             day: "Every Tuesday",
             desc: "In-depth study of the Word for spiritual growth and revelation",
+            active: false,
+          },
+          {
+            title: "Thursday Faith Clinic",
+            time: "5:30 PM",
+            day: "Every Thursday",
+            desc: "Faith-building teachings, prayers, and declarations for healing and breakthroughs",
             active: false,
           },
           {

@@ -21,12 +21,20 @@ const events = [
     colorLight: "bg-[#E8F5E9]",
   },
   {
+    title: "Thursday Faith Clinic",
+    date: "Every Thursday",
+    time: "5:30 PM",
+    venue: "Church Hall",
+    color: "bg-[#D32F2F]",
+    colorLight: "bg-[#FFEBEE]",
+  },
+  {
     title: "Special Thanksgiving Service",
     date: "Last Sunday of the Month",
     time: "7:00 AM",
     venue: "Main Auditorium",
-    color: "bg-[#D32F2F]",
-    colorLight: "bg-[#FFEBEE]",
+    color: "bg-[#9C27B0]",
+    colorLight: "bg-[#F3E5F5]",
   },
 ];
 

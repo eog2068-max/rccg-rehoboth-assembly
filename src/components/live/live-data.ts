@@ -41,6 +41,16 @@ export const serviceSchedules: ServiceSchedule[] = [
     streamType: "video",
   },
   {
+    id: "thu",
+    title: "Thursday Faith Clinic",
+    day: "Thursday",
+    time: "17:30",
+    endTime: "19:00",
+    description: "A special time of faith-building teachings, prayers, and declarations for divine healing, breakthroughs, and supernatural interventions.",
+    icon: "Sparkles",
+    streamType: "video",
+  },
+  {
     id: "fri",
     title: "Friday Prayer Meeting",
     day: "Friday",

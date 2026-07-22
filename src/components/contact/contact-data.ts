@@ -64,6 +64,15 @@ export const serviceTimes: ServiceTime[] = [
     description: "Digging deeper into God's Word",
   },
   {
+    id: "thursday-faith-clinic",
+    name: "Thursday Faith Clinic",
+    day: "Thursday",
+    dayIndex: 4,
+    startTime: "5:30 PM",
+    endTime: "7:00 PM",
+    description: "Faith-building teachings and prayers for healing and breakthroughs",
+  },
+  {
     id: "friday-prayer",
     name: "Friday Prayer Meeting",
     day: "Friday",

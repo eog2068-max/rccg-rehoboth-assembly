@@ -95,6 +95,13 @@ export function Footer() {
                 </div>
               </div>
               <div>
+                <p className="font-semibold text-white">Thursdays</p>
+                <div className="flex items-center gap-2 text-blue-100/70 mt-1">
+                  <Clock className="size-3.5" />
+                  <span>Faith Clinic: 5:30 PM</span>
+                </div>
+              </div>
+              <div>
                 <p className="font-semibold text-white">Fridays</p>
                 <div className="flex items-center gap-2 text-blue-100/70 mt-1">
                   <Clock className="size-3.5" />

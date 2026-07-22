@@ -11,14 +11,46 @@ interface TimeLeft {
   seconds: number;
 }
 
-function getNextSunday(): Date {
+interface ServiceSlot {
+  day: number; // 0=Sun ... 6=Sat
+  hour: number;
+  minute: number;
+  label: string;
+}
+
+const serviceSlots: ServiceSlot[] = [
+  { day: 0, hour: 7, minute: 0, label: "Sunday Worship Service" },
+  { day: 2, hour: 17, minute: 30, label: "Tuesday Digging Deep (Bible Study)" },
+  { day: 4, hour: 17, minute: 30, label: "Thursday Faith Clinic" },
+  { day: 5, hour: 19, minute: 0, label: "Friday Prayer Meeting" },
+];
+
+function getNextServiceTarget(): { targetDate: Date; label: string } {
   const now = new Date();
-  const dayOfWeek = now.getDay();
-  const daysUntilSunday = dayOfWeek === 0 ? (now.getHours() >= 7 ? 7 : 0) : 7 - dayOfWeek;
-  const nextSunday = new Date(now);
-  nextSunday.setDate(now.getDate() + daysUntilSunday);
-  nextSunday.setHours(7, 0, 0, 0);
-  return nextSunday;
+  const currentDay = now.getDay();
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+  for (let offset = 0; offset <= 7; offset++) {
+    const checkDay = (currentDay + offset) % 7;
+    for (const slot of serviceSlots) {
+      if (slot.day === checkDay) {
+        const serviceMinutes = slot.hour * 60 + slot.minute;
+        if (offset > 0 || serviceMinutes > currentMinutes) {
+          const target = new Date(now);
+          target.setDate(now.getDate() + offset);
+          target.setHours(slot.hour, slot.minute, 0, 0);
+          return { targetDate: target, label: slot.label };
+        }
+      }
+    }
+  }
+
+  // Fallback: next Sunday
+  const target = new Date(now);
+  const daysUntilSunday = currentDay === 0 ? 7 : 7 - currentDay;
+  target.setDate(now.getDate() + daysUntilSunday);
+  target.setHours(7, 0, 0, 0);
+  return { targetDate: target, label: "Sunday Worship Service" };
 }
 
 function calculateTimeLeft(targetDate: Date): TimeLeft {
@@ -39,31 +71,34 @@ function calculateTimeLeft(targetDate: Date): TimeLeft {
 
 function useCountdown() {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-  const targetRef = useRef<Date>(getNextSunday());
+  const [label, setLabel] = useState("Sunday Worship Service");
+  const targetRef = useRef<Date | null>(null);
 
   useEffect(() => {
-    // Set initial value
-    setTimeLeft(calculateTimeLeft(targetRef.current));
+    const { targetDate, label: serviceLabel } = getNextServiceTarget();
+    targetRef.current = targetDate;
+    setLabel(serviceLabel);
+    setTimeLeft(calculateTimeLeft(targetDate));
 
     const interval = setInterval(() => {
-      setTimeLeft(calculateTimeLeft(targetRef.current));
+      setTimeLeft(calculateTimeLeft(targetDate));
     }, 1000);
 
     return () => clearInterval(interval);
   }, []);
 
-  return timeLeft;
+  return { timeLeft, label };
 }
 
 function CountdownBox({ value, label }: { value: number; label: string }) {
   return (
     <div className="flex flex-col items-center">
-      <div className="bg-white rounded-2xl shadow-lg shadow-black/5 w-20 h-20 md:w-24 md:h-24 flex items-center justify-center border border-[#1A237E]/10">
-        <span className="text-3xl md:text-4xl font-bold text-[#1A237E] tabular-nums" suppressHydrationWarning>
+      <div className="bg-white rounded-2xl shadow-lg shadow-black/5 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 flex items-center justify-center border border-[#1A237E]/10">
+        <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1A237E] tabular-nums" suppressHydrationWarning>
           {String(value).padStart(2, "0")}
         </span>
       </div>
-      <span className="text-xs md:text-sm font-medium text-gray-500 mt-2 uppercase tracking-wider">
+      <span className="text-[10px] sm:text-xs md:text-sm font-medium text-gray-500 mt-1.5 sm:mt-2 uppercase tracking-wider">
         {label}
       </span>
     </div>
@@ -71,34 +106,45 @@ function CountdownBox({ value, label }: { value: number; label: string }) {
 }
 
 export function CountdownSection() {
-  const timeLeft = useCountdown();
+  const { timeLeft, label } = useCountdown();
   const isZero = timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0;
 
   return (
     <SectionWrapper className="bg-[#F0F4FF] py-16 md:py-24">
-      <div className="max-w-4xl mx-auto px-2 sm:px-6 text-center">
+      <div className="max-w-4xl mx-auto px-3 sm:px-6 text-center">
         <SectionTitle title="Next Service" subtitle="Counting down to our next worship gathering" />
 
         {!isZero && (
-          <div className="flex items-center justify-center gap-2 md:gap-6 mt-8 px-1">
-            <CountdownBox value={timeLeft.days} label="Days" />
-            <span className="text-2xl font-bold text-[#1A237E]/30 mt-[-20px]">:</span>
-            <CountdownBox value={timeLeft.hours} label="Hours" />
-            <span className="text-2xl font-bold text-[#1A237E]/30 mt-[-20px]">:</span>
-            <CountdownBox value={timeLeft.minutes} label="Minutes" />
-            <span className="text-2xl font-bold text-[#1A237E]/30 mt-[-20px]">:</span>
-            <CountdownBox value={timeLeft.seconds} label="Seconds" />
-          </div>
+          <>
+            <p className="mt-6 text-sm md:text-base font-semibold text-[#1A237E]">{label}</p>
+            <div className="flex items-center justify-center gap-1.5 sm:gap-2 md:gap-6 mt-6 px-1">
+              <CountdownBox value={timeLeft.days} label="Days" />
+              <span className="text-xl sm:text-2xl font-bold text-[#1A237E]/30 mt-[-16px] sm:mt-[-20px]">:</span>
+              <CountdownBox value={timeLeft.hours} label="Hours" />
+              <span className="text-xl sm:text-2xl font-bold text-[#1A237E]/30 mt-[-16px] sm:mt-[-20px]">:</span>
+              <CountdownBox value={timeLeft.minutes} label="Min" />
+              <span className="text-xl sm:text-2xl font-bold text-[#1A237E]/30 mt-[-16px] sm:mt-[-20px]">:</span>
+              <CountdownBox value={timeLeft.seconds} label="Sec" />
+            </div>
+          </>
         )}
 
-        <div className="mt-10 inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 bg-white rounded-xl px-4 py-3 shadow-md shadow-black/5 text-sm md:text-base text-gray-600 max-w-full">
-          <Clock className="size-4 text-[#1A237E]" />
+        <div className="mt-8 sm:mt-10 inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 bg-white rounded-xl px-3 sm:px-5 py-2.5 sm:py-3 shadow-md shadow-black/5 text-xs sm:text-sm md:text-base text-gray-600 max-w-[95vw] sm:max-w-full">
+          <Clock className="size-3.5 sm:size-4 text-[#1A237E] shrink-0" />
           <span>
-            <strong className="text-[#1A237E]">Sundays:</strong> 7:00 AM
+            <strong className="text-[#1A237E]">Sun:</strong> 7:00 AM
           </span>
-          <span className="text-gray-300 mx-1 hidden sm:inline">|</span>
+          <span className="text-gray-300 mx-0.5 sm:mx-1">|</span>
           <span>
-            <strong className="text-[#1A237E]">Tuesdays:</strong> 5:30 PM (Bible Study)
+            <strong className="text-[#1A237E]">Tue:</strong> 5:30 PM
+          </span>
+          <span className="text-gray-300 mx-0.5 sm:mx-1">|</span>
+          <span>
+            <strong className="text-[#1A237E]">Thu:</strong> 5:30 PM
+          </span>
+          <span className="text-gray-300 mx-0.5 sm:mx-1">|</span>
+          <span>
+            <strong className="text-[#1A237E]">Fri:</strong> 7:00 PM
           </span>
         </div>
       </div>
