@@ -59,7 +59,7 @@ const departments: Department[] = [
       "Bible quizzes and competitions",
       "Annual Sunday School retreat",
     ],
-    meetingDay: "Sundays, 8:00 AM",
+    meetingDay: "Sundays, 7:00 AM",
     accentColor: "text-[#1A237E]",
     bgColor: "bg-[#1A237E]/10",
   },

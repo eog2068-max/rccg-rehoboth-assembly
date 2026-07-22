@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 md:pt-20">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-28">
       {/* Background gradient placeholder */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#0D1557] via-[#1A237E] to-[#283593]" />
 
@@ -32,14 +32,14 @@ export function HeroSection() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-8"
+          className="mb-4"
         >
-          <div className="relative h-64 w-64 md:h-80 md:w-80 lg:h-96 lg:w-96 mx-auto rounded-full bg-white p-3 shadow-2xl shadow-black/30">
+          <div className="relative h-32 w-32 md:h-40 md:w-40 lg:h-48 lg:w-48 mx-auto rounded-full bg-white p-2 shadow-2xl shadow-black/30">
             <Image
               src="/rccg-logo.png"
               alt="Redeemed Christian Church of God Logo"
               fill
-              sizes="384px"
+              sizes="192px"
               className="object-contain"
               priority
             />
@@ -83,7 +83,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 max-w-xl mx-auto px-2"
+          className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 max-w-xl mx-auto px-2"
         >
           <Button
             asChild
@@ -135,7 +135,7 @@ export function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 z-20"
       >
         <span className="text-white/40 text-xs tracking-wider uppercase">Scroll</span>
         <motion.div

@@ -84,25 +84,21 @@ export function Footer() {
                 <p className="font-semibold text-white">Sundays</p>
                 <div className="flex items-center gap-2 text-blue-100/70 mt-1">
                   <Clock className="size-3.5" />
-                  <span>First Service: 8:00 AM</span>
-                </div>
-                <div className="flex items-center gap-2 text-blue-100/70 mt-1">
-                  <Clock className="size-3.5" />
-                  <span>Second Service: 10:30 AM</span>
+                  <span>Service: 7:00 AM</span>
                 </div>
               </div>
               <div>
-                <p className="font-semibold text-white">Wednesdays</p>
+                <p className="font-semibold text-white">Tuesdays</p>
                 <div className="flex items-center gap-2 text-blue-100/70 mt-1">
                   <Clock className="size-3.5" />
-                  <span>Bible Study: 6:00 PM</span>
+                  <span>Bible Study: 5:30 PM</span>
                 </div>
               </div>
               <div>
                 <p className="font-semibold text-white">Fridays</p>
                 <div className="flex items-center gap-2 text-blue-100/70 mt-1">
                   <Clock className="size-3.5" />
-                  <span>Prayer Meeting: 6:00 PM</span>
+                  <span>Prayer Meeting: 7:00 PM</span>
                 </div>
               </div>
             </div>

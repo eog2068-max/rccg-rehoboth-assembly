@@ -14,10 +14,10 @@ interface TimeLeft {
 function getNextSunday(): Date {
   const now = new Date();
   const dayOfWeek = now.getDay();
-  const daysUntilSunday = dayOfWeek === 0 ? (now.getHours() >= 9 ? 7 : 0) : 7 - dayOfWeek;
+  const daysUntilSunday = dayOfWeek === 0 ? (now.getHours() >= 7 ? 7 : 0) : 7 - dayOfWeek;
   const nextSunday = new Date(now);
   nextSunday.setDate(now.getDate() + daysUntilSunday);
-  nextSunday.setHours(9, 0, 0, 0);
+  nextSunday.setHours(7, 0, 0, 0);
   return nextSunday;
 }
 
@@ -76,11 +76,11 @@ export function CountdownSection() {
 
   return (
     <SectionWrapper className="bg-[#F0F4FF] py-16 md:py-24">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <div className="max-w-4xl mx-auto px-2 sm:px-6 text-center">
         <SectionTitle title="Next Service" subtitle="Counting down to our next worship gathering" />
 
         {!isZero && (
-          <div className="flex items-center justify-center gap-3 md:gap-6 mt-8">
+          <div className="flex items-center justify-center gap-2 md:gap-6 mt-8 px-1">
             <CountdownBox value={timeLeft.days} label="Days" />
             <span className="text-2xl font-bold text-[#1A237E]/30 mt-[-20px]">:</span>
             <CountdownBox value={timeLeft.hours} label="Hours" />
@@ -91,14 +91,14 @@ export function CountdownSection() {
           </div>
         )}
 
-        <div className="mt-10 inline-flex items-center gap-2 bg-white rounded-xl px-5 py-3 shadow-md shadow-black/5 text-sm md:text-base text-gray-600">
+        <div className="mt-10 inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 bg-white rounded-xl px-4 py-3 shadow-md shadow-black/5 text-sm md:text-base text-gray-600 max-w-full">
           <Clock className="size-4 text-[#1A237E]" />
           <span>
-            <strong className="text-[#1A237E]">Sundays:</strong> 8:00 AM &amp; 10:30 AM
+            <strong className="text-[#1A237E]">Sundays:</strong> 7:00 AM
           </span>
-          <span className="text-gray-300 mx-1">|</span>
+          <span className="text-gray-300 mx-1 hidden sm:inline">|</span>
           <span>
-            <strong className="text-[#1A237E]">Wednesdays:</strong> 6:00 PM (Bible Study)
+            <strong className="text-[#1A237E]">Tuesdays:</strong> 5:30 PM (Bible Study)
           </span>
         </div>
       </div>

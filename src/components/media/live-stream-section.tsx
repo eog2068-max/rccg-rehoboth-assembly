@@ -30,7 +30,7 @@ export function LiveStreamSection() {
             </span>
             <span className="flex items-center gap-1.5">
               <Clock className="size-4" />
-              8:00 AM &amp; 10:30 AM
+              7:00 AM
             </span>
           </div>
 
@@ -57,15 +57,15 @@ export function LiveStreamSection() {
         {[
           {
             title: "Sunday Worship",
-            time: "8:00 AM & 10:30 AM",
+            time: "7:00 AM",
             day: "Every Sunday",
             desc: "Praise, worship, Word, and fellowship in God's presence",
             active: false,
           },
           {
-            title: "Wednesday Bible Study",
-            time: "6:00 PM",
-            day: "Every Wednesday",
+            title: "Tuesday Bible Study",
+            time: "5:30 PM",
+            day: "Every Tuesday",
             desc: "In-depth study of the Word for spiritual growth and revelation",
             active: false,
           },

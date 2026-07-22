@@ -7,15 +7,15 @@ const events = [
   {
     title: "Sunday Worship Service",
     date: "Every Sunday",
-    time: "8:00 AM & 10:30 AM",
+    time: "7:00 AM",
     venue: "Main Auditorium",
     color: "bg-[#1A237E]",
     colorLight: "bg-[#EBF0FA]",
   },
   {
     title: "Midweek Bible Study",
-    date: "Every Wednesday",
-    time: "6:00 PM",
+    date: "Every Tuesday",
+    time: "5:30 PM",
     venue: "Church Hall",
     color: "bg-[#2E7D32]",
     colorLight: "bg-[#E8F5E9]",
@@ -23,7 +23,7 @@ const events = [
   {
     title: "Special Thanksgiving Service",
     date: "Last Sunday of the Month",
-    time: "8:00 AM",
+    time: "7:00 AM",
     venue: "Main Auditorium",
     color: "bg-[#D32F2F]",
     colorLight: "bg-[#FFEBEE]",

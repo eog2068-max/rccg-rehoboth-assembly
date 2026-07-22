@@ -110,7 +110,7 @@ export const mockAnnouncements: Announcement[] = [
   {
     id: "ann-001",
     title: "Special Thanksgiving Service This Sunday",
-    body: "Brethren, we warmly invite you to our Special Thanksgiving Service holding this Sunday by 8:00 AM at the main auditorium. This is a season to return all glory to God for His faithfulness, provision, and protection over our families and the church throughout the first half of the year. Come with your thanksgiving offerings, testimonies, and a heart full of gratitude. There will be special ministrations from the choir and the children's department. Let us come together to celebrate the goodness of the Lord. Remember, every good and perfect gift comes from above.",
+    body: "Brethren, we warmly invite you to our Special Thanksgiving Service holding this Sunday by 7:00 AM at the main auditorium. This is a season to return all glory to God for His faithfulness, provision, and protection over our families and the church throughout the first half of the year. Come with your thanksgiving offerings, testimonies, and a heart full of gratitude. There will be special ministrations from the choir and the children's department. Let us come together to celebrate the goodness of the Lord. Remember, every good and perfect gift comes from above.",
     category: "service",
     priority: "high",
     date: "2025-07-17",

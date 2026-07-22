@@ -28,8 +28,8 @@ export function VideoCTA() {
             Watch Us Live Every Sunday
           </h2>
           <p className="mt-4 text-lg text-blue-200/80 max-w-xl mx-auto leading-relaxed">
-            Can&apos;t make it to church? Join us live online every Sunday at 8:00 AM
-            and 10:30 AM. Experience the same anointing, worship, and Word from
+            Can&apos;t make it to church? Join us live online every Sunday at 7:00 AM.
+            Experience the same anointing, worship, and Word from
             wherever you are in the world.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">

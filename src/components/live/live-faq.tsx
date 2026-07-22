@@ -7,7 +7,7 @@ import { ChevronDown, HelpCircle } from "lucide-react";
 const faqs = [
   {
     q: "What time do services start?",
-    a: "Our Sunday services hold at 8:00 AM and 10:30 AM (WAT). Wednesday Bible Study is at 6:00 PM, and Friday Prayer Meeting starts at 7:00 PM. All times are in West African Time (UTC+1).",
+    a: "Our Sunday services hold at 7:00 AM (WAT). Tuesday Bible Study is at 5:30 PM, and Friday Prayer Meeting starts at 7:00 PM. All times are in West African Time (UTC+1).",
     icon: "clock",
   },
   {

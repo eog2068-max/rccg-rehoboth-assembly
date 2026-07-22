@@ -420,14 +420,14 @@ export function GivingMain() {
                         <div className="w-2 h-2 rounded-full bg-[#D32F2F] mt-1.5 shrink-0" />
                         <div>
                           <p className="text-sm font-semibold text-gray-800">Sunday Services</p>
-                          <p className="text-xs text-gray-500">First Service: 8:00 AM &middot; Second Service: 10:30 AM</p>
+                          <p className="text-xs text-gray-500">Service: 7:00 AM</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
                         <div className="w-2 h-2 rounded-full bg-[#1A237E] mt-1.5 shrink-0" />
                         <div>
-                          <p className="text-sm font-semibold text-gray-800">Wednesday Bible Study</p>
-                          <p className="text-xs text-gray-500">6:00 PM &middot; 8:00 PM</p>
+                          <p className="text-sm font-semibold text-gray-800">Tuesday Bible Study</p>
+                          <p className="text-xs text-gray-500">5:30 PM</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">

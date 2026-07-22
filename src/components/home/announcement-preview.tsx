@@ -7,7 +7,7 @@ const announcements = [
     title: "Weekly Programme Update",
     date: "This Week",
     excerpt:
-      "Please note the updated schedule for this week's activities. Sunday services remain at 8:00 AM and 10:30 AM. Wednesday Bible Study continues at 6:00 PM.",
+      "Please note the updated schedule for this week's activities. Sunday services are at 7:00 AM. Tuesday Bible Study continues at 5:30 PM.",
     icon: Megaphone,
   },
   {
