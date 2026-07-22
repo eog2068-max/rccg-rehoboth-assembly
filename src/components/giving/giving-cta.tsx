@@ -37,7 +37,7 @@ export function GivingCTA() {
               size="lg"
               className="bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-xl h-12 px-8 font-semibold shadow-lg"
             >
-              <Link href="/giving">
+              <Link href="/giving#payment-section">
                 <Heart className="size-4 mr-2" />
                 Give Now
               </Link>

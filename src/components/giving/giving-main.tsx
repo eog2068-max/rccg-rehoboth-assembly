@@ -149,7 +149,11 @@ export function GivingMain() {
                 <button
                   key={method.id}
                   onClick={() => setActiveMethod(method.id)}
-                  className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-medium transition-all"
+                  className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-medium transition-all ${
+                    isActive
+                      ? "bg-[#1A237E] text-white shadow-md"
+                      : "bg-white text-gray-600 border border-gray-200 hover:border-[#1A237E]/30 hover:text-[#1A237E]"
+                  }`}
                 >
                   <IconComp className="size-4" />
                   {method.name}
