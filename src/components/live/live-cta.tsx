@@ -28,7 +28,7 @@ export function LiveCTA() {
             Never Miss a Live Service
           </h2>
           <p className="mt-4 text-lg text-blue-200/80 max-w-xl mx-auto leading-relaxed">
-            Join us every Sunday, Wednesday, and Friday as we worship God in spirit
+            Join us every Sunday, Tuesday, and Thursday as we worship God in spirit
             and in truth. Set a reminder and share the stream with family and friends
             around the world.
           </p>

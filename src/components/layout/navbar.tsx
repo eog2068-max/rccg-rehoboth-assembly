@@ -37,7 +37,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#EBF3FF] border-b border-[#1A237E]/10">
+    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#EBF3FF]/70 backdrop-blur-md border-b border-white/30">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo + Church Name */}
@@ -53,10 +53,10 @@ export function Navbar() {
               />
             </div>
             <div className="hidden lg:block">
-              <p className="text-sm font-bold leading-tight text-[#1A237E]">
+              <p className="text-sm font-bold leading-tight text-[#1A237E]/90">
                 Redeemed Christian Church of God
               </p>
-              <p className="text-xs leading-tight text-gray-500">
+              <p className="text-xs leading-tight text-gray-600">
                 (Rehoboth Assembly Parish)
               </p>
             </div>

@@ -22,7 +22,6 @@ const serviceSlots: ServiceSlot[] = [
   { day: 0, hour: 7, minute: 0, label: "Sunday Worship Service" },
   { day: 2, hour: 17, minute: 30, label: "Tuesday Digging Deep (Bible Study)" },
   { day: 4, hour: 17, minute: 30, label: "Thursday Faith Clinic" },
-  { day: 5, hour: 19, minute: 0, label: "Friday Prayer Meeting" },
 ];
 
 function getNextServiceTarget(): { targetDate: Date; label: string } {
@@ -129,22 +128,21 @@ export function CountdownSection() {
           </>
         )}
 
-        <div className="mt-8 sm:mt-10 inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 bg-white rounded-xl px-3 sm:px-5 py-2.5 sm:py-3 shadow-md shadow-black/5 text-xs sm:text-sm md:text-base text-gray-600 max-w-[95vw] sm:max-w-full">
-          <Clock className="size-3.5 sm:size-4 text-[#1A237E] shrink-0" />
-          <span>
-            <strong className="text-[#1A237E]">Sun:</strong> 7:00 AM
+        <div className="mt-8 sm:mt-10 inline-flex flex-col sm:flex-row flex-wrap items-center justify-center gap-x-4 gap-y-1 bg-white rounded-xl px-3 sm:px-5 py-2.5 sm:py-3 shadow-md shadow-black/5 text-xs sm:text-sm md:text-base text-gray-600 max-w-[95vw] sm:max-w-full">
+          <span className="font-semibold text-[#1A237E]">
+            <Clock className="size-3.5 sm:size-4 inline mr-1 -mt-0.5" />
+            Our Services:
           </span>
-          <span className="text-gray-300 mx-0.5 sm:mx-1">|</span>
           <span>
-            <strong className="text-[#1A237E]">Tue:</strong> 5:30 PM
+            <strong className="text-[#1A237E]">Sun 7:00 AM</strong> — Worship Service
           </span>
-          <span className="text-gray-300 mx-0.5 sm:mx-1">|</span>
+          <span className="text-gray-300 hidden sm:inline">|</span>
           <span>
-            <strong className="text-[#1A237E]">Thu:</strong> 5:30 PM
+            <strong className="text-[#1A237E]">Tue 5:30 PM</strong> — Digging Deep
           </span>
-          <span className="text-gray-300 mx-0.5 sm:mx-1">|</span>
+          <span className="text-gray-300 hidden sm:inline">|</span>
           <span>
-            <strong className="text-[#1A237E]">Fri:</strong> 7:00 PM
+            <strong className="text-[#1A237E]">Thu 5:30 PM</strong> — Faith Clinic
           </span>
         </div>
       </div>

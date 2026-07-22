@@ -8,10 +8,10 @@ function getDayIcon(day: string) {
   switch (day) {
     case "Sunday":
       return Church;
-    case "Wednesday":
+    case "Tuesday":
       return BookOpen;
-    case "Friday":
-      return Flame;
+    case "Thursday":
+      return Sparkles;
     default:
       return Clock;
   }
@@ -21,9 +21,9 @@ function getDayColor(day: string) {
   switch (day) {
     case "Sunday":
       return "bg-[#1A237E]";
-    case "Wednesday":
+    case "Tuesday":
       return "bg-[#2E7D32]";
-    case "Friday":
+    case "Thursday":
       return "bg-[#D32F2F]";
     default:
       return "bg-gray-500";
@@ -34,7 +34,7 @@ export function ServiceTimesCard() {
   const upcoming = getUpcomingService();
   const upcomingId = upcoming.service.id;
 
-  const days = ["Sunday", "Wednesday", "Friday"] as const;
+  const days = ["Sunday", "Tuesday", "Thursday"] as const;
 
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">

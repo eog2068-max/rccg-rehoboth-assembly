@@ -47,7 +47,7 @@ export interface ServiceTime {
 export const serviceTimes: ServiceTime[] = [
   {
     id: "sunday-first",
-    name: "Sunday Service",
+    name: "Sunday Worship Service",
     day: "Sunday",
     dayIndex: 0,
     startTime: "7:00 AM",
@@ -56,7 +56,7 @@ export const serviceTimes: ServiceTime[] = [
   },
   {
     id: "tuesday-bible",
-    name: "Tuesday Bible Study",
+    name: "Tuesday Digging Deep (Bible Study)",
     day: "Tuesday",
     dayIndex: 2,
     startTime: "5:30 PM",
@@ -72,15 +72,7 @@ export const serviceTimes: ServiceTime[] = [
     endTime: "7:00 PM",
     description: "Faith-building teachings and prayers for healing and breakthroughs",
   },
-  {
-    id: "friday-prayer",
-    name: "Friday Prayer Meeting",
-    day: "Friday",
-    dayIndex: 5,
-    startTime: "7:00 PM",
-    endTime: "9:30 PM",
-    description: "Powerful night of prayers",
-  },
+
 ];
 
 export const officeHours = {

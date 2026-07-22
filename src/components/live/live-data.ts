@@ -22,7 +22,7 @@ export interface PastStream {
 export const serviceSchedules: ServiceSchedule[] = [
   {
     id: "sun1",
-    title: "Sunday Service",
+    title: "Sunday Worship Service",
     day: "Sunday",
     time: "07:00",
     endTime: "10:00",
@@ -32,7 +32,7 @@ export const serviceSchedules: ServiceSchedule[] = [
   },
   {
     id: "tue",
-    title: "Tuesday Bible Study",
+    title: "Tuesday Digging Deep (Bible Study)",
     day: "Tuesday",
     time: "17:30",
     endTime: "19:00",
@@ -50,16 +50,7 @@ export const serviceSchedules: ServiceSchedule[] = [
     icon: "Sparkles",
     streamType: "video",
   },
-  {
-    id: "fri",
-    title: "Friday Prayer Meeting",
-    day: "Friday",
-    time: "19:00",
-    endTime: "21:30",
-    description: "A night of aggressive, fervent prayers covering personal needs, the church, the nation, and the nations of the world.",
-    icon: "Heart",
-    streamType: "video",
-  },
+
 ];
 
 export const pastStreams: PastStream[] = [
@@ -87,14 +78,7 @@ export const pastStreams: PastStream[] = [
     views: "156",
     type: "Bible Study",
   },
-  {
-    id: "ps4",
-    title: "Friday Prayer Meeting - Mid-Year Breakthrough",
-    date: "2025-06-27",
-    duration: "2:10:00",
-    views: "198",
-    type: "Prayer Meeting",
-  },
+
   {
     id: "ps5",
     title: "Sunday Worship Service - Grace to Overcome",

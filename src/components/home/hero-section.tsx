@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Radio, MapPin, Heart, UserPlus, ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 export function HeroSection() {
   return (
@@ -83,50 +82,43 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 max-w-xl mx-auto px-2"
+          className="mt-8 flex flex-col sm:grid sm:grid-cols-2 gap-3 sm:gap-4 max-w-xl mx-auto"
         >
-          <Button
-            asChild
-            size="lg"
-            className="col-span-2 sm:col-span-1 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-xl h-12 text-base font-semibold"
+          {/* Watch Live - Red, full width on mobile */}
+          <a
+            href="/live"
+            className="flex items-center justify-center gap-2 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-xl h-12 text-base font-semibold transition-colors"
           >
-            <Link href="/live">
-              <Radio className="size-4" />
-              Watch Live
-            </Link>
-          </Button>
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="col-span-2 sm:col-span-1 border-white/30 text-white hover:bg-white/10 hover:text-white rounded-xl h-12 text-base font-semibold"
+            <Radio className="size-4 shrink-0" />
+            <span>Watch Live</span>
+          </a>
+
+          {/* Plan Your Visit - White outline, full width on mobile */}
+          <a
+            href="/contact"
+            className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border-2 border-white/50 text-white rounded-xl h-12 text-base font-semibold transition-colors"
           >
-            <Link href="/contact">
-              <MapPin className="size-4" />
-              Plan Your Visit
-            </Link>
-          </Button>
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="border-white/30 text-white hover:bg-white/10 hover:text-white rounded-xl h-12 text-base font-semibold"
+            <MapPin className="size-4 shrink-0" />
+            <span>Plan Your Visit</span>
+          </a>
+
+          {/* Prayer Request - White outline */}
+          <a
+            href="/prayer"
+            className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border-2 border-white/50 text-white rounded-xl h-12 text-base font-semibold transition-colors"
           >
-            <Link href="/prayer">
-              <Heart className="size-4" />
-              Prayer Request
-            </Link>
-          </Button>
-          <Button
-            asChild
-            size="lg"
-            className="bg-white text-[#1A237E] hover:bg-white/90 rounded-xl h-12 text-base font-semibold"
+            <Heart className="size-4 shrink-0" />
+            <span>Prayer Request</span>
+          </a>
+
+          {/* Join Us - Solid white */}
+          <a
+            href="/join-ministry"
+            className="flex items-center justify-center gap-2 bg-white text-[#1A237E] hover:bg-white/90 rounded-xl h-12 text-base font-semibold transition-colors"
           >
-            <Link href="/join-ministry">
-              <UserPlus className="size-4" />
-              Join Us
-            </Link>
-          </Button>
+            <UserPlus className="size-4 shrink-0" />
+            <span>Join Us</span>
+          </a>
         </motion.div>
       </div>
 

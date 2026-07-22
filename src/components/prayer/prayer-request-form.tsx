@@ -305,7 +305,7 @@ export function PrayerRequestForm() {
               {[
                 { step: "1", title: "Submit Your Request", desc: "Fill in the form with your prayer need. You can submit anonymously." },
                 { step: "2", title: "Prayer Team Reviews", desc: "Our dedicated prayer team receives and prays over every single request." },
-                { step: "3", title: "We Stand in Agreement", desc: "Your request is prayed for during our Friday Prayer Meeting and daily prayer sessions." },
+                { step: "3", title: "We Stand in Agreement", desc: "Your request is prayed for during our daily prayer sessions and prayer meetings." },
                 { step: "4", title: "God Answers", desc: "We believe God hears and answers prayer. Trust Him for the outcome." },
               ].map((item) => (
                 <div key={item.step} className="flex items-start gap-3">
@@ -321,11 +321,11 @@ export function PrayerRequestForm() {
             </div>
           </div>
 
-          {/* Join Friday prayer */}
+          {/* Join prayer */}
           <div className="bg-[#FFF8F0] rounded-xl p-5 border border-amber-100">
             <p className="text-sm font-bold text-gray-800 mb-1">Join Our Prayer Meeting</p>
             <p className="text-xs text-gray-500 leading-relaxed mb-3">
-              Every Friday at 7:00 PM, we gather for a powerful night of prayer. You can also join us live online.
+              We have dedicated prayer sessions during our services. You can also join us live online.
             </p>
             <Button asChild size="sm" className="bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-lg text-xs">
               <Link href="/live">Watch Live</Link>

@@ -53,17 +53,17 @@ export function LiveStreamSection() {
       </div>
 
       {/* Service Schedule Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {[
           {
-            title: "Sunday Worship",
+            title: "Sunday Worship Service",
             time: "7:00 AM",
             day: "Every Sunday",
             desc: "Praise, worship, Word, and fellowship in God's presence",
             active: false,
           },
           {
-            title: "Tuesday Bible Study",
+            title: "Tuesday Digging Deep (Bible Study)",
             time: "5:30 PM",
             day: "Every Tuesday",
             desc: "In-depth study of the Word for spiritual growth and revelation",
@@ -76,13 +76,7 @@ export function LiveStreamSection() {
             desc: "Faith-building teachings, prayers, and declarations for healing and breakthroughs",
             active: false,
           },
-          {
-            title: "Friday Prayer Meeting",
-            time: "7:00 PM",
-            day: "Every Friday",
-            desc: "A night of aggressive prayers, intercession, and spiritual empowerment",
-            active: false,
-          },
+
         ].map((service, i) => (
           <motion.div
             key={service.title}

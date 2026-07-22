@@ -437,13 +437,7 @@ export function GivingMain() {
                           <p className="text-xs text-gray-500">5:30 PM</p>
                         </div>
                       </div>
-                      <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 rounded-full bg-[#2E7D32] mt-1.5 shrink-0" />
-                        <div>
-                          <p className="text-sm font-semibold text-gray-800">Friday Prayer Meeting</p>
-                          <p className="text-xs text-gray-500">7:00 PM</p>
-                        </div>
-                      </div>
+
                     </div>
                   </div>
 

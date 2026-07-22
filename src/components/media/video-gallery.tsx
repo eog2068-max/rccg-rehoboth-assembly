@@ -60,7 +60,7 @@ const mockVideos: Video[] = [
     date: "2025-06-27",
     duration: "55:40",
     views: "1.5K",
-    category: "Friday Prayer",
+    category: "Faith Clinic",
   },
   {
     id: "v6",
@@ -87,7 +87,7 @@ const mockVideos: Video[] = [
     date: "2025-06-20",
     duration: "38:45",
     views: "650",
-    category: "Friday Prayer",
+    category: "Faith Clinic",
   },
   {
     id: "v9",
@@ -100,7 +100,7 @@ const mockVideos: Video[] = [
   },
 ];
 
-const categories = ["All", "Sunday Service", "Bible Study", "Friday Prayer", "Special Programme"];
+const categories = ["All", "Sunday Service", "Bible Study", "Faith Clinic", "Special Programme"];
 
 export function VideoGallery() {
   const [search, setSearch] = useState("");

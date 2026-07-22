@@ -184,7 +184,7 @@ const mockSearchResults: SearchResult[] = [
     url: "/sermons#ser8",
     date: "2025-06-25",
     tags: ["prayer", "authority", "faith", "declaration"],
-    meta: { speaker: "Pastor Adebayo", category: "Friday Prayer" },
+    meta: { speaker: "Pastor Adebayo", category: "Faith Clinic" },
   },
   {
     id: "ser5",
@@ -528,7 +528,7 @@ const mockSearchResults: SearchResult[] = [
     url: "/join-ministry#min3",
     date: "2025-01-01",
     tags: ["youth", "young adults", "fellowship", "empowerment"],
-    meta: { meetingDay: "Fridays, 6:00 PM", members: "50+" },
+    meta: { meetingDay: "Thursdays, 5:30 PM", members: "50+" },
   },
   {
     id: "min4",

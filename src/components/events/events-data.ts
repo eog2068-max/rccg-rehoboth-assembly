@@ -67,19 +67,7 @@ export const mockEvents: ChurchEvent[] = [
     recurringDay: "Every Tuesday",
     registrationRequired: false,
   },
-  {
-    id: "ev3",
-    title: "Friday Prayer Meeting",
-    description: "A night of aggressive, fervent prayers. We cover personal needs, the church, our nation Nigeria, the body of Christ, and the nations of the world in prayer. Come with expectation.",
-    date: "2025-07-25",
-    time: "19:00",
-    endTime: "21:30",
-    venue: "Church Main Auditorium",
-    category: "Service",
-    isRecurring: true,
-    recurringDay: "Every Friday",
-    registrationRequired: false,
-  },
+
   {
     id: "ev3b",
     title: "Thursday Faith Clinic",
