@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAmenWallPosts, addAmenWallPost } from "@/lib/supabase/social-store";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { moderateContent } from "@/lib/moderation";
 
 export async function GET(request: NextRequest) {
   const sessionId = request.headers.get("x-session-id") || "anonymous";
@@ -60,7 +61,6 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { message } = body as {
       message?: string;
-      sessionId?: string;
     };
 
     if (!message) {
@@ -70,21 +70,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (message.trim().length === 0) {
+    // Content moderation
+    const moderation = moderateContent(message, sessionId, {
+      maxLength: 200,
+      minLength: 3,
+    });
+
+    if (!moderation.allowed) {
       return NextResponse.json(
-        { error: "Message cannot be empty." },
+        { error: moderation.reason || "Content not allowed." },
         { status: 400 }
       );
     }
 
-    if (message.length > 200) {
-      return NextResponse.json(
-        { error: "Message must be 200 characters or fewer." },
-        { status: 400 }
-      );
-    }
-
-    const post = addAmenWallPost(message.trim(), sessionId);
+    const post = addAmenWallPost(moderation.sanitized, sessionId);
     return NextResponse.json(
       { post },
       {

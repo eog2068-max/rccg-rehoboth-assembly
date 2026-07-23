@@ -7,11 +7,13 @@ import {
   SocialQuestion,
   QuestionResponse,
   PublicPrayerRequest,
+  PrivatePrayerRequest,
   AmenWallPost,
   WeeklyChallenge,
   LiveSession,
   AttendanceIntention,
   PresenceRecord,
+  ModerationLogEntry,
 } from "./types";
 
 // --- Presence ---
@@ -104,7 +106,8 @@ export function getQuestionResponses(questionId: string): QuestionResponse[] {
 export function addQuestionResponse(
   questionId: string,
   response: string,
-  sessionId: string
+  sessionId: string,
+  autoApprove: boolean = true
 ): QuestionResponse {
   const resp: QuestionResponse = {
     id: `qr_${Date.now()}`,
@@ -112,7 +115,7 @@ export function addQuestionResponse(
     response: response.substring(0, 200),
     displayName: "Anonymous",
     sessionId,
-    status: "approved", // Auto-approved for now
+    status: autoApprove ? "approved" : "pending",
     reactions: { love: 0, praying: 0, amen: 0, fire: 0 },
     createdAt: new Date().toISOString(),
   };
@@ -175,7 +178,8 @@ export function getPublicPrayerRequests(): PublicPrayerRequest[] {
 export function addPublicPrayerRequest(
   request: string,
   category: string,
-  sessionId: string
+  sessionId: string,
+ autoApprove: boolean = true
 ): PublicPrayerRequest {
   const prayer: PublicPrayerRequest = {
     id: `pr_${Date.now()}`,
@@ -183,7 +187,7 @@ export function addPublicPrayerRequest(
     displayName: "Anonymous",
     category,
     sessionId,
-    status: "approved",
+    status: autoApprove ? "approved" : "pending",
     prayerCount: 0,
     createdAt: new Date().toISOString(),
   };
@@ -198,6 +202,133 @@ export function incrementPrayerCount(prayerId: string): PublicPrayerRequest | nu
     return prayer;
   }
   return null;
+}
+
+// --- Private Prayer Requests (Admin-only access) ---
+const privatePrayers: PrivatePrayerRequest[] = [];
+
+export function addPrivatePrayerRequest(
+  request: string,
+  category: string,
+  fullName?: string,
+  email?: string,
+  phone?: string,
+  isUrgent: boolean = false
+): PrivatePrayerRequest {
+  const prayer: PrivatePrayerRequest = {
+    id: `priv_pr_${Date.now()}`,
+    request: request.substring(0, 1000),
+    fullName: fullName || undefined,
+    email: email || undefined,
+    phone: phone || undefined,
+    category,
+    isUrgent,
+    status: "new",
+    createdAt: new Date().toISOString(),
+  };
+  privatePrayers.unshift(prayer);
+  return prayer;
+}
+
+// Admin-only: retrieve all private prayers
+export function getPrivatePrayerRequests(): PrivatePrayerRequest[] {
+  return [...privatePrayers];
+}
+
+// Admin-only: mark as reviewed
+export function markPrivatePrayerReviewed(prayerId: string): boolean {
+  const prayer = privatePrayers.find((p) => p.id === prayerId);
+  if (prayer) {
+    prayer.status = "reviewed";
+    return true;
+  }
+  return false;
+}
+
+// --- Moderation Queue ---
+const moderationQueue: ModerationLogEntry[] = [];
+
+export function getModerationQueue(): ModerationLogEntry[] {
+  return [...moderationQueue];
+}
+
+export function addToModerationQueue(entry: Omit<ModerationLogEntry, "id" | "createdAt">): ModerationLogEntry {
+  const logEntry: ModerationLogEntry = {
+    ...entry,
+    id: `mod_${Date.now()}`,
+    createdAt: new Date().toISOString(),
+  };
+  moderationQueue.unshift(logEntry);
+  return logEntry;
+}
+
+export function approveModerationItem(id: string, targetCollection: "publicPrayers" | "amenPosts" | "questionResponses"): boolean {
+  // Find in moderation queue and update status
+  const item = moderationQueue.find((m) => m.id === id);
+  if (!item) return false;
+  item.action = "approved";
+
+  // Find and approve in the target collection
+  switch (targetCollection) {
+    case "publicPrayers": {
+      const prayer = publicPrayers.find((p) => p.id === item.targetId);
+      if (prayer) prayer.status = "approved";
+      break;
+    }
+    case "amenPosts": {
+      const post = amenPosts.find((p) => p.id === item.targetId);
+      if (post) post.status = "approved";
+      break;
+    }
+    case "questionResponses": {
+      const resp = questionResponses.find((r) => r.id === item.targetId);
+      if (resp) resp.status = "approved";
+      break;
+    }
+  }
+  return true;
+}
+
+export function hideModerationItem(id: string, targetCollection: "publicPrayers" | "amenPosts" | "questionResponses"): boolean {
+  const item = moderationQueue.find((m) => m.id === id);
+  if (!item) return false;
+  item.action = "hidden";
+
+  switch (targetCollection) {
+    case "publicPrayers": {
+      const prayer = publicPrayers.find((p) => p.id === item.targetId);
+      if (prayer) prayer.status = "hidden";
+      break;
+    }
+    case "amenPosts": {
+      const post = amenPosts.find((p) => p.id === item.targetId);
+      if (post) post.status = "hidden";
+      break;
+    }
+    case "questionResponses": {
+      const resp = questionResponses.find((r) => r.id === item.targetId);
+      if (resp) resp.status = "hidden";
+      break;
+    }
+  }
+  return true;
+}
+
+// --- Social Admin Overview Stats ---
+export function getSocialOverviewStats() {
+  return {
+    presenceCount: getPresenceCount(),
+    currentQuestion: getCurrentQuestion(),
+    totalPublicPrayers: publicPrayers.filter((p) => p.status === "approved").length,
+    totalPrivatePrayers: privatePrayers.length,
+    pendingPrivatePrayers: privatePrayers.filter((p) => p.status === "new").length,
+    totalAmenPosts: amenPosts.filter((p) => p.status === "approved").length,
+    totalQuestionResponses: questionResponses.filter((r) => r.status === "approved").length,
+    currentChallenge: getCurrentChallenge(),
+    liveSession: getLiveSession(),
+    moderationQueueSize: moderationQueue.filter((m) => m.action === "pending").length,
+    totalAttendanceIntentions: attendanceIntentions.length,
+  };
 }
 
 // --- Amen Wall ---
@@ -237,14 +368,15 @@ export function getAmenWallPosts(): AmenWallPost[] {
 
 export function addAmenWallPost(
   message: string,
-  sessionId: string
+  sessionId: string,
+  autoApprove: boolean = true
 ): AmenWallPost {
   const post: AmenWallPost = {
     id: `aw_${Date.now()}`,
     message: message.substring(0, 200),
     displayName: "Anonymous",
     sessionId,
-    status: "approved",
+    status: autoApprove ? "approved" : "pending",
     reactions: { praying: 0, love: 0, amen: 0, fire: 0 },
     createdAt: new Date().toISOString(),
   };

@@ -109,3 +109,14 @@ export interface PresenceRecord {
 export interface ReactionPayload {
   type: "love" | "praying" | "amen" | "fire";
 }
+
+export interface ModerationLogEntry {
+  id: string;
+  targetType: "publicPrayer" | "amenPost" | "questionResponse";
+  targetId: string;
+  content: string;
+  sessionId: string;
+  action: "pending" | "approved" | "hidden" | "deleted";
+  moderatedBy?: string;
+  createdAt: string;
+}

@@ -4,6 +4,7 @@ import {
   addQuestionResponse,
 } from "@/lib/supabase/social-store";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { moderateContent } from "@/lib/moderation";
 
 export async function GET(request: NextRequest) {
   const sessionId = request.headers.get("x-session-id") || "anonymous";
@@ -84,21 +85,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (response.trim().length === 0) {
+    // Content moderation
+    const moderation = moderateContent(response, sessionId, {
+      maxLength: 200,
+      minLength: 2,
+    });
+
+    if (!moderation.allowed) {
       return NextResponse.json(
-        { error: "Response cannot be empty." },
+        { error: moderation.reason || "Content not allowed." },
         { status: 400 }
       );
     }
 
-    if (response.length > 200) {
-      return NextResponse.json(
-        { error: "Response must be 200 characters or fewer." },
-        { status: 400 }
-      );
-    }
-
-    const newResponse = addQuestionResponse(questionId, response.trim(), sessionId);
+    const newResponse = addQuestionResponse(questionId, moderation.sanitized, sessionId);
     return NextResponse.json(
       { response: newResponse },
       {
