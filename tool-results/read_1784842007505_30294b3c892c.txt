@@ -1,0 +1,994 @@
+     1→     1→Z.AI IMPLEMENTATION PROMPT
+     2→     2→ADD REHOBOTHSOCIAL TO THE EXISTING RCCG REHOBOTH ASSEMBLY PARISH PWA
+     3→     3→IMPORTANT: READ THIS FIRST
+     4→     4→You are continuing development of an existing Progressive Web App (PWA) for:
+     5→     5→The Redeemed Christian Church of God (RCCG)
+     6→     6→Rehoboth Assembly Parish
+     7→     7→Silla-Zeka Plaza,
+     8→     8→Adebayo Adedeji Street,
+     9→     9→Utako,
+    10→    10→FCT, Abuja, Nigeria.
+    11→    11→The application is already being developed as a comprehensive, world-class church PWA.
+    12→    12→Your task in this phase is to ADD A NEW FEATURE ECOSYSTEM called "RehobothSocial" to the existing PWA.
+    13→    13→DO NOT BUILD A NEW STANDALONE APPLICATION.
+    14→    14→DO NOT REPLACE THE EXISTING PWA.
+    15→    15→DO NOT REMOVE EXISTING FEATURES.
+    16→    16→DO NOT DUPLICATE EXISTING SYSTEMS unnecessarily.
+    17→    17→DO NOT RESTRUCTURE THE ENTIRE APPLICATION unnecessarily.
+    18→    18→Instead, inspect the existing project and integrate the new RehobothSocial feature into the existing architecture.
+    19→    19→RehobothSocial is an additional feature/module within the existing RCCG Rehoboth Assembly Parish PWA.
+    20→    20→The overall application should remain the church's primary digital home.
+    21→    21→RehobothSocial is the social engagement and digital community layer within that larger ecosystem.
+    22→    22→________________________________________
+    23→    23→1. EXISTING PWA ARCHITECTURE
+    24→    24→The existing RCCG Rehoboth Assembly Parish PWA is intended to include, among other features:
+    25→    25→•       Home
+    26→    26→•       About
+    27→    27→•       Church History
+    28→    28→•       Vision
+    29→    29→•       Mission
+    30→    30→•       Core Values
+    31→    31→•       Statement of Faith
+    32→    32→•       Our Beliefs
+    33→    33→•       Pastor's Welcome
+    34→    34→•       Leadership
+    35→    35→•       Church Departments
+    36→    36→•       Members Gallery
+    37→    37→•       Sermon Library
+    38→    38→•       Media Center
+    39→    39→•       Live Streaming
+    40→    40→•       Events Calendar
+    41→    41→•       Prayer Request Portal
+    42→    42→•       Ministry Application
+    43→    43→•       Event Registration
+    44→    44→•       Daily Devotionals
+    45→    45→•       Announcements
+    46→    46→•       Testimonies
+    47→    47→•       Photo Gallery
+    48→    48→•       Video Gallery
+    49→    49→•       Giving
+    50→    50→•       Branch Locator
+    51→    51→•       Contact
+    52→    52→•       Global Search
+    53→    53→•       PWA installation support
+    54→    54→•       Secure Admin Dashboard
+    55→    55→•       SEO optimization
+    56→    56→•       Accessibility
+    57→    57→•       Performance optimization
+    58→    58→A new feature is now being added:
+    59→    59→❤️ REHOBOTHSOCIAL
+    60→    60→The architecture should be represented conceptually as:
+    61→    61→RCCG Rehoboth Assembly Parish PWA
+    62→    62→├── Home
+    63→    63→├── About
+    64→    64→├── Leadership
+    65→    65→├── Departments
+    66→    66→├── Members Gallery
+    67→    67→├── Sermons
+    68→    68→├── Media
+    69→    69→├── Events
+    70→    70→├── Prayer
+    71→    71→├── Join a Ministry
+    72→    72→├── Devotionals
+    73→    73→├── Announcements
+    74→    74→├── Giving
+    75→    75→├── Contact
+    76→    76→│
+    77→    77→└── ❤️ RehobothSocial
+    78→    78→├── 👋 I'm Here
+    79→    79→├── 💬 Today's Question
+    80→    80→├── 🙏 Prayer Circle
+    81→    81→├── ❤️ Amen Wall
+    82→    82→├── 🔥 Weekly Challenge
+    83→    83→├── 🔴 Live Together
+    84→    84→└── 🙋 Who's Coming?
+    85→    85→The exact navigation and visual placement should follow the existing application's design system.
+    86→    86→________________________________________
+    87→    87→2. PRIMARY PURPOSE OF REHOBOTHSOCIAL
+    88→    88→RehobothSocial is intended to make the existing church PWA feel:
+    89→    89→•       Alive
+    90→    90→•       Active
+    91→    91→•       Social
+    92→    92→•       Welcoming
+    93→    93→•       Interactive
+    94→    94→•       Spiritually engaging
+    95→    95→•       Community-centered
+    96→    96→The primary objective is to encourage:
+    97→    97→•       Adoption of the PWA
+    98→    98→•       Frequent return visits
+    99→    99→•       Community interaction
+   100→   100→•       Church participation
+   101→   101→•       Prayer
+   102→   102→•       Encouragement
+   103→   103→•       Event attendance
+   104→   104→•       Engagement during livestreams
+   105→   105→•       A sense of belonging
+   106→   106→The core concept is:
+   107→   107→Connect. Pray. Encourage. Grow. Together.
+   108→   108→The exact tagline must be configurable.
+   109→   109→RehobothSocial should NOT be a conventional social media platform.
+   110→   110→It should NOT become a clone of Facebook, Instagram, WhatsApp, TikTok, or X.
+   111→   111→It is a church-centered digital gathering space.
+   112→   112→It should make users feel:
+   113→   113→"This is where my church family gathers."
+   114→   114→________________________________________
+   115→   115→3. REUSE THE EXISTING PWA SYSTEMS
+   116→   116→Before implementing anything, inspect the existing codebase and identify existing systems that RehobothSocial can reuse.
+   117→   117→Do not create duplicate functionality where an existing system already serves the purpose.
+   118→   118→For example:
+   119→   119→RehobothSocial "Who's Coming?"
+   120→   120→Should integrate with the existing:
+   121→   121→Events System
+   122→   122→rather than creating a completely separate event database.
+   123→   123→________________________________________
+   124→   124→RehobothSocial "Prayer Circle"
+   125→   125→Should integrate with or extend the existing:
+   126→   126→Prayer Request System
+   127→   127→rather than creating an unrelated prayer system.
+   128→   128→________________________________________
+   129→   129→RehobothSocial "Live Together"
+   130→   130→Should integrate with the existing:
+   131→   131→Media / Livestream System
+   132→   132→rather than creating another livestream architecture.
+   133→   133→________________________________________
+   134→   134→RehobothSocial Announcements
+   135→   135→Should use the existing:
+   136→   136→Announcements System
+   137→   137→where applicable.
+   138→   138→________________________________________
+   139→   139→RehobothSocial Devotionals
+   140→   140→Should use the existing:
+   141→   141→Devotional System
+   142→   142→where applicable.
+   143→   143→________________________________________
+   144→   144→RehobothSocial Ministry Applications
+   145→   145→Should integrate with the existing:
+   146→   146→Ministry System
+   147→   147→where applicable.
+   148→   148→The goal is to create one coherent PWA with interconnected features, not several disconnected mini-applications.
+   149→   149→________________________________________
+   150→   150→4. PUBLIC ACCESS MODEL
+   151→   151→RehobothSocial is OPEN TO EVERYONE.
+   152→   152→Visitors and church members do NOT need to:
+   153→   153→•       Register
+   154→   154→•       Log in
+   155→   155→•       Create an account
+   156→   156→•       Create a profile
+   157→   157→Users should be able to enter RehobothSocial and participate immediately.
+   158→   158→There must be:
+   159→   159→NO PUBLIC LOGIN WALL.
+   160→   160→NO PUBLIC REGISTRATION WALL.
+   161→   161→NO MEMBER ACCOUNT REQUIRED.
+   162→   162→This is an intentional product decision.
+   163→   163→The public experience must remain frictionless.
+   164→   164→________________________________________
+   165→   165→5. CRITICAL SECURITY PRINCIPLE
+   166→   166→Although RehobothSocial is open to public participation:
+   167→   167→PUBLIC USERS MUST NOT HAVE PUBLISHING CONTROL OVER THE CHURCH WEBSITE.
+   168→   168→The principle is:
+   169→   169→Open participation, controlled publishing.
+   170→   170→Public users may participate in carefully defined interactions.
+   171→   171→Only authorized Church Admins and Moderators may:
+   172→   172→•       Create official content
+   173→   173→•       Publish official content
+   174→   174→•       Edit official content
+   175→   175→•       Delete official content
+   176→   176→•       Moderate user interactions
+   177→   177→•       Manage social features
+   178→   178→•       Manage events
+   179→   179→•       Manage announcements
+   180→   180→•       Manage devotionals
+   181→   181→•       Manage livestream sessions
+   182→   182→The Church retains full editorial and administrative control.
+   183→   183→________________________________________
+   184→   184→6. PUBLIC USERS MAY
+   185→   185→Without logging in, users may:
+   186→   186→•       View RehobothSocial
+   187→   187→•       View Daily Questions
+   188→   188→•       Answer Daily Questions
+   189→   189→•       React to responses
+   190→   190→•       Submit public prayer requests
+   191→   191→•       Submit private prayer requests
+   192→   192→•       Indicate "I'm Praying With You"
+   193→   193→•       View approved public prayer requests
+   194→   194→•       Submit short Amen Wall messages
+   195→   195→•       React to Amen Wall messages
+   196→   196→•       View Weekly Challenges
+   197→   197→•       Join Weekly Challenges
+   198→   198→•       View participation counts
+   199→   199→•       View active Live Together sessions
+   200→   200→•       Watch embedded livestreams
+   201→   201→•       Participate in live reactions
+   202→   202→•       Indicate "I'm Here"
+   203→   203→•       View event attendance intentions
+   204→   204→•       Indicate "I'm Coming"
+   205→   205→•       Indicate "Coming With Family"
+   206→   206→•       Indicate "Bringing a Friend"
+   207→   207→•       Register for events
+   208→   208→•       Apply to join ministries
+   209→   209→•       View announcements
+   210→   210→•       View devotionals
+   211→   211→________________________________________
+   212→   212→7. PUBLIC USERS MUST NOT
+   213→   213→Public users must NOT be able to:
+   214→   214→•       Upload images
+   215→   215→•       Upload videos
+   216→   216→•       Upload documents
+   217→   217→•       Upload profile photographs
+   218→   218→•       Create arbitrary posts
+   219→   219→•       Create official announcements
+   220→   220→•       Create official events
+   221→   221→•       Create challenges
+   222→   222→•       Publish devotionals
+   223→   223→•       Publish sermons
+   224→   224→•       Edit official church content
+   225→   225→•       Edit member profiles
+   226→   226→•       Modify the Members Gallery
+   227→   227→•       Modify departments
+   228→   228→•       Modify leadership profiles
+   229→   229→•       Access Admin Dashboard
+   230→   230→•       Access Moderator Dashboard
+   231→   231→•       Access private prayer requests
+   232→   232→•       Access private registrations
+   233→   233→•       Access ministry applications belonging to other users
+   234→   234→•       Access moderation logs
+   235→   235→•       Delete official content
+   236→   236→•       Modify database records outside permitted public actions
+   237→   237→There must be NO general-purpose public content upload functionality.
+   238→   238→________________________________________
+   239→   239→8. ADMIN AUTHENTICATION
+   240→   240→The only users who require authentication are authorized:
+   241→   241→•       Super Admins
+   242→   242→•       Church Admins
+   243→   243→•       Moderators
+   244→   244→Use the existing Admin authentication architecture if already implemented.
+   245→   245→If not yet implemented, use Supabase Auth.
+   246→   246→Support role-based access control.
+   247→   247→At minimum:
+   248→   248→•       Super Admin
+   249→   249→•       Admin
+   250→   250→•       Moderator
+   251→   251→The architecture should allow additional roles later.
+   252→   252→Never expose Supabase service-role credentials in client-side code.
+   253→   253→All sensitive operations must be protected server-side.
+   254→   254→________________________________________
+   255→   255→9. REHOBOTHSOCIAL ENTRY POINT
+   256→   256→Add RehobothSocial to the existing PWA navigation.
+   257→   257→The main website should have a prominent entry point.
+   258→   258→Possible button:
+   259→   259→REHOBOTHSOCIAL
+   260→   260→The homepage should feature an attractive call-to-action such as:
+   261→   261→Connect With Your Church Family
+   262→   262→Join RehobothSocial
+   263→   263→Connect. Pray. Encourage. Grow. Together.
+   264→   264→Button:
+   265→   265→ENTER REHOBOTHSOCIAL
+   266→   266→The wording must be configurable.
+   267→   267→Do not make RehobothSocial visually disconnected from the main PWA.
+   268→   268→It must use the existing design system, typography, spacing, colors, buttons, cards, icons, and responsive behavior.
+   269→   269→________________________________________
+   270→   270→10. REHOBOTHSOCIAL LANDING PAGE
+   271→   271→When users enter RehobothSocial, display a premium social hub.
+   272→   272→The page should immediately communicate:
+   273→   273→Welcome to RehobothSocial
+   274→   274→Connect. Pray. Encourage. Grow. Together.
+   275→   275→Then provide a simple, visually compelling selection of engagement experiences.
+   276→   276→The user should immediately understand:
+   277→   277→What is this?
+   278→   278→A place to connect with the church family.
+   279→   279→What can I do?
+   280→   280→Talk. Pray. Encourage. Join.
+   281→   281→Do I need an account?
+   282→   282→No.
+   283→   283→Can I participate immediately?
+   284→   284→Yes.
+   285→   285→Do not create complicated onboarding.
+   286→   286→________________________________________
+   287→   287→11. REHOBOTHSOCIAL CORE FEATURES
+   288→   288→The initial RehobothSocial ecosystem must include:
+   289→   289→1.      👋 I'm Here
+   290→   290→2.      💬 Today's Question
+   291→   291→3.      🙏 Prayer Circle
+   292→   292→4.      ❤️ Amen Wall
+   293→   293→5.      🔥 This Week's Challenge
+   294→   294→6.      🔴 Live Together
+   295→   295→7.      🙋 Who's Coming?
+   296→   296→These features should appear as attractive interactive cards or sections.
+   297→   297→On desktop, use an elegant responsive grid where appropriate.
+   298→   298→On mobile, use a clean vertical experience.
+   299→   299→________________________________________
+   300→   300→12. 👋 I'M HERE
+   301→   301→Create a lightweight presence feature.
+   302→   302→Users can tap:
+   303→   303→I'M HERE 👋
+   304→   304→The interface should show something like:
+   305→   305→83 people are here right now.
+   306→   306→The purpose is to create a sense of live community presence.
+   307→   307→Do NOT expose personal information.
+   308→   308→Do NOT require login.
+   309→   309→Do NOT create permanent visitor profiles.
+   310→   310→Use an efficient, privacy-conscious presence implementation.
+   311→   311→Where appropriate, use Supabase Realtime Presence or another lightweight mechanism.
+   312→   312→Avoid excessive database writes.
+   313→   313→The presence count should be designed to work efficiently within Supabase Free Tier constraints.
+   314→   314→If displaying avatars or initials, they must be anonymous or temporary and must not expose personally identifiable information.
+   315→   315→________________________________________
+   316→   316→13. 💬 TODAY'S QUESTION
+   317→   317→Create a daily church-community conversation.
+   318→   318→Only Admins can create and publish questions.
+   319→   319→Examples:
+   320→   320→What are you thanking God for today?
+   321→   321→What are you trusting God for this week?
+   322→   322→What Bible verse has encouraged you recently?
+   323→   323→Describe today's service in one word.
+   324→   324→What made you smile today?
+   325→   325→What should we pray about together this week?
+   326→   326→Admin functionality:
+   327→   327→•       Create
+   328→   328→•       Edit
+   329→   329→•       Schedule
+   330→   330→•       Publish
+   331→   331→•       Archive
+   332→   332→Users can submit short responses.
+   333→   333→Set reasonable character limits.
+   334→   334→Users can react with:
+   335→   335→❤️ Love
+   336→   336→🙏 Praying
+   337→   337→🙌 Amen
+   338→   338→🔥 Powerful
+   339→   339→Admin moderation is required.
+   340→   340→Admins can:
+   341→   341→•       Approve
+   342→   342→•       Hide
+   343→   343→•       Delete
+   344→   344→•       Archive
+   345→   345→responses.
+   346→   346→Do not allow image or video uploads.
+   347→   347→Do not allow arbitrary links.
+   348→   348→________________________________________
+   349→   349→14. 🙏 PRAYER CIRCLE
+   350→   350→Create a social prayer experience.
+   351→   351→Users can submit:
+   352→   352→PUBLIC PRAYER REQUEST
+   353→   353→Approved public prayer requests can be displayed to the church community.
+   354→   354→Other users can tap:
+   355→   355→🙏 I'M PRAYING WITH YOU
+   356→   356→Show a count:
+   357→   357→27 people are praying with you.
+   358→   358→The user submitting the prayer request should receive confirmation.
+   359→   359→Example:
+   360→   360→Your prayer request has been received. We are standing with you in prayer.
+   361→   361→Also provide:
+   362→   362→🔒 PRIVATE PRAYER REQUEST
+   363→   363→Private prayer requests must only be accessible to authorized Church Admins or designated pastoral users.
+   364→   364→Never expose private prayer requests publicly.
+   365→   365→Admins can:
+   366→   366→•       View
+   367→   367→•       Search
+   368→   368→•       Filter
+   369→   369→•       Review
+   370→   370→•       Mark as reviewed
+   371→   371→•       Archive
+   372→   372→•       Delete
+   373→   373→public and private requests according to their permissions.
+   374→   374→Reuse the existing Prayer Request system if one already exists.
+   375→   375→Extend it rather than creating an unnecessary duplicate.
+   376→   376→________________________________________
+   377→   377→15. ❤️ AMEN WALL
+   378→   378→Create a positive, faith-centered stream of short community messages.
+   379→   379→Examples:
+   380→   380→God has been faithful to my family.
+   381→   381→Thank You, Jesus!
+   382→   382→Praying for everyone going through a difficult season.
+   383→   383→I believe this week will be different.
+   384→   384→Hallelujah!
+   385→   385→Users can submit short text messages.
+   386→   386→Set character limits.
+   387→   387→No image uploads.
+   388→   388→No video uploads.
+   389→   389→No arbitrary social posts.
+   390→   390→All submissions must pass moderation controls.
+   391→   391→Users can react with:
+   392→   392→🙏
+   393→   393→❤️
+   394→   394→🙌
+   395→   395→🔥
+   396→   396→Admin can:
+   397→   397→•       Approve
+   398→   398→•       Hide
+   399→   399→•       Delete
+   400→   400→•       Archive
+   401→   401→messages.
+   402→   402→Implement basic spam protection and rate limiting.
+   403→   403→________________________________________
+   404→   404→16. 🔥 THIS WEEK'S CHALLENGE
+   405→   405→Create a weekly community challenge.
+   406→   406→Examples:
+   407→   407→Encourage one person who needs hope.
+   408→   408→Read one chapter of John every day this week.
+   409→   409→Send a message of encouragement to someone today.
+   410→   410→Users tap:
+   411→   411→I'M IN 🙌
+   412→   412→Show aggregate participation:
+   413→   413→126 people have accepted this challenge.
+   414→   414→Admin can:
+   415→   415→•       Create
+   416→   416→•       Edit
+   417→   417→•       Schedule
+   418→   418→•       Publish
+   419→   419→•       Archive
+   420→   420→challenges.
+   421→   421→Prevent duplicate participation as far as practical without requiring login.
+   422→   422→Do not require public account creation.
+   423→   423→________________________________________
+   424→   424→17. 🔴 LIVE TOGETHER
+   425→   425→Create a social engagement layer around church livestreams.
+   426→   426→Do NOT build custom video streaming infrastructure.
+   427→   427→Use:
+   428→   428→•       YouTube
+   429→   429→•       YouTube Live
+   430→   430→•       Existing church livestream provider
+   431→   431→The existing Media/Livestream feature should be reused.
+   432→   432→When active:
+   433→   433→🔴 LIVE NOW
+   434→   434→Sunday Worship Experience
+   435→   435→Show a participation indicator such as:
+   436→   436→342 people are worshipping together.
+   437→   437→The Admin can configure Live Together sessions.
+   438→   438→Users can watch the embedded livestream.
+   439→   439→Users can participate through one-tap reactions:
+   440→   440→🙌
+   441→   441→🙏
+   442→   442→❤️
+   443→   443→🔥
+   444→   444→The Admin can create or trigger live service moments:
+   445→   445→•       🙌 Worship
+   446→   446→•       🙏 Prayer
+   447→   447→•       📖 Sermon
+   448→   448→•       ❤️ Offering
+   449→   449→•       🔥 Altar Call
+   450→   450→Display dynamic engagement counts where practical.
+   451→   451→Example:
+   452→   452→🙌 182 people are worshipping
+   453→   453→🙏 97 people are praying
+   454→   454→Use Supabase Realtime efficiently.
+   455→   455→Do not over-engineer.
+   456→   456→________________________________________
+   457→   457→18. 🙋 WHO'S COMING?
+   458→   458→Integrate this feature with the existing Events system.
+   459→   459→For an upcoming event:
+   460→   460→Who's Coming?
+   461→   461→Provide:
+   462→   462→🙋 I'm Coming
+   463→   463→👨👩👧 Coming With Family
+   464→   464→🤝 Bringing a Friend
+   465→   465→Show aggregate counts.
+   466→   466→Example:
+   467→   467→174 people are planning to attend.
+   468→   468→Do NOT publicly display individual attendance information unless explicitly designed and approved later.
+   469→   469→This feature should create positive social proof and encourage physical church attendance.
+   470→   470→Reuse the existing event registration system.
+   471→   471→Do not duplicate event records.
+   472→   472→________________________________________
+   473→   473→19. EVENT REGISTRATION
+   474→   474→Visitors can register for events without login.
+   475→   475→Use only necessary information.
+   476→   476→Admin can manage registrations through the existing Admin Dashboard.
+   477→   477→Protect registration information.
+   478→   478→Do not expose personal registration details publicly.
+   479→   479→________________________________________
+   480→   480→20. MINISTRY APPLICATIONS
+   481→   481→Users can apply to join church ministries without login.
+   482→   482→Use the existing Ministries/Departments system.
+   483→   483→Examples:
+   484→   484→•       Choir
+   485→   485→•       Ushering
+   486→   486→•       Media
+   487→   487→•       Protocol
+   488→   488→•       Children's Church
+   489→   489→•       Teen Church
+   490→   490→•       Youth Church
+   491→   491→•       Evangelism
+   492→   492→•       Technical
+   493→   493→•       Hospitality
+   494→   494→•       Sunday School
+   495→   495→•       House Fellowship
+   496→   496→•       Sanctuary Keepers
+   497→   497→•       Welfare
+   498→   498→•       Security
+   499→   499→Admin reviews applications.
+   500→   500→Do not expose application information publicly.
+   501→   501→________________________________________
+   502→   502→21. MODERATION AND ANTI-SPAM
+   503→   503→Because public participation does not require login, strong moderation is essential.
+   504→   504→Implement:
+   505→   505→•       Server-side validation
+   506→   506→•       Input sanitization
+   507→   507→•       Rate limiting
+   508→   508→•       Character limits
+   509→   509→•       Spam prevention
+   510→   510→•       Duplicate submission prevention
+   511→   511→•       Basic profanity filtering
+   512→   512→•       Moderation queue
+   513→   513→•       Admin hide/delete controls
+   514→   514→•       Secure database policies
+   515→   515→Never rely only on client-side validation.
+   516→   516→Never trust client-provided role information.
+   517→   517→Never allow public users to bypass RLS.
+   518→   518→________________________________________
+   519→   519→22. ANONYMOUS PARTICIPATION
+   520→   520→Public users do not create accounts.
+   521→   521→Where the system needs to distinguish repeated actions, use privacy-conscious temporary anonymous identifiers.
+   522→   522→Examples:
+   523→   523→•       Temporary browser/session identifier
+   524→   524→•       Secure anonymous token
+   525→   525→•       Rate-limit token
+   526→   526→Use these only when necessary.
+   527→   527→Do not expose technical identifiers.
+   528→   528→Do not expose IP addresses.
+   529→   529→Do not collect unnecessary personal data.
+   530→   530→Do not create permanent anonymous profiles unnecessarily.
+   531→   531→________________________________________
+   532→   532→23. SUPABASE DATABASE
+   533→   533→First inspect the existing database schema.
+   534→   534→Reuse existing tables where appropriate.
+   535→   535→Only create new tables when necessary.
+   536→   536→Potential social-specific entities may include:
+   537→   537→•       social_questions
+   538→   538→•       social_question_responses
+   539→   539→•       social_reactions
+   540→   540→•       prayer_interactions
+   541→   541→•       amen_wall_posts
+   542→   542→•       weekly_challenges
+   543→   543→•       challenge_participation
+   544→   544→•       live_sessions
+   545→   545→•       live_session_prompts
+   546→   546→•       live_reactions
+   547→   547→•       event_attendance_intentions
+   548→   548→•       moderation_logs
+   549→   549→Do not blindly create duplicate tables if equivalent existing tables already exist.
+   550→   550→Use:
+   551→   551→•       Foreign keys
+   552→   552→•       Indexes
+   553→   553→•       Timestamps
+   554→   554→•       Status fields
+   555→   555→•       Appropriate constraints
+   556→   556→Keep the schema efficient.
+   557→   557→________________________________________
+   558→   558→24. SUPABASE RLS
+   559→   559→Implement Row Level Security.
+   560→   560→Public users may only perform explicitly permitted operations.
+   561→   561→Public users must never be able to:
+   562→   562→•       Read private prayer requests
+   563→   563→•       Read private ministry applications
+   564→   564→•       Read private event registrations
+   565→   565→•       Read moderation logs
+   566→   566→•       Modify official content
+   567→   567→•       Delete content
+   568→   568→•       Access Admin data
+   569→   569→•       Escalate privileges
+   570→   570→Admin-only operations must be protected.
+   571→   571→Moderators should have only the permissions necessary for moderation.
+   572→   572→Super Admins have full administrative control.
+   573→   573→________________________________________
+   574→   574→25. REALTIME OPTIMIZATION
+   575→   575→Use Supabase Realtime only where it provides genuine value.
+   576→   576→Appropriate uses:
+   577→   577→•       Presence
+   578→   578→•       Live reactions
+   579→   579→•       Live session activity
+   580→   580→•       Prayer interaction counts
+   581→   581→•       Selected participation counters
+   582→   582→Avoid realtime subscriptions on every page.
+   583→   583→Avoid aggressive polling.
+   584→   584→Clean up subscriptions when users leave pages.
+   585→   585→Optimize database writes.
+   586→   586→Use debouncing or batching where appropriate.
+   587→   587→The application must remain practical for Supabase Free Tier.
+   588→   588→________________________________________
+   589→   589→26. FREE-TIER ARCHITECTURE
+   590→   590→The entire PWA, including RehobothSocial, must be designed for:
+   591→   591→Vercel Free Tier
+   592→   592→and
+   593→   593→Supabase Free Tier
+   594→   594→The architecture should target:
+   595→   595→$0 hosting cost or as close to $0 as practically possible.
+   596→   596→Avoid:
+   597→   597→•       Custom video streaming
+   598→   598→•       Large video storage
+   599→   599→•       Unnecessary background jobs
+   600→   600→•       Excessive database writes
+   601→   601→•       Excessive realtime subscriptions
+   602→   602→•       Unnecessary third-party paid APIs
+   603→   603→Use YouTube for:
+   604→   604→•       Sermon videos
+   605→   605→•       Testimony videos
+   606→   606→•       Livestreaming
+   607→   607→Use Supabase Storage for:
+   608→   608→•       Compressed images
+   609→   609→•       Member photos
+   610→   610→•       Event photos
+   611→   611→•       Pastor photos
+   612→   612→•       PDFs
+   613→   613→•       Small documents
+   614→   614→Optimize all media.
+   615→   615→________________________________________
+   616→   616→27. EXISTING MEMBERS GALLERY
+   617→   617→Preserve the existing Members Gallery requirements.
+   618→   618→The Members Gallery displays ONLY:
+   619→   619→•       Member Photo
+   620→   620→•       Member Name
+   621→   621→•       Department
+   622→   622→Nothing else.
+   623→   623→Only approved Church Admins can upload or manage member records.
+   624→   624→Members and visitors cannot:
+   625→   625→•       Upload photographs
+   626→   626→•       Edit profiles
+   627→   627→•       Modify names
+   628→   628→•       Modify departments
+   629→   629→Include:
+   630→   630→•       Search
+   631→   631→•       Department filtering
+   632→   632→•       Alphabetical sorting
+   633→   633→•       Responsive grid
+   634→   634→•       Lazy loading
+   635→   635→Do not turn the Members Gallery into a social profile system.
+   636→   636→________________________________________
+   637→   637→28. EXISTING WEBSITE FEATURES
+   638→   638→Do not remove or weaken any previously implemented features.
+   639→   639→Preserve the complete PWA ecosystem, including:
+   640→   640→•       Home
+   641→   641→•       About
+   642→   642→•       Church History
+   643→   643→•       Vision
+   644→   644→•       Mission
+   645→   645→•       Core Values
+   646→   646→•       Statement of Faith
+   647→   647→•       Our Beliefs
+   648→   648→•       Pastor's Welcome
+   649→   649→•       Leadership
+   650→   650→•       Departments
+   651→   651→•       Members Gallery
+   652→   652→•       Sermons
+   653→   653→•       Media
+   654→   654→•       Live Streaming
+   655→   655→•       Events
+   656→   656→•       Prayer
+   657→   657→•       Ministry Applications
+   658→   658→•       Event Registration
+   659→   659→•       Devotionals
+   660→   660→•       Announcements
+   661→   661→•       Testimonies
+   662→   662→•       Photo Gallery
+   663→   663→•       Video Gallery
+   664→   664→•       Giving
+   665→   665→•       Branch Locator
+   666→   666→•       Contact
+   667→   667→•       Global Search
+   668→   668→•       PWA installation support
+   669→   669→•       Admin Dashboard
+   670→   670→•       SEO
+   671→   671→•       Accessibility
+   672→   672→•       Performance optimization
+   673→   673→RehobothSocial is an ADDITION to these features.
+   674→   674→________________________________________
+   675→   675→29. ADMIN DASHBOARD INTEGRATION
+   676→   676→Do not create a completely separate Admin Dashboard for RehobothSocial.
+   677→   677→Integrate RehobothSocial management into the existing Admin Dashboard.
+   678→   678→Add a new section:
+   679→   679→RehobothSocial Management
+   680→   680→Possible subsections:
+   681→   681→•       Overview
+   682→   682→•       Today's Question
+   683→   683→•       Question Responses
+   684→   684→•       Prayer Circle
+   685→   685→•       Amen Wall
+   686→   686→•       Weekly Challenges
+   687→   687→•       Live Together
+   688→   688→•       Who's Coming
+   689→   689→•       Moderation Queue
+   690→   690→The Admin Dashboard should also continue managing:
+   691→   691→•       Members
+   692→   692→•       Leadership
+   693→   693→•       Departments
+   694→   694→•       Sermons
+   695→   695→•       Media
+   696→   696→•       Events
+   697→   697→•       Prayer
+   698→   698→•       Ministries
+   699→   699→•       Devotionals
+   700→   700→•       Announcements
+   701→   701→•       Giving
+   702→   702→•       Contact
+   703→   703→•       Branches
+   704→   704→•       Website Settings
+   705→   705→________________________________________
+   706→   706→30. SOCIAL ADMIN OVERVIEW
+   707→   707→Add a useful RehobothSocial overview.
+   708→   708→Display:
+   709→   709→•       Current presence
+   710→   710→•       Today's Question activity
+   711→   711→•       Prayer activity
+   712→   712→•       Amen Wall activity
+   713→   713→•       Weekly Challenge participation
+   714→   714→•       Live Together activity
+   715→   715→•       Event attendance intentions
+   716→   716→•       Ministry application activity
+   717→   717→Keep the dashboard simple.
+   718→   718→Use charts only where they provide genuine value.
+   719→   719→________________________________________
+   720→   720→31. CONTENT LIFECYCLE
+   721→   721→Admin-created content should support appropriate states:
+   722→   722→•       Draft
+   723→   723→•       Scheduled
+   724→   724→•       Published
+   725→   725→•       Archived
+   726→   726→Public submissions may use:
+   727→   727→•       Pending
+   728→   728→•       Approved
+   729→   729→•       Hidden
+   730→   730→•       Deleted
+   731→   731→The moderation process must be clear.
+   732→   732→________________________________________
+   733→   733→32. DESIGN
+   734→   734→RehobothSocial must inherit the existing PWA's visual identity.
+   735→   735→Do not introduce a completely unrelated visual design.
+   736→   736→Use the church's established:
+   737→   737→•       Colors
+   738→   738→•       Typography
+   739→   739→•       Icons
+   740→   740→•       Spacing
+   741→   741→•       Components
+   742→   742→•       Buttons
+   743→   743→•       Cards
+   744→   744→•       Navigation
+   745→   745→Enhance the experience with:
+   746→   746→•       Beautiful cards
+   747→   747→•       Subtle animations
+   748→   748→•       Smooth transitions
+   749→   749→•       Live counters
+   750→   750→•       Responsive layouts
+   751→   751→•       Modern interaction states
+   752→   752→The feature should feel premium without becoming visually cluttered.
+   753→   753→________________________________________
+   754→   754→33. MOBILE-FIRST EXPERIENCE
+   755→   755→The primary audience will likely use smartphones.
+   756→   756→Optimize RehobothSocial for mobile.
+   757→   757→The most important actions should be immediately visible.
+   758→   758→Avoid requiring users to navigate through multiple screens unnecessarily.
+   759→   759→Use large, accessible touch targets.
+   760→   760→Ensure excellent performance on slower mobile networks.
+   761→   761→________________________________________
+   762→   762→34. PWA INTEGRATION
+   763→   763→RehobothSocial must work seamlessly within the existing PWA.
+   764→   764→It should not open as a separate external application.
+   765→   765→It should use the existing:
+   766→   766→•       Manifest
+   767→   767→•       Service Worker
+   768→   768→•       Navigation
+   769→   769→•       Theme
+   770→   770→•       Installation experience
+   771→   771→The main PWA should continue to include an attractive "How to Install This App" section explaining:
+   772→   772→1.      Open the website.
+   773→   773→2.      Accept the browser install prompt if displayed.
+   774→   774→3.      Alternatively, open the browser's three-dot menu.
+   775→   775→4.      Select "Add to Home Screen" or "Install App."
+   776→   776→________________________________________
+   777→   777→35. SEO AND PRIVACY
+   778→   778→The overall PWA must remain SEO optimized.
+   779→   779→However, private user-submitted information must never be indexed.
+   780→   780→Do not expose private:
+   781→   781→•       Prayer requests
+   782→   782→•       Event registration information
+   783→   783→•       Ministry applications
+   784→   784→•       Admin information
+   785→   785→•       Moderation logs
+   786→   786→Public social content should be indexed only if explicitly configured by Admin.
+   787→   787→________________________________________
+   788→   788→36. ACCESSIBILITY
+   789→   789→Ensure:
+   790→   790→•       Keyboard accessibility
+   791→   791→•       Semantic HTML
+   792→   792→•       Accessible buttons
+   793→   793→•       Appropriate ARIA labels
+   794→   794→•       Good color contrast
+   795→   795→•       Focus states
+   796→   796→•       Screen reader compatibility
+   797→   797→•       Reduced motion support
+   798→   798→________________________________________
+   799→   799→37. PERFORMANCE
+   800→   800→Maintain the existing performance goals.
+   801→   801→Target:
+   802→   802→•       Lighthouse score above 95 where practical
+   803→   803→•       Fast mobile loading
+   804→   804→•       Optimized images
+   805→   805→•       Lazy loading
+   806→   806→•       Code splitting
+   807→   807→•       Caching
+   808→   808→•       Minimal unnecessary JavaScript
+   809→   809→RehobothSocial should not make the overall PWA unnecessarily heavy.
+   810→   810→________________________________________
+   811→   811→38. REUSABLE CHURCH TEMPLATE
+   812→   812→This PWA is intended to eventually be reused for other churches.
+   813→   813→Therefore, do not hard-code:
+   814→   814→•       Church name
+   815→   815→•       Church address
+   816→   816→•       Church logo
+   817→   817→•       Pastor name
+   818→   818→•       Contact information
+   819→   819→•       Departments
+   820→   820→•       Service times
+   821→   821→•       Social links
+   822→   822→•       Giving information
+   823→   823→•       YouTube channel
+   824→   824→•       Livestream URL
+   825→   825→•       Social feature name
+   826→   826→Use centralized configuration or database-driven settings.
+   827→   827→The social feature should be dynamically branded.
+   828→   828→Current configuration:
+   829→   829→Church:
+   830→   830→The Redeemed Christian Church of God (RCCG) — Rehoboth Assembly Parish
+   831→   831→Social Feature:
+   832→   832→RehobothSocial
+   833→   833→Future examples:
+   834→   834→GraceSocial
+   835→   835→VictorySocial
+   836→   836→FaithSocial
+   837→   837→CovenantSocial
+   838→   838→The core software should remain reusable.
+   839→   839→________________________________________
+   840→   840→39. MISSING CHURCH INFORMATION
+   841→   841→Development must continue even though some church information is not yet available.
+   842→   842→Do NOT stop development.
+   843→   843→Use:
+   844→   844→•       Professional placeholder content
+   845→   845→•       Placeholder images where necessary
+   846→   846→•       Editable Admin fields
+   847→   847→•       Configurable settings
+   848→   848→Every placeholder must be replaceable later through the Admin Dashboard or configuration system.
+   849→   849→Do not require code changes simply to replace normal church information.
+   850→   850→________________________________________
+   851→   851→40. FUTURE-READY BUT DO NOT OVERBUILD
+   852→   852→Keep the architecture extensible for future features such as:
+   853→   853→•       PWA push notifications
+   854→   854→•       Podcasts
+   855→   855→•       Bible reading plans
+   856→   856→•       Member accounts
+   857→   857→•       Personalized devotionals
+   858→   858→•       Advanced church directory
+   859→   859→•       Multiple branches
+   860→   860→•       Multi-language support
+   861→   861→•       AI Church Assistant
+   862→   862→•       Advanced analytics
+   863→   863→•       Online courses
+   864→   864→•       Small group management
+   865→   865→Do not implement these unless already required.
+   866→   866→Simply ensure the architecture does not prevent them later.
+   867→   867→________________________________________
+   868→   868→41. DEVELOPMENT METHOD
+   869→   869→Before making changes:
+   870→   870→1.      Inspect the existing codebase.
+   871→   871→2.      Identify the existing routing structure.
+   872→   872→3.      Identify the existing component library.
+   873→   873→4.      Identify the existing database schema.
+   874→   874→5.      Identify existing Supabase integrations.
+   875→   875→6.      Identify existing Admin authentication.
+   876→   876→7.      Identify existing RLS policies.
+   877→   877→8.      Identify existing Events, Prayer, Media, Livestream, Ministry, Announcement, and Devotional systems.
+   878→   878→9.      Reuse existing components and services wherever possible.
+   879→   879→10.     Avoid unnecessary refactoring.
+   880→   880→Then integrate RehobothSocial.
+   881→   881→Do not rebuild the entire PWA unless a specific architectural issue makes it absolutely necessary.
+   882→   882→________________________________________
+   883→   883→42. IMPLEMENTATION PHASES
+   884→   884→Implement RehobothSocial in logical phases.
+   885→   885→Phase 1
+   886→   886→Inspect existing architecture.
+   887→   887→Phase 2
+   888→   888→Design the integration architecture.
+   889→   889→Phase 3
+   890→   890→Create or extend the required Supabase schema.
+   891→   891→Phase 4
+   892→   892→Implement RLS and security.
+   893→   893→Phase 5
+   894→   894→Integrate RehobothSocial into existing navigation.
+   895→   895→Phase 6
+   896→   896→Build RehobothSocial landing page.
+   897→   897→Phase 7
+   898→   898→Implement "I'm Here."
+   899→   899→Phase 8
+   900→   900→Implement "Today's Question."
+   901→   901→Phase 9
+   902→   902→Implement "Prayer Circle."
+   903→   903→Phase 10
+   904→   904→Implement "Amen Wall."
+   905→   905→Phase 11
+   906→   906→Implement "Weekly Challenge."
+   907→   907→Phase 12
+   908→   908→Implement "Live Together."
+   909→   909→Phase 13
+   910→   910→Implement "Who's Coming?"
+   911→   911→Phase 14
+   912→   912→Integrate existing Events, Prayer, Media, Livestream, Ministry, Announcements, and Devotional systems.
+   913→   913→Phase 15
+   914→   914→Integrate RehobothSocial management into existing Admin Dashboard.
+   915→   915→Phase 16
+   916→   916→Implement moderation and anti-spam.
+   917→   917→Phase 17
+   918→   918→Optimize Supabase Free Tier usage.
+   919→   919→Phase 18
+   920→   920→Optimize performance.
+   921→   921→Phase 19
+   922→   922→Test PWA functionality.
+   923→   923→Phase 20
+   924→   924→Test security, RLS, privacy, accessibility, and mobile responsiveness.
+   925→   925→________________________________________
+   926→   926→43. ACCEPTANCE CRITERIA
+   927→   927→The implementation is successful when:
+   928→   928→1.      RehobothSocial exists as an additional feature inside the existing RCCG Rehoboth Assembly Parish PWA.
+   929→   929→2.      The existing PWA remains fully functional.
+   930→   930→3.      Existing features are not unnecessarily duplicated.
+   931→   931→4.      Existing Events, Prayer, Media, Livestream, Ministries, Announcements, and Devotionals systems are reused or integrated wherever practical.
+   932→   932→5.      Public users do not need to log in.
+   933→   933→6.      Public users do not need to register.
+   934→   934→7.      Public users can participate immediately.
+   935→   935→8.      Public users cannot upload images, videos, or documents.
+   936→   936→9.      Public users cannot publish official church content.
+   937→   937→10.     Only authorized Admins can publish official content.
+   938→   938→11.     Admins can moderate public interactions.
+   939→   939→12.     Private prayer requests remain private.
+   940→   940→13.     "I'm Here" works efficiently.
+   941→   941→14.     "Today's Question" works.
+   942→   942→15.     "Prayer Circle" works.
+   943→   943→16.     "Amen Wall" works.
+   944→   944→17.     "Weekly Challenge" works.
+   945→   945→18.     "Live Together" works.
+   946→   946→19.     "Who's Coming?" integrates with Events.
+   947→   947→20.     Event registration works.
+   948→   948→21.     Ministry applications work.
+   949→   949→22.     Admins can manage all relevant social content from the existing Admin Dashboard.
+   950→   950→23.     Supabase RLS protects sensitive information.
+   951→   951→24.     No Supabase service-role key is exposed client-side.
+   952→   952→25.     Realtime functionality is used efficiently.
+   953→   953→26.     The application is designed for Vercel Free Tier.
+   954→   954→27.     The application is designed for Supabase Free Tier.
+   955→   955→28.     Large videos are not stored in Supabase.
+   956→   956→29.     YouTube is used for video hosting and livestreaming.
+   957→   957→30.     The PWA remains fast and responsive.
+   958→   958→31.     RehobothSocial works beautifully on mobile.
+   959→   959→32.     Accessibility requirements are respected.
+   960→   960→33.     SEO requirements are respected.
+   961→   961→34.     Missing church information does not block development.
+   962→   962→35.     The entire PWA remains reusable as a template for future churches.
+   963→   963→36.     The RehobothSocial name can be dynamically changed for future church deployments.
+   964→   964→________________________________________
+   965→   965→44. FINAL NON-NEGOTIABLE INSTRUCTION
+   966→   966→Remember:
+   967→   967→THIS IS AN ADDITION TO THE EXISTING PWA.
+   968→   968→You are NOT building a standalone RehobothSocial application.
+   969→   969→You are NOT replacing the existing church website.
+   970→   970→You are NOT rebuilding the entire PWA unnecessarily.
+   971→   971→You are adding a new, integrated social engagement ecosystem called:
+   972→   972→REHOBOTHSOCIAL
+   973→   973→inside the existing:
+   974→   974→RCCG REHOBOTH ASSEMBLY PARISH PWA.
+   975→   975→The overall PWA remains the church's complete digital home.
+   976→   976→RehobothSocial is the community engagement layer that makes the PWA more interactive, alive, attractive, and habit-forming.
+   977→   977→The desired experience is:
+   978→   978→A visitor opens the church PWA.
+   979→   979→They discover RehobothSocial.
+   980→   980→They enter without login or registration.
+   981→   981→They see that other people are present.
+   982→   982→They answer today's question.
+   983→   983→They pray for someone.
+   984→   984→They react with "Amen."
+   985→   985→They join the weekly challenge.
+   986→   986→They see an upcoming church event and indicate that they are coming.
+   987→   987→Later, they return to participate in the next Daily Question or join the church's livestream through Live Together.
+   988→   988→The experience should create a natural cycle:
+   989→   989→DISCOVER → PARTICIPATE → CONNECT → RETURN
+   990→   990→Build RehobothSocial to achieve this while maintaining the original vision of the RCCG Rehoboth Assembly Parish PWA:
+   991→   991→A world-class, aesthetically outstanding, secure, fast, accessible, mobile-first church PWA that can operate at $0 or near-zero infrastructure cost using Vercel Free Tier and Supabase Free Tier.
+   992→   992→Begin by inspecting the existing project and integrating RehobothSocial into the current architecture rather than creating a separate application.
+   993→   993→
+   994→   994→
