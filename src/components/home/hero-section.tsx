@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Radio, MapPin, Heart, UserPlus, ChevronDown } from "lucide-react";
+import { Radio, Heart, UserPlus } from "lucide-react";
 
 export function HeroSection() {
   return (
@@ -77,32 +77,23 @@ export function HeroSection() {
           Experience God&rsquo;s presence where His Word transforms lives and worship draws you closer to your divine purpose.
         </motion.p>
 
-        {/* CTA Buttons */}
+        {/* CTA Buttons — Watch Live (red, full width), Prayer Request + Join Us (matching outline style) */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-8 flex flex-col sm:grid sm:grid-cols-2 gap-3 sm:gap-4 max-w-xl mx-auto"
+          className="mt-6 flex flex-col sm:grid sm:grid-cols-2 gap-3 max-w-xl mx-auto"
         >
-          {/* Watch Live - Red, full width on mobile */}
+          {/* Watch Live — Red, spans full width */}
           <a
             href="/live"
-            className="flex items-center justify-center gap-2 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-xl h-12 text-base font-semibold transition-colors"
+            className="sm:col-span-2 flex items-center justify-center gap-2 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-xl h-12 text-base font-semibold transition-colors"
           >
             <Radio className="size-4 shrink-0" />
             <span>Watch Live</span>
           </a>
 
-          {/* Plan Your Visit - White outline, full width on mobile */}
-          <a
-            href="/contact"
-            className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border-2 border-white/50 text-white rounded-xl h-12 text-base font-semibold transition-colors"
-          >
-            <MapPin className="size-4 shrink-0" />
-            <span>Plan Your Visit</span>
-          </a>
-
-          {/* Prayer Request - White outline */}
+          {/* Prayer Request — Blunt blue outline with ring */}
           <a
             href="/prayer"
             className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border-2 border-white/50 text-white rounded-xl h-12 text-base font-semibold transition-colors"
@@ -111,32 +102,16 @@ export function HeroSection() {
             <span>Prayer Request</span>
           </a>
 
-          {/* Join Us - Solid white */}
+          {/* Join Us — Same blunt blue outline with ring as Prayer Request */}
           <a
             href="/join-ministry"
-            className="flex items-center justify-center gap-2 bg-white text-[#1A237E] hover:bg-white/90 rounded-xl h-12 text-base font-semibold transition-colors"
+            className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border-2 border-white/50 text-white rounded-xl h-12 text-base font-semibold transition-colors"
           >
             <UserPlus className="size-4 shrink-0" />
             <span>Join Us</span>
           </a>
         </motion.div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 z-20"
-      >
-        <span className="text-white/40 text-xs tracking-wider uppercase">Scroll</span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ChevronDown className="size-5 text-white/40" />
-        </motion.div>
-      </motion.div>
     </section>
   );
 }
