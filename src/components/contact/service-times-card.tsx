@@ -67,81 +67,165 @@ export function ServiceTimesCard() {
         </p>
       </div>
 
-      {/* Service List */}
-      <div className="divide-y divide-gray-50">
-        {days.map((day) => {
-          const dayServices = serviceTimes.filter((s) => s.day === day);
-          const IconComp = getDayIcon(day);
-          const iconBg = getDayColor(day);
+      {/* Service List — 2 column layout: Sunday + Tuesday side by side, Thursday centered below */}
+      <div className="px-5 py-4">
+        {/* Row 1: Sunday + Tuesday side by side */}
+        <div className="grid grid-cols-2 gap-4">
+          {(["Sunday", "Tuesday"] as const).map((day) => {
+            const dayServices = serviceTimes.filter((s) => s.day === day);
+            const IconComp = getDayIcon(day);
+            const iconBg = getDayColor(day);
 
-          return (
-            <div key={day} className="px-5 py-4">
-              <div className="flex items-center gap-2 mb-3">
-                <div
-                  className={`w-7 h-7 rounded-lg ${iconBg} flex items-center justify-center`}
-                >
-                  <IconComp className="size-3.5 text-white" />
+            return (
+              <div key={day}>
+                <div className="flex items-center gap-2 mb-3">
+                  <div
+                    className={`w-7 h-7 rounded-lg ${iconBg} flex items-center justify-center`}
+                  >
+                    <IconComp className="size-3.5 text-white" />
+                  </div>
+                  <h4 className="text-sm font-bold text-gray-800">{day}</h4>
                 </div>
-                <h4 className="text-sm font-bold text-gray-800">{day}</h4>
-              </div>
-              <div className="space-y-2 ml-9">
-                {dayServices.map((service) => {
-                  const isUpcoming = service.id === upcomingId;
-                  return (
-                    <motion.div
-                      key={service.id}
-                      initial={false}
-                      animate={
-                        isUpcoming ? { scale: [1, 1.02, 1] } : {}
-                      }
-                      transition={
-                        isUpcoming
-                          ? { duration: 2, repeat: Infinity, repeatDelay: 3 }
-                          : {}
-                      }
-                      className={`flex items-center justify-between p-2.5 rounded-xl transition-colors ${
-                        isUpcoming
-                          ? "bg-[#EBF0FA] border border-[#1A237E]/15"
-                          : "hover:bg-gray-50"
-                      }`}
-                    >
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-2">
-                          <p
-                            className={`text-sm font-semibold ${
-                              isUpcoming
-                                ? "text-[#1A237E]"
-                                : "text-gray-700"
-                            }`}
-                          >
-                            {service.name}
-                          </p>
-                          {isUpcoming && (
-                            <span className="text-[10px] font-bold text-[#1A237E] bg-[#1A237E]/10 px-1.5 py-0.5 rounded-md uppercase tracking-wider">
-                              Next
-                            </span>
-                          )}
-                        </div>
-                        {service.description && (
-                          <p className="text-[11px] text-gray-400 mt-0.5">
-                            {service.description}
-                          </p>
-                        )}
-                      </div>
-                      <p
-                        className={`text-xs font-semibold whitespace-nowrap ml-3 ${
-                          isUpcoming ? "text-[#1A237E]" : "text-gray-500"
+                <div className="space-y-2 ml-9">
+                  {dayServices.map((service) => {
+                    const isUpcoming = service.id === upcomingId;
+                    return (
+                      <motion.div
+                        key={service.id}
+                        initial={false}
+                        animate={
+                          isUpcoming ? { scale: [1, 1.02, 1] } : {}
+                        }
+                        transition={
+                          isUpcoming
+                            ? { duration: 2, repeat: Infinity, repeatDelay: 3 }
+                            : {}
+                        }
+                        className={`flex items-center justify-between p-2.5 rounded-xl transition-colors ${
+                          isUpcoming
+                            ? "bg-[#EBF0FA] border border-[#1A237E]/15"
+                            : "hover:bg-gray-50"
                         }`}
                       >
-                        {service.startTime}
-                      </p>
-                    </motion.div>
-                  );
-                })}
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2">
+                            <p
+                              className={`text-sm font-semibold ${
+                                isUpcoming
+                                  ? "text-[#1A237E]"
+                                  : "text-gray-700"
+                              }`}
+                            >
+                              {service.name}
+                            </p>
+                            {isUpcoming && (
+                              <span className="text-[10px] font-bold text-[#1A237E] bg-[#1A237E]/10 px-1.5 py-0.5 rounded-md uppercase tracking-wider">
+                                Next
+                              </span>
+                            )}
+                          </div>
+                          {service.description && (
+                            <p className="text-[11px] text-gray-400 mt-0.5">
+                              {service.description}
+                            </p>
+                          )}
+                        </div>
+                        <p
+                          className={`text-xs font-semibold whitespace-nowrap ml-3 ${
+                            isUpcoming ? "text-[#1A237E]" : "text-gray-500"
+                          }`}
+                        >
+                          {service.startTime}
+                        </p>
+                      </motion.div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
+
+        {/* Divider */}
+        <div className="border-t border-gray-100 my-4" />
+
+        {/* Row 2: Thursday centered alone */}
+        <div className="max-w-[50%] mx-auto">
+          {"Thursday" && (() => {
+            const day = "Thursday";
+            const dayServices = serviceTimes.filter((s) => s.day === day);
+            const IconComp = getDayIcon(day);
+            const iconBg = getDayColor(day);
+
+            return (
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <div
+                    className={`w-7 h-7 rounded-lg ${iconBg} flex items-center justify-center`}
+                  >
+                    <IconComp className="size-3.5 text-white" />
+                  </div>
+                  <h4 className="text-sm font-bold text-gray-800">{day}</h4>
+                </div>
+                <div className="space-y-2 ml-9">
+                  {dayServices.map((service) => {
+                    const isUpcoming = service.id === upcomingId;
+                    return (
+                      <motion.div
+                        key={service.id}
+                        initial={false}
+                        animate={
+                          isUpcoming ? { scale: [1, 1.02, 1] } : {}
+                        }
+                        transition={
+                          isUpcoming
+                            ? { duration: 2, repeat: Infinity, repeatDelay: 3 }
+                            : {}
+                        }
+                        className={`flex items-center justify-between p-2.5 rounded-xl transition-colors ${
+                          isUpcoming
+                            ? "bg-[#EBF0FA] border border-[#1A237E]/15"
+                            : "hover:bg-gray-50"
+                        }`}
+                      >
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2">
+                            <p
+                              className={`text-sm font-semibold ${
+                                isUpcoming
+                                  ? "text-[#1A237E]"
+                                  : "text-gray-700"
+                              }`}
+                            >
+                              {service.name}
+                            </p>
+                            {isUpcoming && (
+                              <span className="text-[10px] font-bold text-[#1A237E] bg-[#1A237E]/10 px-1.5 py-0.5 rounded-md uppercase tracking-wider">
+                                Next
+                              </span>
+                            )}
+                          </div>
+                          {service.description && (
+                            <p className="text-[11px] text-gray-400 mt-0.5">
+                              {service.description}
+                            </p>
+                          )}
+                        </div>
+                        <p
+                          className={`text-xs font-semibold whitespace-nowrap ml-3 ${
+                            isUpcoming ? "text-[#1A237E]" : "text-gray-500"
+                          }`}
+                        >
+                          {service.startTime}
+                        </p>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })()}
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import {
   Facebook,
   Instagram,
@@ -11,7 +10,7 @@ import {
   Clock,
 } from "lucide-react";
 
-const quickLinks = [
+const quickLinksLeft = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Leadership", href: "/leadership" },
@@ -19,6 +18,9 @@ const quickLinks = [
   { label: "Watch Live", href: "/live" },
   { label: "Events", href: "/events" },
   { label: "Devotionals", href: "/devotionals" },
+];
+
+const quickLinksRight = [
   { label: "Testimonies", href: "/testimonies" },
   { label: "Prayer", href: "/prayer" },
   { label: "Join a Ministry", href: "/join-ministry" },
@@ -35,15 +37,6 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           {/* About Column */}
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <Image
-                src="/rccg-logo.png"
-                alt="RCCG Logo"
-                width={36}
-                height={36}
-                className="h-9 w-auto brightness-0 invert"
-              />
-            </div>
             <h3 className="text-lg font-bold leading-tight">Redeemed Christian Church of God</h3>
             <p className="text-sm text-blue-200/70 mt-0.5">(Rehoboth Assembly Parish)</p>
             <p className="text-sm text-blue-200/60 mt-4 leading-relaxed">
@@ -55,53 +48,70 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Quick Links Column */}
+          {/* Quick Links Column — 2 columns side by side */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-blue-200/50 mb-4">
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-blue-200/50 mb-4 text-center">
               Quick Links
             </h4>
-            <ul className="space-y-2">
-              {quickLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-blue-100/70 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <div className="grid grid-cols-2 gap-x-4">
+              <ul className="space-y-2">
+                {quickLinksLeft.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-blue-100/70 hover:text-white transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <ul className="space-y-2">
+                {quickLinksRight.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-blue-100/70 hover:text-white transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
-          {/* Service Times Column */}
+          {/* Service Times Column — 2 column layout */}
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-wider text-blue-200/50 mb-4">
               Service Times
             </h4>
-            <div className="space-y-4 text-sm">
-              <div>
-                <p className="font-semibold text-white">Sundays</p>
-                <div className="flex items-center gap-2 text-blue-100/70 mt-1">
-                  <Clock className="size-3.5" />
-                  <span>Service: 7:00 AM</span>
+            <div className="text-sm">
+              {/* Row 1: Sunday + Tuesday side by side */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <p className="font-semibold text-white">Sundays</p>
+                  <div className="flex items-center gap-2 text-blue-100/70 mt-1">
+                    <Clock className="size-3.5" />
+                    <span>Service: 7:00 AM</span>
+                  </div>
+                </div>
+                <div>
+                  <p className="font-semibold text-white">Tuesdays</p>
+                  <div className="flex items-center gap-2 text-blue-100/70 mt-1">
+                    <Clock className="size-3.5" />
+                    <span>Digging Deep: 5:30 PM</span>
+                  </div>
                 </div>
               </div>
-              <div>
-                <p className="font-semibold text-white">Tuesdays</p>
-                <div className="flex items-center gap-2 text-blue-100/70 mt-1">
-                  <Clock className="size-3.5" />
-                  <span>Bible Study: 5:30 PM</span>
-                </div>
-              </div>
-              <div>
+              {/* Row 2: Thursday centered alone */}
+              <div className="mt-3 text-center">
                 <p className="font-semibold text-white">Thursdays</p>
-                <div className="flex items-center gap-2 text-blue-100/70 mt-1">
+                <div className="flex items-center justify-center gap-2 text-blue-100/70 mt-1">
                   <Clock className="size-3.5" />
                   <span>Faith Clinic: 5:30 PM</span>
                 </div>
               </div>
-
             </div>
           </div>
 
