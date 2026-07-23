@@ -11,6 +11,7 @@ import { VideoGalleryPreview } from "@/components/home/video-gallery-preview";
 import { Testimonies } from "@/components/home/testimonies";
 import { GivingSection } from "@/components/home/giving-section";
 import { LocationMap } from "@/components/home/location-map";
+import { SocialCTA } from "@/components/home/social-cta";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
       <LatestSermon />
       <PastorsWelcome />
       <UpcomingEvents />
+      <SocialCTA />
       <DepartmentsPreview />
       <DevotionalPreview />
       <AnnouncementPreview />

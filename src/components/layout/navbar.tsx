@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, Radio } from "lucide-react";
+import { Menu, Radio, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -30,6 +30,7 @@ const navItems = [
   { label: "Announcements", href: "/announcements" },
   { label: "Giving", href: "/giving" },
   { label: "Contact", href: "/contact" },
+  { label: "RehobothSocial", href: "/social" },
 ];
 
 export function Navbar() {
@@ -84,11 +85,20 @@ export function Navbar() {
           <div className="flex items-center gap-3">
             <Button
               asChild
-              className="hidden sm:inline-flex bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-xl px-5 font-semibold shadow-md"
+              className="hidden sm:inline-flex bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-xl px-4 font-semibold shadow-md"
             >
               <Link href="/live">
                 <Radio className="size-4" />
                 Watch Live
+              </Link>
+            </Button>
+            <Button
+              asChild
+              className="hidden md:inline-flex bg-[#E65100] hover:bg-[#BF360C] text-white rounded-xl px-4 font-semibold shadow-md"
+            >
+              <Link href="/social">
+                <Heart className="size-4" />
+                RehobothSocial
               </Link>
             </Button>
 
@@ -134,15 +144,26 @@ export function Navbar() {
                     </Link>
                   ))}
                   <div className="mt-4 pt-4 border-t border-gray-200">
-                    <Button
-                      asChild
-                      className="w-full bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-xl font-semibold"
-                    >
-                      <Link href="/live" onClick={() => setMobileOpen(false)}>
-                        <Radio className="size-4" />
-                        Watch Live
-                      </Link>
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button
+                        asChild
+                        className="flex-1 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-xl font-semibold"
+                      >
+                        <Link href="/live" onClick={() => setMobileOpen(false)}>
+                          <Radio className="size-4" />
+                          Watch Live
+                        </Link>
+                      </Button>
+                      <Button
+                        asChild
+                        className="flex-1 bg-[#E65100] hover:bg-[#BF360C] text-white rounded-xl font-semibold"
+                      >
+                        <Link href="/social" onClick={() => setMobileOpen(false)}>
+                          <Heart className="size-4" />
+                          Social
+                        </Link>
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </SheetContent>
