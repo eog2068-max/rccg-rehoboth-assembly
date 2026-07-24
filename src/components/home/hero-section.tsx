@@ -74,7 +74,7 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="mt-6 max-w-2xl mx-auto text-base md:text-lg text-blue-100/80 leading-relaxed font-light"
         >
-          Worship with us live. Stay connected all week.
+          Experience God&rsquo;s presence in our live services, and stay connected to your church family all week long through RehobothSocial.
         </motion.p>
 
         {/* CTA Buttons — Watch Live + RehobothSocial */}
@@ -96,12 +96,12 @@ export function HeroSection() {
           {/* RehobothSocial — Same red, taller, two-level messaging */}
           <Link
             href="/social"
-            className="flex flex-col items-center justify-center gap-2 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-xl py-6 px-8 transition-colors"
+            className="flex flex-col items-center justify-center gap-1.5 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-xl py-4 px-8 transition-colors"
           >
             <span className="text-lg md:text-xl font-bold tracking-wide">
               RehobothSocial
             </span>
-            <span className="text-xs md:text-sm text-white/75 font-light leading-snug max-w-xs text-center">
+            <span className="text-xs md:text-sm text-white/90 font-medium leading-snug max-w-xs text-center">
               I Remain Connected To My Church Family Throughout The Week.
             </span>
           </Link>
