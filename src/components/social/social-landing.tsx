@@ -14,6 +14,7 @@ import {
   Globe,
   Sparkles,
   ChevronRight,
+  Users,
 } from "lucide-react";
 import { socialFeatures } from "./social-data";
 
@@ -46,61 +47,95 @@ export function SocialLandingPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F8FAFF]">
-      {/* ===== HERO ===== */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#0D1557] via-[#1A237E] to-[#283593] pt-32 pb-20 md:pt-40 md:pb-28">
-        {/* Decorative elements */}
-        <div className="absolute inset-0 opacity-10">
+    <div className="min-h-screen bg-[#EDF1FA]">
+      {/* ===== HERO — Modernized with animated mesh + glow ===== */}
+      <section className="relative overflow-hidden bg-[#0B0F3A] pt-28 pb-28 md:pt-36 md:pb-36">
+        {/* Animated mesh gradient background */}
+        <div className="absolute inset-0">
+          <div
+            className="absolute inset-0 opacity-30 animate-pulse"
+            style={{
+              backgroundImage: `
+                radial-gradient(ellipse 80% 60% at 20% 40%, rgba(59, 91, 246, 0.4) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 50% at 80% 20%, rgba(168, 85, 247, 0.25) 0%, transparent 70%),
+                radial-gradient(ellipse 70% 40% at 50% 80%, rgba(211, 47, 47, 0.15) 0%, transparent 70%)
+              `,
+            }}
+          />
+          {/* Moving light beams */}
+          <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-blue-500/8 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-purple-500/8 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+          <div className="absolute top-[30%] right-[20%] w-[30%] h-[30%] bg-pink-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "2s" }} />
+        </div>
+
+        {/* Subtle grid pattern overlay */}
+        <div className="absolute inset-0 opacity-[0.03]">
           <div
             className="absolute inset-0"
             style={{
-              backgroundImage: `radial-gradient(circle at 20% 30%, rgba(255,255,255,0.12) 1px, transparent 1px),
-                               radial-gradient(circle at 80% 70%, rgba(255,255,255,0.08) 1px, transparent 1px)`,
-              backgroundSize: "50px 50px",
+              backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                               linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+              backgroundSize: "60px 60px",
             }}
           />
         </div>
-        <div className="absolute top-0 right-1/4 w-72 h-72 bg-pink-400/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 w-60 h-60 bg-blue-400/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 right-1/3 w-48 h-48 bg-purple-400/5 rounded-full blur-3xl" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
+          {/* Pill badge */}
           <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 200 }}
-            className="text-5xl md:text-6xl mb-6"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.05 }}
+            className="inline-flex items-center gap-2 bg-white/[0.07] backdrop-blur-sm border border-white/[0.12] rounded-full px-4 py-1.5 mb-7"
           >
-            💬
+            <Users className="size-3.5 text-blue-300" />
+            <span className="text-xs font-medium text-blue-200/80">
+              Your Digital Family Hub
+            </span>
           </motion.div>
 
+          {/* Emoji icon with glow ring */}
+          <motion.div
+            initial={{ scale: 0, rotate: -10 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ type: "spring", stiffness: 200, damping: 15 }}
+            className="relative inline-block mb-7"
+          >
+            <div className="absolute inset-0 bg-blue-400/20 rounded-full blur-2xl scale-150" />
+            <div className="relative text-5xl md:text-6xl">💬</div>
+          </motion.div>
+
+          {/* Title with gradient text effect */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-4"
+            transition={{ delay: 0.15 }}
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-5"
           >
-            RehobothSocial
+            <span className="bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
+              RehobothSocial
+            </span>
           </motion.h1>
 
-          {/* === THE DOMINANT SLOGAN === */}
+          {/* Dominant slogan */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mb-6"
+            transition={{ delay: 0.25 }}
+            className="mb-5"
           >
-            <p className="text-lg sm:text-xl md:text-2xl font-medium text-white leading-snug">
-              I Remain Connected To My Church Family Throughout The Week.
+            <p className="text-lg sm:text-xl md:text-2xl font-semibold text-white/95 leading-snug">
+              I Remain Connected To My Church Family
+              <br className="hidden sm:block" /> Throughout The Week.
             </p>
           </motion.div>
 
-          {/* === SECONDARY PROMISE === */}
+          {/* Secondary promise */}
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-sm md:text-base text-blue-100/60 mb-8 max-w-lg mx-auto leading-relaxed"
+            transition={{ delay: 0.35 }}
+            className="text-sm md:text-base text-blue-200/50 mb-8 max-w-lg mx-auto leading-relaxed"
           >
             You Don&rsquo;t Have To Wait Until The Next Church Service To Feel
             Connected To Your Church Family.
@@ -111,10 +146,13 @@ export function SocialLandingPage() {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35 }}
-              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-8"
+              transition={{ delay: 0.4 }}
+              className="inline-flex items-center gap-2.5 bg-white/[0.08] backdrop-blur-md border border-white/[0.15] rounded-full px-5 py-2.5"
             >
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-400" />
+              </span>
               <span className="text-sm text-blue-100/80">
                 <span className="font-bold text-white">{presenceCount}</span>{" "}
                 people connected right now
@@ -125,18 +163,27 @@ export function SocialLandingPage() {
       </section>
 
       {/* ===== ALL 5 FEATURES GRID ===== */}
-      <section className="max-w-5xl mx-auto px-4 -mt-10 relative z-20 mb-14">
+      <section className="max-w-5xl mx-auto px-4 py-14 md:py-18 relative z-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-8"
+          className="text-center mb-10"
         >
-          <h2 className="text-2xl md:text-3xl font-bold text-[#1A237E] mb-2">
+          {/* Decorative dash */}
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="h-px w-8 bg-[#1A237E]/30" />
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1A237E]/60">
+              Explore
+            </span>
+            <div className="h-px w-8 bg-[#1A237E]/30" />
+          </div>
+          <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D1557] mb-3">
             Five Ways to Connect
           </h2>
-          <p className="text-gray-500 max-w-md mx-auto text-sm">
-            Choose a feature and stay connected to your church family all week
+          <p className="text-gray-500 max-w-md mx-auto text-sm leading-relaxed">
+            From heartfelt prayers to real-time worship, find the space that draws
+            your heart closer to the family — every single day of the week.
           </p>
         </motion.div>
 
@@ -145,31 +192,34 @@ export function SocialLandingPage() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
         >
           {socialFeatures.map((feature) => {
             const IconComp = iconMap[feature.id] || Sparkles;
             return (
               <motion.div key={feature.id} variants={itemVariants}>
                 <Link href={feature.href} className="block group h-full">
-                  <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg hover:border-gray-200 transition-all duration-300 h-full hover:-translate-y-1">
+                  <div className="bg-white rounded-2xl border border-gray-300/70 shadow-md overflow-hidden hover:shadow-xl hover:border-gray-400/60 transition-all duration-300 h-full hover:-translate-y-1.5">
                     <div
                       className={`bg-gradient-to-r ${feature.color} p-5 relative overflow-hidden`}
                     >
-                      <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full blur-xl -translate-y-8 translate-x-8" />
+                      <div className="absolute top-0 right-0 w-28 h-28 bg-white/[0.08] rounded-full blur-xl -translate-y-10 translate-x-10" />
+                      <div className="absolute bottom-0 left-0 w-16 h-16 bg-white/[0.05] rounded-full blur-lg translate-y-8 -translate-x-6" />
                       <div className="relative flex items-center justify-between">
-                        <span className="text-3xl">{feature.emoji}</span>
-                        <IconComp className="size-6 text-white/40 group-hover:text-white/70 transition-colors" />
+                        <span className="text-3xl drop-shadow-sm">
+                          {feature.emoji}
+                        </span>
+                        <IconComp className="size-6 text-white/30 group-hover:text-white/60 group-hover:scale-110 transition-all duration-300" />
                       </div>
-                      <h3 className="relative text-base font-bold text-white mt-3">
+                      <h3 className="relative text-base font-bold text-white mt-3 drop-shadow-sm">
                         {feature.title}
                       </h3>
                     </div>
                     <div className="p-4">
-                      <p className="text-xs text-gray-500 leading-relaxed mb-3">
+                      <p className="text-xs text-gray-500 leading-relaxed mb-3.5">
                         {feature.description}
                       </p>
-                      <div className="flex items-center gap-1.5 text-xs text-[#1A237E] font-semibold">
+                      <div className="flex items-center gap-1.5 text-xs text-[#1A237E] font-semibold group-hover:gap-2.5 transition-all duration-300">
                         {feature.featured ? (
                           <>
                             <span>Enter</span>
@@ -192,7 +242,7 @@ export function SocialLandingPage() {
       </section>
 
       {/* ===== HOW THE ECOSYSTEM WORKS ===== */}
-      <section className="bg-white border-y border-gray-100 py-14">
+      <section className="bg-white/80 backdrop-blur-sm border-y border-gray-300/50 py-14">
         <div className="max-w-4xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -276,7 +326,7 @@ export function SocialLandingPage() {
               },
             ].map((item) => (
               <div key={item.title} className="text-center">
-                <div className="w-12 h-12 rounded-xl bg-[#F8FAFF] flex items-center justify-center mx-auto mb-3">
+                <div className="w-12 h-12 rounded-xl bg-[#E8ECF8] flex items-center justify-center mx-auto mb-3">
                   <item.icon className="size-6 text-[#1A237E]" />
                 </div>
                 <h3 className="text-sm font-bold text-gray-800 mb-1">
@@ -292,7 +342,7 @@ export function SocialLandingPage() {
       </section>
 
       {/* ===== BOTTOM CTA ===== */}
-      <section className="bg-gradient-to-r from-[#0D1557] to-[#1A237E] py-14">
+      <section className="bg-gradient-to-r from-[#0B0F3A] to-[#1A237E] py-14">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -311,7 +361,7 @@ export function SocialLandingPage() {
             </p>
             <Link
               href="/social/family-chat"
-              className="inline-flex items-center gap-2 bg-[#D32F2F] hover:bg-[#B71C1C] text-white px-8 py-3.5 rounded-xl font-bold transition-colors shadow-lg text-sm"
+              className="inline-flex items-center gap-2 bg-[#D32F2F] hover:bg-[#B71C1C] text-white px-8 py-3.5 rounded-xl font-bold transition-colors shadow-lg shadow-red-900/30 text-sm"
             >
               <MessageCircle className="size-4" />
               Enter FamilyChat
