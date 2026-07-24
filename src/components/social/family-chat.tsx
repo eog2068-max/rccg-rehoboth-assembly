@@ -6,15 +6,18 @@ import {
   Send,
   Flag,
   ChevronLeft,
-  Hash,
   Megaphone,
   SmilePlus,
   Reply,
   X,
   Loader2,
+  Users,
+  MessageCircle,
+  AlertTriangle,
 } from "lucide-react";
 import { BackToSocial } from "./back-to-social";
 
+/* ============ TYPES ============ */
 interface Channel {
   id: string;
   name: string;
@@ -27,27 +30,66 @@ interface Channel {
 
 interface Message {
   id: string;
+  channelId: string;
   content: string;
   displayName: string;
   isAnnouncement: boolean;
   replyToId?: string;
+  replyToContent?: string;
+  replyToDisplayName?: string;
   reactions: Record<string, number>;
   createdAt: string;
 }
 
+/* ============ CONSTANTS ============ */
 const REACTION_OPTIONS = ["❤️", "🙏", "🙌", "🔥", "👍"];
 
+const REPORT_REASONS = [
+  { value: "inappropriate", label: "Inappropriate content" },
+  { value: "harassment", label: "Harassment or bullying" },
+  { value: "spam", label: "Spam or advertising" },
+  { value: "scam", label: "Scam or fraud attempt" },
+  { value: "hate", label: "Hate speech" },
+  { value: "false_accusation", label: "False accusation / gossip" },
+  { value: "unchristian", label: "Unchristian conduct" },
+  { value: "other", label: "Other" },
+];
+
+const WARM_GREETINGS = [
+  "Welcome to FamilyChat! 🏠",
+  "God bless you as you connect with the family today. 💬",
+  "The service may end, but the fellowship continues here. ❤️",
+];
+
+/* ============ HELPERS ============ */
 function formatTimeAgo(dateStr: string): string {
   const diff = Date.now() - new Date(dateStr).getTime();
   const mins = Math.floor(diff / 60000);
-  if (mins < 1) return "now";
-  if (mins < 60) return `${mins}m`;
+  if (mins < 1) return "just now";
+  if (mins < 60) return `${mins}m ago`;
   const hrs = Math.floor(mins / 60);
-  if (hrs < 24) return `${hrs}h`;
+  if (hrs < 24) return `${hrs}h ago`;
   const days = Math.floor(hrs / 24);
-  return `${days}d`;
+  return `${days}d ago`;
 }
 
+function getAvatarColor(name: string): string {
+  const colors = [
+    "from-[#1A237E] to-[#283593]",
+    "from-[#D32F2F] to-[#E53935]",
+    "from-[#2E7D32] to-[#388E3C]",
+    "from-[#E65100] to-[#F57C00]",
+    "from-[#6A1B9A] to-[#8E24AA]",
+    "from-[#00695C] to-[#00897B]",
+  ];
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return colors[Math.abs(hash) % colors.length];
+}
+
+/* ============ MAIN COMPONENT ============ */
 export function FamilyChat() {
   const [channels, setChannels] = useState<Channel[]>([]);
   const [activeChannel, setActiveChannel] = useState<Channel | null>(null);
@@ -55,11 +97,19 @@ export function FamilyChat() {
   const [inputText, setInputText] = useState("");
   const [showSidebar, setShowSidebar] = useState(true);
   const [replyingTo, setReplyingTo] = useState<Message | null>(null);
-  const [reporting, setReporting] = useState<string | null>(null);
+  const [reportingMsg, setReportingMsg] = useState<Message | null>(null);
   const [showReactions, setShowReactions] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [reportReason, setReportReason] = useState("");
+  const [reportExplanation, setReportExplanation] = useState("");
+  const [reportSubmitting, setReportSubmitting] = useState(false);
+  const [charCount, setCharCount] = useState(0);
+  const MAX_CHARS = 500;
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const sessionIdRef = useRef(
     typeof window !== "undefined"
@@ -67,7 +117,7 @@ export function FamilyChat() {
       : `user_${Date.now()}`
   );
 
-  // Set session ID
+  // Initialize session
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (!sessionStorage.getItem("rs_session")) {
@@ -85,53 +135,87 @@ export function FamilyChat() {
         if (d.channels?.[0]) setActiveChannel(d.channels[0]);
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => {
+        setError("Failed to load channels");
+        setLoading(false);
+      });
   }, []);
 
-  // Load messages when channel changes
-  const loadMessages = useCallback(
-    async (channelId: string) => {
-      try {
-        const r = await fetch(
-          `/api/social/chat/messages?channelId=${channelId}`
-        );
-        const d = await r.json();
-        setMessages(d.messages || []);
-      } catch {
-        setMessages([]);
+  // Load messages for a channel
+  const loadMessages = useCallback(async (channelId: string) => {
+    try {
+      const r = await fetch(
+        `/api/social/chat/messages?channelId=${channelId}&limit=40`
+      );
+      const d = await r.json();
+      if (d.messages) {
+        // Enrich messages with reply content previews
+        const enriched = d.messages.map((msg: Message) => {
+          if (msg.replyToId) {
+            const replyMsg = d.messages.find(
+              (m: Message) => m.id === msg.replyToId
+            );
+            if (replyMsg) {
+              return {
+                ...msg,
+                replyToContent: replyMsg.content,
+                replyToDisplayName: replyMsg.displayName,
+              };
+            }
+          }
+          return msg;
+        });
+        setMessages(enriched.reverse()); // newest at bottom
       }
-    },
-    []
-  );
+    } catch {
+      setMessages([]);
+    }
+  }, []);
 
+  // Switch channel
   useEffect(() => {
     if (activeChannel) {
       loadMessages(activeChannel.id);
       setReplyingTo(null);
       setShowReactions(null);
-      setReporting(null);
+      setReportingMsg(null);
+      setError("");
     }
   }, [activeChannel, loadMessages]);
 
-  // Poll for new messages
+  // Poll for new messages (every 6 seconds)
   useEffect(() => {
     if (!activeChannel) return;
     const interval = setInterval(() => {
       loadMessages(activeChannel.id);
-    }, 8000);
+    }, 6000);
     return () => clearInterval(interval);
   }, [activeChannel, loadMessages]);
 
-  // Scroll to bottom on new messages
+  // Auto-scroll to bottom on new messages
+  const isNearBottom = useRef(true);
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (isNearBottom.current) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages.length]);
 
+  // Track scroll position to prevent forced scroll when user reads history
+  const handleScroll = () => {
+    const el = messagesContainerRef.current;
+    if (!el) return;
+    isNearBottom.current =
+      el.scrollHeight - el.scrollTop - el.clientHeight < 120;
+  };
+
+  // Send message
   const sendMessage = async () => {
     if (!inputText.trim() || !activeChannel || sending) return;
+    if (charCount > MAX_CHARS) return;
     setSending(true);
+    setError("");
     try {
-      await fetch("/api/social/chat/messages", {
+      const res = await fetch("/api/social/chat/messages", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -143,17 +227,25 @@ export function FamilyChat() {
           replyToId: replyingTo?.id,
         }),
       });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || "Failed to send message");
+        return;
+      }
       setInputText("");
+      setCharCount(0);
       setReplyingTo(null);
+      isNearBottom.current = true;
       loadMessages(activeChannel.id);
     } catch {
-      // Silently fail
+      setError("Network error. Please try again.");
     } finally {
       setSending(false);
       inputRef.current?.focus();
     }
   };
 
+  // React to message
   const addReaction = async (messageId: string, reaction: string) => {
     try {
       await fetch(`/api/social/chat/messages/${messageId}/react`, {
@@ -164,15 +256,16 @@ export function FamilyChat() {
       loadMessages(activeChannel?.id || "");
       setShowReactions(null);
     } catch {
-      // Silently fail
+      // Silent
     }
   };
 
-  const reportMessage = async (messageId: string) => {
-    if (!activeChannel) return;
-    setReporting(null);
+  // Report message
+  const submitReport = async () => {
+    if (!reportingMsg || !activeChannel || !reportReason) return;
+    setReportSubmitting(true);
     try {
-      await fetch(`/api/social/chat/messages/${messageId}/report`, {
+      await fetch(`/api/social/chat/messages/${reportingMsg.id}/report`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -180,11 +273,26 @@ export function FamilyChat() {
         },
         body: JSON.stringify({
           channelId: activeChannel.id,
-          reason: "Inappropriate content",
+          reason: reportReason,
+          explanation: reportExplanation,
         }),
       });
+      setReportingMsg(null);
+      setReportReason("");
+      setReportExplanation("");
     } catch {
-      // Silently fail
+      // Silent
+    } finally {
+      setReportSubmitting(false);
+    }
+  };
+
+  // Handle input change with character count
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const val = e.target.value;
+    if (val.length <= MAX_CHARS) {
+      setInputText(val);
+      setCharCount(val.length);
     }
   };
 
@@ -195,43 +303,55 @@ export function FamilyChat() {
     }
   };
 
+  // Loading state
   if (loading) {
     return (
       <div className="min-h-screen bg-[#F8FAFF] flex items-center justify-center">
         <BackToSocial />
-        <Loader2 className="size-8 text-[#1A237E] animate-spin" />
+        <div className="text-center">
+          <Loader2 className="size-8 text-[#1A237E] animate-spin mx-auto mb-3" />
+          <p className="text-sm text-gray-500">Loading FamilyChat...</p>
+        </div>
       </div>
     );
   }
+
+  const greeting = WARM_GREETINGS[Math.floor(Date.now() / 86400000) % WARM_GREETINGS.length];
 
   return (
     <div className="min-h-screen bg-[#F8FAFF]">
       <BackToSocial />
 
       <div className="flex h-[calc(100vh-60px)] max-w-5xl mx-auto">
-        {/* Channel Sidebar */}
+        {/* ===== CHANNEL SIDEBAR ===== */}
         <AnimatePresence>
           {showSidebar && (
-            <motion.div
+            <motion.aside
               initial={{ x: -280, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: -280, opacity: 0 }}
               transition={{ duration: 0.2 }}
               className="w-64 md:w-72 bg-white border-r border-gray-100 flex flex-col shrink-0 shadow-sm"
             >
-              {/* Sidebar header */}
-              <div className="p-4 border-b border-gray-100">
-                <div className="flex items-center gap-2">
-                  <span className="text-xl">💬</span>
-                  <h2 className="text-sm font-bold text-[#1A237E]">FamilyChat</h2>
+              {/* Sidebar Header */}
+              <div className="p-4 border-b border-gray-100 bg-gradient-to-br from-[#F8FAFF] to-white">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#1A237E] to-[#283593] flex items-center justify-center">
+                    <MessageCircle className="size-4 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-sm font-bold text-[#1A237E]">
+                      FamilyChat
+                    </h2>
+                    <p className="text-[9px] text-gray-400 leading-tight mt-0.5">
+                      I Remain Connected To My Church Family
+                    </p>
+                  </div>
                 </div>
-                <p className="text-[10px] text-gray-400 mt-1 leading-tight">
-                  I Remain Connected To My Church Family Throughout The Week.
-                </p>
               </div>
 
-              {/* Channel list */}
-              <div className="flex-1 overflow-y-auto py-2">
+              {/* Channel List */}
+              <div className="flex-1 overflow-y-auto py-1">
                 {channels.map((ch) => (
                   <button
                     key={ch.id}
@@ -239,19 +359,19 @@ export function FamilyChat() {
                       setActiveChannel(ch);
                       if (window.innerWidth < 768) setShowSidebar(false);
                     }}
-                    className={`w-full text-left px-4 py-3 flex items-center gap-3 transition-colors ${
+                    className={`w-full text-left px-4 py-3 flex items-center gap-3 transition-all duration-150 ${
                       activeChannel?.id === ch.id
-                        ? "bg-[#1A237E]/5 border-l-3 border-[#1A237E]"
-                        : "hover:bg-gray-50 border-l-3 border-transparent"
+                        ? "bg-[#1A237E]/5 border-l-[3px] border-[#1A237E]"
+                        : "hover:bg-gray-50/80 border-l-[3px] border-transparent"
                     }`}
                   >
                     <span className="text-lg shrink-0">{ch.emoji}</span>
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <p
-                        className={`text-sm font-medium truncate ${
+                        className={`text-[13px] font-medium truncate ${
                           activeChannel?.id === ch.id
                             ? "text-[#1A237E]"
-                            : "text-gray-700"
+                            : "text-gray-600"
                         }`}
                       >
                         {ch.name}
@@ -266,39 +386,49 @@ export function FamilyChat() {
                 ))}
               </div>
 
-              {/* Community guidelines link */}
-              <div className="p-3 border-t border-gray-100">
-                <p className="text-[9px] text-gray-400 text-center leading-tight">
-                  Be kind. Be respectful. Be Christ-like.
+              {/* Community Guidelines */}
+              <div className="p-3 border-t border-gray-100 bg-gray-50/50">
+                <div className="flex items-center gap-1.5 mb-1.5">
+                  <Users className="size-3 text-gray-400" />
+                  <p className="text-[10px] font-medium text-gray-500">
+                    Community Guidelines
+                  </p>
+                </div>
+                <p className="text-[9px] text-gray-400 leading-relaxed">
+                  Be kind. Be respectful. Be Christ-like. This is your church
+                  family.
                 </p>
               </div>
-            </motion.div>
+            </motion.aside>
           )}
         </AnimatePresence>
 
-        {/* Chat Area */}
-        <div className="flex-1 flex flex-col min-w-0">
+        {/* ===== CHAT AREA ===== */}
+        <div className="flex-1 flex flex-col min-w-0 bg-white">
           {/* Chat Header */}
-          <div className="bg-white border-b border-gray-100 px-4 py-3 flex items-center gap-3 shadow-sm">
+          <div className="bg-white border-b border-gray-100 px-4 py-3 flex items-center gap-3 shadow-sm shrink-0">
             {!showSidebar && (
               <button
                 onClick={() => setShowSidebar(true)}
                 className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors"
+                aria-label="Show channels"
               >
                 <ChevronLeft className="size-5 text-gray-500" />
               </button>
             )}
             {activeChannel ? (
               <>
-                <span className="text-xl">{activeChannel.emoji}</span>
-                <div>
-                  <h3 className="text-sm font-bold text-gray-800">
-                    {activeChannel.isAnnouncement && (
-                      <Megaphone className="size-3 inline mr-1 text-amber-500" />
-                    )}
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#F0F4FF] to-[#E8EDFF] flex items-center justify-center text-xl">
+                  {activeChannel.emoji}
+                </div>
+                <div className="min-w-0">
+                  <h3 className="text-sm font-bold text-gray-800 flex items-center gap-1.5">
                     {activeChannel.name}
+                    {activeChannel.isAnnouncement && (
+                      <Megaphone className="size-3 text-amber-500" />
+                    )}
                   </h3>
-                  <p className="text-[10px] text-gray-400">
+                  <p className="text-[10px] text-gray-400 truncate">
                     {activeChannel.description}
                   </p>
                 </div>
@@ -308,170 +438,257 @@ export function FamilyChat() {
             )}
           </div>
 
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
-            {/* Pinned / Announcement banner */}
+          {/* Messages Area */}
+          <div
+            ref={messagesContainerRef}
+            onScroll={handleScroll}
+            className="flex-1 overflow-y-auto px-4 py-4"
+          >
+            {/* Announcement channel banner */}
             {activeChannel?.isAnnouncement && (
-              <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 flex items-start gap-2 mb-4">
-                <Megaphone className="size-4 text-amber-500 mt-0.5 shrink-0" />
+              <div className="bg-amber-50 border border-amber-200/80 rounded-xl p-3 flex items-start gap-2.5 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center shrink-0">
+                  <Megaphone className="size-4 text-amber-600" />
+                </div>
                 <div>
                   <p className="text-xs font-semibold text-amber-800">
-                    Announcements Channel
+                    Official Announcements
                   </p>
-                  <p className="text-[10px] text-amber-600 mt-0.5">
-                    Official updates from church leadership appear here.
+                  <p className="text-[10px] text-amber-600/80 mt-0.5 leading-relaxed">
+                    Updates from church leadership appear here. This channel is
+                    read-only for members.
                   </p>
                 </div>
               </div>
             )}
 
-            {activeChannel && messages.length === 0 && (
-              <div className="text-center py-12">
-                <span className="text-4xl mb-3 block">
-                  {activeChannel.emoji}
-                </span>
-                <p className="text-sm text-gray-500">
-                  No messages yet in {activeChannel.name}.
+            {/* Empty state */}
+            {activeChannel && messages.length === 0 && !activeChannel.isAnnouncement && (
+              <div className="text-center py-16">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#F0F4FF] to-[#E8EDFF] flex items-center justify-center mx-auto mb-4">
+                  <span className="text-3xl">{activeChannel.emoji}</span>
+                </div>
+                <p className="text-sm font-medium text-gray-600 mb-1">
+                  {activeChannel.name}
                 </p>
-                <p className="text-xs text-gray-400 mt-1">
-                  Start the conversation!
+                <p className="text-xs text-gray-400 mb-4">
+                  No messages yet. Start the conversation!
                 </p>
+                <p className="text-[10px] text-gray-300 italic">{greeting}</p>
               </div>
             )}
 
-            {messages.map((msg) => (
-              <div key={msg.id} className="group relative">
-                {/* Announcement style */}
-                {msg.isAnnouncement ? (
-                  <div className="bg-gradient-to-r from-[#1A237E]/5 to-[#283593]/5 border border-[#1A237E]/10 rounded-xl p-4">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Megaphone className="size-3.5 text-[#1A237E]" />
-                      <span className="text-xs font-bold text-[#1A237E]">
-                        {msg.displayName}
-                      </span>
-                      <span className="text-[10px] text-gray-400">
-                        {formatTimeAgo(msg.createdAt)}
-                      </span>
-                    </div>
-                    <p className="text-sm text-gray-700 leading-relaxed">
-                      {msg.content}
-                    </p>
-                    <MessageReactions
-                      reactions={msg.reactions}
-                      onReact={(r) => addReaction(msg.id, r)}
-                      showPicker={showReactions === msg.id}
-                      onTogglePicker={() =>
-                        setShowReactions(
-                          showReactions === msg.id ? null : msg.id
-                        )
-                      }
-                    />
-                  </div>
-                ) : (
-                  <div className="flex gap-2.5">
-                    {/* Avatar */}
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#1A237E] to-[#283593] flex items-center justify-center shrink-0">
-                      <span className="text-white text-xs font-bold">
-                        {msg.displayName.charAt(0).toUpperCase()}
-                      </span>
-                    </div>
+            {/* Messages */}
+            <div className="space-y-1">
+              {messages.map((msg, idx) => {
+                const isFirst = idx === 0 || messages[idx - 1]?.displayName !== msg.displayName;
+                const showAvatar = isFirst || msg.isAnnouncement;
 
-                    <div className="min-w-0 flex-1">
-                      {/* Name + time */}
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-xs font-semibold text-gray-800">
-                          {msg.displayName}
-                        </span>
-                        <span className="text-[10px] text-gray-400">
-                          {formatTimeAgo(msg.createdAt)}
-                        </span>
-                      </div>
-
-                      {/* Reply reference */}
-                      {msg.replyToId && (
-                        <div className="mt-1 bg-gray-50 border-l-2 border-[#1A237E]/30 rounded-r px-2.5 py-1.5">
-                          <p className="text-[10px] text-gray-500 italic">
-                            replying to a message in thread
-                          </p>
+                return (
+                  <div key={msg.id} className="group relative py-0.5">
+                    {msg.isAnnouncement ? (
+                      /* === ANNOUNCEMENT MESSAGE === */
+                      <div className="bg-gradient-to-r from-[#1A237E]/[0.04] to-[#283593]/[0.04] border border-[#1A237E]/10 rounded-xl p-3.5 my-1">
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <div className="w-6 h-6 rounded-md bg-[#1A237E]/10 flex items-center justify-center">
+                            <Megaphone className="size-3 text-[#1A237E]/70" />
+                          </div>
+                          <span className="text-[11px] font-bold text-[#1A237E]">
+                            {msg.displayName}
+                          </span>
+                          <span className="text-[10px] text-gray-400 ml-auto">
+                            {formatTimeAgo(msg.createdAt)}
+                          </span>
                         </div>
-                      )}
-
-                      {/* Content */}
-                      <p className="mt-1 text-sm text-gray-700 leading-relaxed break-words">
-                        {msg.content}
-                      </p>
-
-                      {/* Reactions */}
-                      <MessageReactions
-                        reactions={msg.reactions}
-                        onReact={(r) => addReaction(msg.id, r)}
-                        showPicker={showReactions === msg.id}
-                        onTogglePicker={() =>
-                          setShowReactions(
-                            showReactions === msg.id ? null : msg.id
-                          )
-                        }
-                      />
-
-                      {/* Action buttons (hover) */}
-                      <div className="flex items-center gap-1 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button
-                          onClick={() => setReplyingTo(msg)}
-                          className="p-1 hover:bg-gray-100 rounded text-gray-400 hover:text-gray-600"
-                          title="Reply"
-                        >
-                          <Reply className="size-3" />
-                        </button>
-                        <button
-                          onClick={() => setReporting(msg.id)}
-                          className="p-1 hover:bg-red-50 rounded text-gray-400 hover:text-red-500"
-                          title="Report"
-                        >
-                          <Flag className="size-3" />
-                        </button>
+                        <p className="text-[13px] text-gray-700 leading-relaxed pl-8">
+                          {msg.content}
+                        </p>
+                        <MessageReactions
+                          reactions={msg.reactions}
+                          onReact={(r) => addReaction(msg.id, r)}
+                          showPicker={showReactions === msg.id}
+                          onTogglePicker={() =>
+                            setShowReactions(showReactions === msg.id ? null : msg.id)
+                          }
+                        />
                       </div>
-                    </div>
+                    ) : (
+                      /* === REGULAR MESSAGE === */
+                      <div className="flex gap-2.5">
+                        {/* Avatar */}
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br {getAvatarColor(msg.displayName)} flex items-center justify-center shrink-0 mt-0.5">
+                          <span className="text-white text-[11px] font-bold">
+                            {msg.displayName.charAt(0).toUpperCase()}
+                          </span>
+                        </div>
+
+                        <div className="min-w-0 flex-1">
+                          {/* Name + time (only show on first message in group) */}
+                          {showAvatar && (
+                            <div className="flex items-baseline gap-2 mb-0.5">
+                              <span className="text-[11px] font-semibold text-gray-700">
+                                {msg.displayName}
+                              </span>
+                              <span className="text-[10px] text-gray-400">
+                                {formatTimeAgo(msg.createdAt)}
+                              </span>
+                            </div>
+                          )}
+
+                          {/* Reply reference */}
+                          {msg.replyToId && (
+                            <div className="mt-1 bg-[#F0F4FF] border-l-2 border-[#1A237E]/25 rounded-r-lg px-2.5 py-1.5">
+                              {msg.replyToDisplayName && (
+                                <p className="text-[10px] font-semibold text-[#1A237E]/60">
+                                  {msg.replyToDisplayName}
+                                </p>
+                              )}
+                              <p className="text-[10px] text-gray-500 italic truncate max-w-xs">
+                                {msg.replyToContent || "Original message"}
+                              </p>
+                            </div>
+                          )}
+
+                          {/* Message bubble */}
+                          <div className="mt-0.5 group-hover:bg-gray-50/80 rounded-xl px-0.5 py-0.5 -mx-0.5 transition-colors">
+                            <p className="text-[13px] text-gray-700 leading-relaxed break-words pr-16">
+                              {msg.content}
+                            </p>
+                          </div>
+
+                          {/* Reactions */}
+                          <MessageReactions
+                            reactions={msg.reactions}
+                            onReact={(r) => addReaction(msg.id, r)}
+                            showPicker={showReactions === msg.id}
+                            onTogglePicker={() =>
+                              setShowReactions(showReactions === msg.id ? null : msg.id)
+                            }
+                          />
+
+                          {/* Hover actions */}
+                          <div className="flex items-center gap-0.5 mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button
+                              onClick={() => setReplyingTo(msg)}
+                              className="p-1 hover:bg-gray-100 rounded-md text-gray-400 hover:text-[#1A237E] transition-colors"
+                              title="Reply"
+                            >
+                              <Reply className="size-3" />
+                            </button>
+                            <button
+                              onClick={() => setShowReactions(showReactions === msg.id ? null : msg.id)}
+                              className="p-1 hover:bg-gray-100 rounded-md text-gray-400 hover:text-[#1A237E] transition-colors"
+                              title="React"
+                            >
+                              <SmilePlus className="size-3" />
+                            </button>
+                            <button
+                              onClick={() => setReportingMsg(msg)}
+                              className="p-1 hover:bg-red-50 rounded-md text-gray-400 hover:text-red-500 transition-colors"
+                              title="Report"
+                            >
+                              <Flag className="size-3" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            ))}
+                );
+              })}
+            </div>
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input area */}
-          {activeChannel && (
-            <div className="bg-white border-t border-gray-100 p-3">
-              {/* Replying to indicator */}
-              {replyingTo && (
-                <div className="flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2 mb-2 text-xs">
-                  <Reply className="size-3 text-[#1A237E]" />
-                  <span className="text-gray-600 flex-1 truncate">
-                    Replying to: {replyingTo.content.substring(0, 60)}...
-                  </span>
-                  <button
-                    onClick={() => setReplyingTo(null)}
-                    className="text-gray-400 hover:text-gray-600"
-                  >
-                    <X className="size-3" />
-                  </button>
-                </div>
-              )}
+          {/* Error banner */}
+          <AnimatePresence>
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="bg-red-50 border-t border-red-100 px-4 py-2 flex items-center gap-2 shrink-0"
+              >
+                <AlertTriangle className="size-3.5 text-red-500 shrink-0" />
+                <p className="text-xs text-red-600 flex-1">{error}</p>
+                <button
+                  onClick={() => setError("")}
+                  className="text-red-400 hover:text-red-600"
+                >
+                  <X className="size-3" />
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
+          {/* Input Area */}
+          {activeChannel && (
+            <div className="bg-white border-t border-gray-100 p-3 shrink-0">
+              {/* Replying to indicator */}
+              <AnimatePresence>
+                {replyingTo && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="flex items-center gap-2 bg-[#F0F4FF] border border-[#1A237E]/10 rounded-lg px-3 py-2 mb-2">
+                      <Reply className="size-3 text-[#1A237E] shrink-0" />
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[10px] font-semibold text-[#1A237E]/60">
+                          Replying to {replyingTo.displayName}
+                        </p>
+                        <p className="text-[10px] text-gray-500 truncate">
+                          {replyingTo.content.substring(0, 80)}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => setReplyingTo(null)}
+                        className="text-gray-400 hover:text-gray-600 shrink-0"
+                      >
+                        <X className="size-3.5" />
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Composer */}
               <div className="flex items-end gap-2">
-                <textarea
-                  ref={inputRef}
-                  value={inputText}
-                  onChange={(e) => setInputText(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder={`Message ${activeChannel.name}...`}
-                  rows={1}
-                  className="flex-1 resize-none rounded-xl border border-gray-200 bg-gray-50 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A237E]/20 focus:border-[#1A237E]/30 transition-colors min-h-[42px] max-h-24"
-                  style={{ lineHeight: "1.5" }}
-                />
+                <div className="flex-1 relative">
+                  <textarea
+                    ref={inputRef}
+                    value={inputText}
+                    onChange={handleInputChange}
+                    onKeyDown={handleKeyDown}
+                    placeholder={
+                      activeChannel.isAnnouncement
+                        ? "This channel is for announcements only."
+                        : `Message ${activeChannel.name}...`
+                    }
+                    disabled={activeChannel.isAnnouncement}
+                    rows={1}
+                    className="w-full resize-none rounded-xl border border-gray-200 bg-[#FAFBFF] px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A237E]/15 focus:border-[#1A237E]/25 transition-all min-h-[42px] max-h-24 disabled:opacity-50 disabled:cursor-not-allowed"
+                    style={{ lineHeight: "1.5" }}
+                  />
+                  {/* Character counter */}
+                  {charCount > 0 && (
+                    <span
+                      className={`absolute bottom-1.5 right-3 text-[9px] ${
+                        charCount > MAX_CHARS * 0.9
+                          ? "text-red-400"
+                          : "text-gray-300"
+                      }`}
+                    >
+                      {charCount}/{MAX_CHARS}
+                    </span>
+                  )}
+                </div>
                 <button
                   onClick={sendMessage}
-                  disabled={!inputText.trim() || sending}
-                  className="shrink-0 w-10 h-10 rounded-xl bg-[#1A237E] hover:bg-[#283593] text-white flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  disabled={!inputText.trim() || sending || activeChannel.isAnnouncement}
+                  className="shrink-0 w-10 h-[42px] rounded-xl bg-[#1A237E] hover:bg-[#283593] text-white flex items-center justify-center transition-colors disabled:opacity-30 disabled:cursor-not-allowed shadow-sm"
                 >
                   {sending ? (
                     <Loader2 className="size-4 animate-spin" />
@@ -485,52 +702,120 @@ export function FamilyChat() {
         </div>
       </div>
 
-      {/* Report Modal */}
+      {/* ===== REPORT MODAL ===== */}
       <AnimatePresence>
-        {reporting && (
+        {reportingMsg && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4"
-            onClick={() => setReporting(null)}
+            onClick={() => {
+              setReportingMsg(null);
+              setReportReason("");
+              setReportExplanation("");
+            }}
           >
             <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-xl"
+              initial={{ scale: 0.95, opacity: 0, y: 10 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 10 }}
+              className="bg-white rounded-2xl p-5 max-w-sm w-full shadow-xl"
               onClick={(e) => e.stopPropagation()}
             >
+              {/* Header */}
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center">
                   <Flag className="size-5 text-red-500" />
                 </div>
                 <div>
                   <h3 className="text-sm font-bold text-gray-800">
                     Report Message
                   </h3>
-                  <p className="text-xs text-gray-500">
-                    This will be reviewed by a moderator
+                  <p className="text-[10px] text-gray-500">
+                    Reviewed confidentially by a church moderator
                   </p>
                 </div>
               </div>
-              <p className="text-xs text-gray-600 mb-5 leading-relaxed">
-                Are you sure you want to report this message? Reports are
-                confidential and will be reviewed by a church moderator.
-              </p>
+
+              {/* Reported message preview */}
+              <div className="bg-gray-50 rounded-lg p-2.5 mb-4 border border-gray-100">
+                <p className="text-[11px] text-gray-600 italic line-clamp-2">
+                  &ldquo;{reportingMsg.content.substring(0, 120)}&rdquo;
+                </p>
+              </div>
+
+              {/* Reason selection */}
+              <div className="mb-4">
+                <p className="text-xs font-medium text-gray-700 mb-2">
+                  What is the reason?
+                </p>
+                <div className="space-y-1.5 max-h-48 overflow-y-auto">
+                  {REPORT_REASONS.map((r) => (
+                    <label
+                      key={r.value}
+                      className={`flex items-center gap-2.5 px-3 py-2 rounded-lg border cursor-pointer transition-colors ${
+                        reportReason === r.value
+                          ? "border-[#1A237E] bg-[#1A237E]/5"
+                          : "border-gray-100 hover:bg-gray-50"
+                      }`}
+                    >
+                      <div
+                        className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${
+                          reportReason === r.value
+                            ? "border-[#1A237E]"
+                            : "border-gray-300"
+                        }`}
+                      >
+                        {reportReason === r.value && (
+                          <div className="w-2 h-2 rounded-full bg-[#1A237E]" />
+                        )}
+                      </div>
+                      <span className="text-xs text-gray-700">{r.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Optional explanation */}
+              {reportReason && (
+                <div className="mb-4">
+                  <p className="text-xs font-medium text-gray-700 mb-1.5">
+                    Additional details (optional)
+                  </p>
+                  <textarea
+                    value={reportExplanation}
+                    onChange={(e) => setReportExplanation(e.target.value)}
+                    placeholder="Provide any helpful context..."
+                    rows={2}
+                    className="w-full resize-none rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#1A237E]/15 focus:border-[#1A237E]/25 transition-colors"
+                  />
+                </div>
+              )}
+
+              {/* Actions */}
               <div className="flex gap-3">
                 <button
-                  onClick={() => setReporting(null)}
-                  className="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+                  onClick={() => {
+                    setReportingMsg(null);
+                    setReportReason("");
+                    setReportExplanation("");
+                  }}
+                  className="flex-1 py-2.5 rounded-xl border border-gray-200 text-xs font-medium text-gray-600 hover:bg-gray-50 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
-                  onClick={() => reportMessage(reporting)}
-                  className="flex-1 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-sm font-medium text-white transition-colors"
+                  onClick={submitReport}
+                  disabled={!reportReason || reportSubmitting}
+                  className="flex-1 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-xs font-medium text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-1.5"
                 >
-                  Report
+                  {reportSubmitting ? (
+                    <Loader2 className="size-3 animate-spin" />
+                  ) : (
+                    <Flag className="size-3" />
+                  )}
+                  Submit Report
                 </button>
               </div>
             </motion.div>
@@ -541,7 +826,7 @@ export function FamilyChat() {
   );
 }
 
-// Reactions sub-component
+/* ============ REACTIONS SUB-COMPONENT ============ */
 function MessageReactions({
   reactions,
   onReact,
@@ -553,47 +838,55 @@ function MessageReactions({
   showPicker: boolean;
   onTogglePicker: () => void;
 }) {
-  const totalReactions = Object.values(reactions).reduce((a, b) => a + b, 0);
+  const hasReactions = Object.values(reactions).some((c) => c > 0);
 
   return (
-    <div className="flex items-center gap-1 mt-1.5 flex-wrap">
-      {/* Existing reactions */}
+    <div className="flex items-center gap-1 mt-1 flex-wrap">
       {Object.entries(reactions)
         .filter(([, count]) => count > 0)
         .map(([emoji, count]) => (
           <button
             key={emoji}
             onClick={() => onReact(emoji)}
-            className="inline-flex items-center gap-1 bg-gray-100 hover:bg-gray-200 rounded-full px-2 py-0.5 text-xs transition-colors"
+            className="inline-flex items-center gap-0.5 bg-gray-100/80 hover:bg-gray-200 rounded-full px-1.5 py-0.5 text-[11px] transition-colors"
           >
-            <span>{emoji}</span>
-            <span className="text-gray-500">{count}</span>
+            <span className="text-[10px]">{emoji}</span>
+            <span className="text-gray-500 text-[9px]">{count}</span>
           </button>
         ))}
 
-      {/* Add reaction button */}
       <button
         onClick={onTogglePicker}
-        className="inline-flex items-center gap-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full px-2 py-0.5 text-xs transition-colors"
+        className={`inline-flex items-center justify-center hover:bg-gray-100 rounded-full p-0.5 transition-colors ${
+          showPicker ? "bg-gray-100" : ""
+        }`}
         title="Add reaction"
       >
-        <SmilePlus className="size-3" />
+        <SmilePlus
+          className={`size-3 transition-colors ${showPicker ? "text-[#1A237E]" : "text-gray-400"}`}
+        />
       </button>
 
-      {/* Reaction picker */}
-      {showPicker && (
-        <div className="flex items-center gap-1 bg-white border border-gray-200 rounded-full px-2 py-1 shadow-sm">
-          {REACTION_OPTIONS.map((emoji) => (
-            <button
-              key={emoji}
-              onClick={() => onReact(emoji)}
-              className="hover:scale-125 transition-transform p-0.5"
-            >
-              {emoji}
-            </button>
-          ))}
-        </div>
-      )}
+      <AnimatePresence>
+        {showPicker && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 4 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 4 }}
+            className="flex items-center gap-0.5 bg-white border border-gray-200 rounded-full px-2 py-1 shadow-md"
+          >
+            {REACTION_OPTIONS.map((emoji) => (
+              <button
+                key={emoji}
+                onClick={() => onReact(emoji)}
+                className="hover:scale-125 transition-transform p-0.5 rounded-full hover:bg-gray-50"
+              >
+                {emoji}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getChatMessages, addChatMessage, isUserBlocked } from "@/lib/supabase/social-store";
 import { moderateContent } from "@/lib/moderation";
+import { checkRateLimit } from "@/lib/rate-limit";
+
+// Chat-specific rate limit: 10 messages per 60 seconds
+const CHAT_RATE_LIMIT = 10;
 
 // POST /api/social/chat/messages — create a new message
 export async function POST(req: NextRequest) {
@@ -20,11 +24,20 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Access restricted" }, { status: 403 });
     }
 
-    // Moderate content
-    const moderation = moderateContent(content);
-    if (moderation.blocked) {
+    // Chat-specific rate limiting
+    const rateCheck = checkRateLimit(`chat_${sessionId}`, CHAT_RATE_LIMIT);
+    if (!rateCheck.allowed) {
       return NextResponse.json(
-        { error: "Message does not meet community guidelines" },
+        { error: "You're sending messages too quickly. Please wait a moment.", remaining: 0, resetAt: rateCheck.resetAt },
+        { status: 429 }
+      );
+    }
+
+    // Moderate content (pass sessionId for duplicate detection)
+    const moderation = moderateContent(content, sessionId, { maxLength: 500, minLength: 1 });
+    if (!moderation.allowed) {
+      return NextResponse.json(
+        { error: moderation.reason || "Message does not meet community guidelines" },
         { status: 422 }
       );
     }
@@ -43,7 +56,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// GET /api/social/chat/messages?channelId=ch_general&before=timestamp
+// GET /api/social/chat/messages?channelId=ch_general&before=timestamp&limit=30
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
@@ -54,7 +67,8 @@ export async function GET(req: NextRequest) {
     }
 
     const before = searchParams.get("before") || undefined;
-    const messages = getChatMessages(channelId, 50, before);
+    const limit = Math.min(parseInt(searchParams.get("limit") || "30", 10), 50);
+    const messages = getChatMessages(channelId, limit, before);
 
     return NextResponse.json({ messages });
   } catch {

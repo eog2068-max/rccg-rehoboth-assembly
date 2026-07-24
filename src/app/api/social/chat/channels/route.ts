@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getChatChannels } from "@/lib/supabase/social-store";
 
 export async function GET() {
