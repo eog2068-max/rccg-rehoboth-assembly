@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -36,9 +36,38 @@ const navItems = [
 export function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  // Start as NOT scrolled to match SSR output; only flip after client mount
+  const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  const handleScroll = useCallback(() => {
+    setScrolled(window.scrollY > 20);
+  }, []);
+
+  useEffect(() => {
+    // Mark as mounted so we can safely apply scroll-dependent classes
+    setMounted(true);
+    // Read actual scroll position after mount to avoid hydration mismatch
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#EBF3FF]/70 backdrop-blur-md border-b border-white/30">
+    <header
+      suppressHydrationWarning
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        mounted && scrolled
+          ? "bg-[#0D1557]/95 backdrop-blur-xl shadow-lg shadow-black/10 border-b border-white/10"
+          : "bg-[#EBF3FF]/70 backdrop-blur-md border-b border-white/30"
+      )}
+    >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo + Church Name */}
@@ -54,10 +83,24 @@ export function Navbar() {
               />
             </div>
             <div className="hidden lg:block">
-              <p className="text-sm font-bold leading-tight text-[#1A237E]/90">
+              <p
+                className={cn(
+                  "text-sm font-bold leading-tight transition-colors",
+                  mounted && scrolled
+                    ? "text-white"
+                    : "text-[#1A237E]/90"
+                )}
+              >
                 Redeemed Christian Church of God
               </p>
-              <p className="text-xs leading-tight text-gray-600">
+              <p
+                className={cn(
+                  "text-xs leading-tight transition-colors",
+                  mounted && scrolled
+                    ? "text-blue-200/80"
+                    : "text-gray-600"
+                )}
+              >
                 (Rehoboth Assembly Parish)
               </p>
             </div>
@@ -71,9 +114,13 @@ export function Navbar() {
                 href={item.href}
                 className={cn(
                   "px-3 py-2 text-sm font-medium rounded-lg transition-colors",
-                  pathname === item.href
-                    ? "text-[#1A237E] bg-[#1A237E]/10 font-semibold"
-                    : "text-gray-600 hover:text-[#1A237E] hover:bg-[#1A237E]/5"
+                  mounted && scrolled
+                    ? pathname === item.href
+                      ? "text-white bg-white/20 font-semibold"
+                      : "text-blue-100/80 hover:text-white hover:bg-white/10"
+                    : pathname === item.href
+                      ? "text-[#1A237E] bg-[#1A237E]/10 font-semibold"
+                      : "text-gray-600 hover:text-[#1A237E] hover:bg-[#1A237E]/5"
                 )}
               >
                 {item.label}
@@ -106,7 +153,12 @@ export function Navbar() {
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
                 <button
-                  className="xl:hidden p-2 rounded-lg transition-colors text-[#1A237E] hover:bg-[#1A237E]/5"
+                  className={cn(
+                    "xl:hidden p-2 rounded-lg transition-colors",
+                    mounted && scrolled
+                      ? "text-white hover:bg-white/10"
+                      : "text-[#1A237E] hover:bg-[#1A237E]/5"
+                  )}
                   aria-label="Open menu"
                 >
                   <Menu className="size-6" />
