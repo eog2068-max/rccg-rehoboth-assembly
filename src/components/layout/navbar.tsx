@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useSyncExternalStore } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -36,19 +36,20 @@ const navItems = [
 export function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  // useSyncExternalStore handles server/client scroll mismatch correctly.
-  // getServerSnapshot always returns false (light navbar), while
-  // getSnapshot reads the real scrollY on the client. React knows these
-  // may differ and reconciles without hydration errors.
-  const scrollY = useSyncExternalStore(
-    (cb) => {
-      window.addEventListener("scroll", cb, { passive: true });
-      return () => window.removeEventListener("scroll", cb);
-    },
-    () => window.scrollY,
-    () => 0
-  );
-  const scrolled = scrollY > 20;
+  // Start as NOT scrolled to match SSR output; only flip after client mount
+  const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  const handleScroll = useCallback(() => {
+    setScrolled(window.scrollY > 20);
+  }, []);
+
+  useEffect(() => {
+    setMounted(true);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -60,7 +61,7 @@ export function Navbar() {
       suppressHydrationWarning
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        scrolled
+        mounted && scrolled
           ? "bg-[#0D1557]/95 backdrop-blur-xl shadow-lg shadow-black/10 border-b border-white/10"
           : "bg-[#EBF3FF]/70 backdrop-blur-md border-b border-white/30"
       )}
@@ -83,7 +84,7 @@ export function Navbar() {
               <p
                 className={cn(
                   "text-sm font-bold leading-tight transition-colors",
-                  scrolled
+                  mounted && scrolled
                     ? "text-white"
                     : "text-[#1A237E]/90"
                 )}
@@ -93,7 +94,7 @@ export function Navbar() {
               <p
                 className={cn(
                   "text-xs leading-tight transition-colors",
-                  scrolled
+                  mounted && scrolled
                     ? "text-blue-200/80"
                     : "text-gray-600"
                 )}
@@ -111,7 +112,7 @@ export function Navbar() {
                 href={item.href}
                 className={cn(
                   "px-3 py-2 text-sm font-medium rounded-lg transition-colors",
-                  scrolled
+                  mounted && scrolled
                     ? pathname === item.href
                       ? "text-white bg-white/20 font-semibold"
                       : "text-blue-100/80 hover:text-white hover:bg-white/10"
@@ -152,7 +153,7 @@ export function Navbar() {
                 <button
                   className={cn(
                     "xl:hidden p-2 rounded-lg transition-colors",
-                    scrolled
+                    mounted && scrolled
                       ? "text-white hover:bg-white/10"
                       : "text-[#1A237E] hover:bg-[#1A237E]/5"
                   )}
