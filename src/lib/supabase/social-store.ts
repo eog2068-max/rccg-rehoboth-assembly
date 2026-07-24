@@ -14,6 +14,9 @@ import {
   AttendanceIntention,
   PresenceRecord,
   ModerationLogEntry,
+  ChatChannel,
+  ChatMessage,
+  ChatReport,
 } from "./types";
 
 // --- Presence ---
@@ -314,23 +317,6 @@ export function hideModerationItem(id: string, targetCollection: "publicPrayers"
   return true;
 }
 
-// --- Social Admin Overview Stats ---
-export function getSocialOverviewStats() {
-  return {
-    presenceCount: getPresenceCount(),
-    currentQuestion: getCurrentQuestion(),
-    totalPublicPrayers: publicPrayers.filter((p) => p.status === "approved").length,
-    totalPrivatePrayers: privatePrayers.length,
-    pendingPrivatePrayers: privatePrayers.filter((p) => p.status === "new").length,
-    totalAmenPosts: amenPosts.filter((p) => p.status === "approved").length,
-    totalQuestionResponses: questionResponses.filter((r) => r.status === "approved").length,
-    currentChallenge: getCurrentChallenge(),
-    liveSession: getLiveSession(),
-    moderationQueueSize: moderationQueue.filter((m) => m.action === "pending").length,
-    totalAttendanceIntentions: attendanceIntentions.length,
-  };
-}
-
 // --- Amen Wall ---
 const amenPosts: AmenWallPost[] = [
   {
@@ -536,3 +522,383 @@ addAttendanceIntention("ev1", "mock_s2", "self");
 addAttendanceIntention("ev1", "mock_s3", "family");
 addAttendanceIntention("ev1", "mock_s4", "self");
 addAttendanceIntention("ev1", "mock_s5", "friend");
+
+// ============================================================
+// FamilyChat Store
+// ============================================================
+
+const chatChannels: ChatChannel[] = [
+  {
+    id: "ch_general",
+    name: "General Family",
+    emoji: "🏠",
+    description: "Everyday church-family conversation.",
+    order: 0,
+    isAnnouncement: false,
+    status: "active",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    lastMessageAt: new Date(Date.now() - 60000).toISOString(),
+    messageCount: 42,
+  },
+  {
+    id: "ch_prayer",
+    name: "Prayer & Encouragement",
+    emoji: "🙏",
+    description: "Prayer and spiritual support.",
+    order: 1,
+    isAnnouncement: false,
+    status: "active",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    lastMessageAt: new Date(Date.now() - 300000).toISOString(),
+    messageCount: 28,
+  },
+  {
+    id: "ch_bible",
+    name: "Bible & Faith",
+    emoji: "📖",
+    description: "Healthy Bible discussions.",
+    order: 2,
+    isAnnouncement: false,
+    status: "active",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    lastMessageAt: new Date(Date.now() - 900000).toISOString(),
+    messageCount: 15,
+  },
+  {
+    id: "ch_family",
+    name: "Family & Marriage",
+    emoji: "👨‍👩‍👧",
+    description: "Christian family and relationship discussions.",
+    order: 3,
+    isAnnouncement: false,
+    status: "active",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    lastMessageAt: new Date(Date.now() - 1800000).toISOString(),
+    messageCount: 8,
+  },
+  {
+    id: "ch_church_life",
+    name: "Church Life & Activities",
+    emoji: "🎉",
+    description: "Church activities and community matters.",
+    order: 4,
+    isAnnouncement: false,
+    status: "active",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    lastMessageAt: new Date(Date.now() - 3600000).toISOString(),
+    messageCount: 12,
+  },
+  {
+    id: "ch_announcements",
+    name: "Church Announcements",
+    emoji: "📢",
+    description: "Admin-only publishing.",
+    order: 5,
+    isAnnouncement: true,
+    status: "active",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    lastMessageAt: new Date(Date.now() - 7200000).toISOString(),
+    messageCount: 3,
+  },
+];
+
+const chatMessages: ChatMessage[] = [
+  {
+    id: "msg_1",
+    channelId: "ch_general",
+    content: "Good morning, family! Hope everyone had a blessed week. God is faithful!",
+    displayName: "Anonymous",
+    sessionId: "s100",
+    status: "approved",
+    isAnnouncement: false,
+    reactions: { "❤️": 8, "🙏": 5, "🙌": 3 },
+    reportCount: 0,
+    createdAt: new Date(Date.now() - 600000).toISOString(),
+  },
+  {
+    id: "msg_2",
+    channelId: "ch_general",
+    content: "Praise God! He's been so good to my family this week. My daughter got admitted to university!",
+    displayName: "Anonymous",
+    sessionId: "s101",
+    status: "approved",
+    isAnnouncement: false,
+    replyToId: "msg_1",
+    reactions: { "🙏": 12, "🔥": 7, "❤️": 9 },
+    reportCount: 0,
+    createdAt: new Date(Date.now() - 540000).toISOString(),
+  },
+  {
+    id: "msg_3",
+    channelId: "ch_general",
+    content: "Congratulations! That's wonderful news. God will continue to guide her path. Amen!",
+    displayName: "Anonymous",
+    sessionId: "s102",
+    status: "approved",
+    isAnnouncement: false,
+    replyToId: "msg_2",
+    reactions: { "❤️": 4, "🙌": 6 },
+    reportCount: 0,
+    createdAt: new Date(Date.now() - 480000).toISOString(),
+  },
+  {
+    id: "msg_4",
+    channelId: "ch_general",
+    content: "Does anyone know if there's a Bible study this Tuesday? I want to come prepared.",
+    displayName: "Anonymous",
+    sessionId: "s103",
+    status: "approved",
+    isAnnouncement: false,
+    reactions: {},
+    reportCount: 0,
+    createdAt: new Date(Date.now() - 360000).toISOString(),
+  },
+  {
+    id: "msg_5",
+    channelId: "ch_general",
+    content: "Yes! Tuesday Digging Deep at 5:30 PM. We're studying the book of Romans. Come join us!",
+    displayName: "Anonymous",
+    sessionId: "s104",
+    status: "approved",
+    isAnnouncement: false,
+    replyToId: "msg_4",
+    reactions: { "🙏": 3, "❤️": 2 },
+    reportCount: 0,
+    createdAt: new Date(Date.now() - 300000).toISOString(),
+  },
+  {
+    id: "msg_6",
+    channelId: "ch_prayer",
+    content: "Please keep my family in your prayers. My father is going for a medical procedure next week. We trust God for a successful outcome.",
+    displayName: "Anonymous",
+    sessionId: "s105",
+    status: "approved",
+    isAnnouncement: false,
+    reactions: { "🙏": 18, "❤️": 12 },
+    reportCount: 0,
+    createdAt: new Date(Date.now() - 1200000).toISOString(),
+  },
+  {
+    id: "msg_7",
+    channelId: "ch_prayer",
+    content: "We are praying with you, dear. God is the Great Physician. He will see your father through. Be encouraged!",
+    displayName: "Anonymous",
+    sessionId: "s106",
+    status: "approved",
+    isAnnouncement: false,
+    replyToId: "msg_6",
+    reactions: { "🙏": 7, "❤️": 5 },
+    reportCount: 0,
+    createdAt: new Date(Date.now() - 1080000).toISOString(),
+  },
+  {
+    id: "msg_8",
+    channelId: "ch_bible",
+    content: "\"Trust in the Lord with all your heart, and lean not on your own understanding; in all your ways acknowledge Him, and He shall direct your paths.\" - Proverbs 3:5-6",
+    displayName: "Anonymous",
+    sessionId: "s107",
+    status: "approved",
+    isAnnouncement: false,
+    reactions: { "❤️": 15, "🙏": 11, "🔥": 8, "🙌": 6 },
+    reportCount: 0,
+    createdAt: new Date(Date.now() - 1800000).toISOString(),
+  },
+  {
+    id: "msg_announce_1",
+    channelId: "ch_announcements",
+    content: "Sunday Worship Service this week starts at 7:00 AM. Theme: \"Grace That Transform.\" Please come early. God bless you all!",
+    displayName: "Church Admin",
+    sessionId: "admin_1",
+    status: "approved",
+    isAnnouncement: true,
+    reactions: { "❤️": 22, "🙏": 14 },
+    reportCount: 0,
+    createdAt: new Date(Date.now() - 7200000).toISOString(),
+  },
+];
+
+const chatReports: ChatReport[] = [];
+const blockedSessions = new Set<string>();
+
+// --- FamilyChat Functions ---
+
+export function getChatChannels(): ChatChannel[] {
+  return chatChannels
+    .filter((ch) => ch.status === "active")
+    .sort((a, b) => a.order - b.order);
+}
+
+export function getChatChannelById(channelId: string): ChatChannel | null {
+  return chatChannels.find((ch) => ch.id === channelId && ch.status === "active") || null;
+}
+
+export function getChatMessages(
+  channelId: string,
+  limit: number = 50,
+  before?: string
+): ChatMessage[] {
+  let messages = chatMessages.filter(
+    (m) => m.channelId === channelId && m.status === "approved"
+  );
+  if (before) {
+    const beforeDate = new Date(before).getTime();
+    messages = messages.filter((m) => new Date(m.createdAt).getTime() < beforeDate);
+  }
+  return messages.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).slice(0, limit);
+}
+
+export function addChatMessage(
+  channelId: string,
+  content: string,
+  sessionId: string,
+  displayName: string = "Anonymous",
+  replyToId?: string
+): ChatMessage {
+  const channel = chatChannels.find((ch) => ch.id === channelId);
+  const isAnnouncement = channel?.isAnnouncement || false;
+
+  const msg: ChatMessage = {
+    id: `msg_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+    channelId,
+    content: content.substring(0, 500),
+    displayName,
+    sessionId,
+    status: "approved",
+    isAnnouncement,
+    replyToId,
+    reactions: {},
+    reportCount: 0,
+    createdAt: new Date().toISOString(),
+  };
+  chatMessages.push(msg);
+
+  // Update channel stats
+  if (channel) {
+    channel.lastMessageAt = msg.createdAt;
+    channel.messageCount++;
+    channel.updatedAt = msg.createdAt;
+  }
+
+  return msg;
+}
+
+export function addReactionToChatMessage(
+  messageId: string,
+  reaction: string
+): ChatMessage | null {
+  const msg = chatMessages.find((m) => m.id === messageId);
+  if (msg) {
+    msg.reactions[reaction] = (msg.reactions[reaction] || 0) + 1;
+    return msg;
+  }
+  return null;
+}
+
+export function reportChatMessage(
+  messageId: string,
+  channelId: string,
+  sessionId: string,
+  reason: string
+): ChatReport {
+  const report: ChatReport = {
+    id: `rpt_${Date.now()}`,
+    messageId,
+    channelId,
+    sessionId,
+    reason,
+    status: "pending",
+    createdAt: new Date().toISOString(),
+  };
+  chatReports.push(report);
+
+  // Increment report count on message
+  const msg = chatMessages.find((m) => m.id === messageId);
+  if (msg) msg.reportCount++;
+
+  // Auto-hide if 3+ reports
+  if (msg && msg.reportCount >= 3) {
+    msg.status = "hidden";
+  }
+
+  return report;
+}
+
+export function getChatReports(): ChatReport[] {
+  return [...chatReports].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
+}
+
+// Admin functions for FamilyChat
+export function removeChatMessage(messageId: string): boolean {
+  const idx = chatMessages.findIndex((m) => m.id === messageId);
+  if (idx !== -1) {
+    chatMessages[idx].status = "hidden";
+    return true;
+  }
+  return false;
+}
+
+export function pinChatMessage(messageId: string): boolean {
+  const msg = chatMessages.find((m) => m.id === messageId);
+  if (msg) {
+    msg.status = "pinned";
+    msg.pinnedAt = new Date().toISOString();
+    return true;
+  }
+  return false;
+}
+
+export function unpinChatMessage(messageId: string): boolean {
+  const msg = chatMessages.find((m) => m.id === messageId);
+  if (msg && msg.status === "pinned") {
+    msg.status = "approved";
+    msg.pinnedAt = undefined;
+    return true;
+  }
+  return false;
+}
+
+export function blockUser(sessionId: string): boolean {
+  blockedSessions.add(sessionId);
+  return true;
+}
+
+export function unblockUser(sessionId: string): boolean {
+  blockedSessions.delete(sessionId);
+  return true;
+}
+
+export function isUserBlocked(sessionId: string): boolean {
+  return blockedSessions.has(sessionId);
+}
+
+// --- Update Admin Overview Stats to include FamilyChat ---
+export function getSocialOverviewStats() {
+  const activeChannels = chatChannels.filter((ch) => ch.status === "active");
+  const totalMessages = chatMessages.filter((m) => m.status === "approved").length;
+  const pendingReports = chatReports.filter((r) => r.status === "pending").length;
+
+  return {
+    presenceCount: getPresenceCount(),
+    currentQuestion: getCurrentQuestion(),
+    totalPublicPrayers: publicPrayers.filter((p) => p.status === "approved").length,
+    totalPrivatePrayers: privatePrayers.length,
+    pendingPrivatePrayers: privatePrayers.filter((p) => p.status === "new").length,
+    totalAmenPosts: amenPosts.filter((p) => p.status === "approved").length,
+    totalQuestionResponses: questionResponses.filter((r) => r.status === "approved").length,
+    totalChatChannels: activeChannels.length,
+    totalChatMessages: totalMessages,
+    pendingChatReports: pendingReports,
+    currentChallenge: getCurrentChallenge(),
+    liveSession: getLiveSession(),
+    moderationQueueSize: moderationQueue.filter((m) => m.action === "pending").length,
+    totalAttendanceIntentions: attendanceIntentions.length,
+  };
+}

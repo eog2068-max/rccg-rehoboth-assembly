@@ -110,6 +110,48 @@ export interface ReactionPayload {
   type: "love" | "praying" | "amen" | "fire";
 }
 
+// --- FamilyChat Types ---
+export interface ChatChannel {
+  id: string;
+  name: string;
+  emoji: string;
+  description: string;
+  order: number;
+  isAnnouncement: boolean;
+  status: "active" | "archived";
+  createdAt: string;
+  updatedAt: string;
+  lastMessageAt?: string;
+  messageCount: number;
+}
+
+export interface ChatMessage {
+  id: string;
+  channelId: string;
+  content: string;
+  displayName: string;
+  sessionId: string;
+  status: "approved" | "pending" | "hidden" | "pinned";
+  isAnnouncement: boolean;
+  replyToId?: string;
+  reactions: Record<string, number>;
+  reportCount: number;
+  createdAt: string;
+  pinnedAt?: string;
+}
+
+export interface ChatReport {
+  id: string;
+  messageId: string;
+  channelId: string;
+  sessionId: string;
+  reason: string;
+  status: "pending" | "reviewed" | "dismissed";
+  createdAt: string;
+  reviewedAt?: string;
+  actionTaken?: string;
+}
+
 export interface ModerationLogEntry {
   id: string;
   targetType: "publicPrayer" | "amenPost" | "questionResponse";
