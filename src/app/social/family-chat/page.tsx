@@ -1,11 +1,43 @@
-import { FamilyChat } from "@/components/social/family-chat";
+"use client";
 
-export const metadata = {
-  title: "FamilyChat — RehobothSocial",
-  description:
-    "Stay connected with your church family through meaningful conversations throughout the week.",
-};
+import { useState } from "react";
+import { FeatureLandingPage } from "@/components/social/feature-landing-page";
+import { FamilyChat } from "@/components/social/family-chat";
+import { socialFeatures } from "@/components/social/social-data";
 
 export default function FamilyChatPage() {
-  return <FamilyChat />;
+  const [entered, setEntered] = useState(false);
+
+  if (entered) return <FamilyChat />;
+
+  const feature = socialFeatures.find((f) => f.id === "family-chat")!;
+
+  return (
+    <FeatureLandingPage feature={feature} onEnter={() => setEntered(true)}>
+      {/* Channel previews — FamilyChat-specific content */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-2">
+        {[
+          { emoji: "🏠", name: "General Family", desc: "Everyday conversation" },
+          { emoji: "🙏", name: "Prayer & Encouragement", desc: "Spiritual support" },
+          { emoji: "📖", name: "Bible & Faith", desc: "Bible discussions" },
+          { emoji: "👨‍👩‍👧", name: "Family & Marriage", desc: "Relationships" },
+          { emoji: "🎉", name: "Church Life", desc: "Activities & events" },
+          { emoji: "📢", name: "Announcements", desc: "Official updates" },
+        ].map((ch) => (
+          <div
+            key={ch.name}
+            className="bg-gray-50 rounded-xl p-3 border border-gray-100"
+          >
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-base">{ch.emoji}</span>
+              <span className="text-xs font-semibold text-gray-700 truncate">
+                {ch.name}
+              </span>
+            </div>
+            <p className="text-[10px] text-gray-400">{ch.desc}</p>
+          </div>
+        ))}
+      </div>
+    </FeatureLandingPage>
+  );
 }

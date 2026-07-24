@@ -1,11 +1,41 @@
-import type { Metadata } from "next";
-import { TodaysQuestion } from "@/components/social/todays-question";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Today's Question | RehobothSocial",
-  description: "Answer today's community question and connect with your church family.",
-};
+import { useState } from "react";
+import { FeatureLandingPage } from "@/components/social/feature-landing-page";
+import { TodaysQuestion } from "@/components/social/todays-question";
+import { socialFeatures } from "@/components/social/social-data";
 
 export default function TodaysQuestionPage() {
-  return <TodaysQuestion />;
+  const [entered, setEntered] = useState(false);
+
+  if (entered) return <TodaysQuestion />;
+
+  const feature = socialFeatures.find((f) => f.id === "todays-question")!;
+
+  return (
+    <FeatureLandingPage feature={feature} onEnter={() => setEntered(true)}>
+      {/* Sample question types preview */}
+      <div className="bg-gray-50 rounded-xl p-4 border border-gray-100 mb-2">
+        <p className="text-xs font-semibold text-[#1A237E] mb-3">
+          Example Questions You Might See:
+        </p>
+        <div className="space-y-2">
+          {[
+            '"What Scripture has been speaking to you this week?"',
+            '"How did you experience God\'s faithfulness today?"',
+            '"What\'s one thing you\'re grateful for right now?"',
+            '"How can we be praying for you this week?"',
+          ].map((q, i) => (
+            <div
+              key={i}
+              className="flex items-start gap-2 text-xs text-gray-600"
+            >
+              <span className="text-sm mt-0.5">💬</span>
+              <p className="italic leading-relaxed">{q}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </FeatureLandingPage>
+  );
 }

@@ -9,7 +9,7 @@ export function BackToSocial() {
     <motion.div
       initial={{ opacity: 0, x: -10 }}
       animate={{ opacity: 1, x: 0 }}
-      className="mb-6"
+      className="mb-2"
     >
       <Link
         href="/social"

@@ -12,8 +12,8 @@ import {
   Shield,
   Zap,
   Globe,
-  Users,
   Sparkles,
+  ChevronRight,
 } from "lucide-react";
 import { socialFeatures } from "./social-data";
 
@@ -44,9 +44,6 @@ export function SocialLandingPage() {
       .then((d) => setPresenceCount(d.count))
       .catch(() => {});
   }, []);
-
-  const familyChatFeature = socialFeatures.find((f) => f.id === "family-chat");
-  const otherFeatures = socialFeatures.filter((f) => f.id !== "family-chat");
 
   return (
     <div className="min-h-screen bg-[#F8FAFF]">
@@ -124,115 +121,22 @@ export function SocialLandingPage() {
               </span>
             </motion.div>
           )}
-
-          {/* Hero CTAs — FamilyChat is primary */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-3 justify-center"
-          >
-            <Link
-              href="/social/family-chat"
-              className="inline-flex items-center gap-2 bg-[#D32F2F] hover:bg-[#B71C1C] text-white px-8 py-4 rounded-xl font-bold transition-colors shadow-lg text-base"
-            >
-              <MessageCircle className="size-5" />
-              Enter FamilyChat
-              <ArrowRight className="size-4" />
-            </Link>
-            <Link
-              href="/social/prayer-circle"
-              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white px-6 py-4 rounded-xl font-semibold hover:bg-white/20 transition-colors text-sm"
-            >
-              🙏 Prayer Circle
-            </Link>
-          </motion.div>
         </div>
       </section>
 
-      {/* ===== FAMILYCHAT — THE HEARTBEAT (Featured) ===== */}
-      <section className="max-w-5xl mx-auto px-4 -mt-10 relative z-20 mb-12">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="bg-white rounded-2xl border border-gray-100 shadow-xl overflow-hidden"
-        >
-          <div className="bg-gradient-to-r from-[#1A237E] to-[#283593] p-6 md:p-8">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center text-3xl">
-                💬
-              </div>
-              <div>
-                <h2 className="text-xl md:text-2xl font-bold text-white">
-                  FamilyChat
-                </h2>
-                <p className="text-sm text-blue-100/70">
-                  The heartbeat of RehobothSocial
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="p-6 md:p-8">
-            <p className="text-base text-gray-600 leading-relaxed mb-6">
-              FamilyChat is your church family&rsquo;s digital gathering place.
-              Connect through meaningful conversations in dedicated channels
-              — share prayer requests, discuss Scripture, encourage one another,
-              and stay updated on church life. No account needed. Just come as
-              you are.
-            </p>
-
-            {/* Channel previews */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
-              {[
-                { emoji: "🏠", name: "General Family", desc: "Everyday conversation" },
-                { emoji: "🙏", name: "Prayer & Encouragement", desc: "Spiritual support" },
-                { emoji: "📖", name: "Bible & Faith", desc: "Bible discussions" },
-                { emoji: "👨‍👩‍👧", name: "Family & Marriage", desc: "Relationships" },
-                { emoji: "🎉", name: "Church Life", desc: "Activities & events" },
-                { emoji: "📢", name: "Announcements", desc: "Official updates" },
-              ].map((ch) => (
-                <div
-                  key={ch.name}
-                  className="bg-gray-50 rounded-xl p-3 border border-gray-100"
-                >
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-base">{ch.emoji}</span>
-                    <span className="text-xs font-semibold text-gray-700 truncate">
-                      {ch.name}
-                    </span>
-                  </div>
-                  <p className="text-[10px] text-gray-400">{ch.desc}</p>
-                </div>
-              ))}
-            </div>
-
-            <Link
-              href="/social/family-chat"
-              className="inline-flex items-center gap-2 bg-[#1A237E] hover:bg-[#283593] text-white px-6 py-3 rounded-xl font-semibold transition-colors text-sm"
-            >
-              <MessageCircle className="size-4" />
-              Open FamilyChat
-              <ArrowRight className="size-3" />
-            </Link>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* ===== OTHER FEATURES GRID ===== */}
-      <section className="max-w-6xl mx-auto px-4 pb-16">
+      {/* ===== ALL 5 FEATURES GRID ===== */}
+      <section className="max-w-5xl mx-auto px-4 -mt-10 relative z-20 mb-14">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
-          <h2 className="text-2xl md:text-3xl font-bold text-[#1A237E] mb-3">
-            Explore the Ecosystem
+          <h2 className="text-2xl md:text-3xl font-bold text-[#1A237E] mb-2">
+            Five Ways to Connect
           </h2>
-          <p className="text-gray-500 max-w-md mx-auto">
-            Four ways to participate, connect, and grow together
+          <p className="text-gray-500 max-w-md mx-auto text-sm">
+            Choose a feature and stay connected to your church family all week
           </p>
         </motion.div>
 
@@ -241,39 +145,42 @@ export function SocialLandingPage() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
         >
-          {otherFeatures.map((feature) => {
+          {socialFeatures.map((feature) => {
             const IconComp = iconMap[feature.id] || Sparkles;
             return (
               <motion.div key={feature.id} variants={itemVariants}>
                 <Link href={feature.href} className="block group h-full">
                   <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg hover:border-gray-200 transition-all duration-300 h-full hover:-translate-y-1">
                     <div
-                      className={`bg-gradient-to-r ${feature.color} p-4 relative overflow-hidden`}
+                      className={`bg-gradient-to-r ${feature.color} p-5 relative overflow-hidden`}
                     >
                       <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full blur-xl -translate-y-8 translate-x-8" />
                       <div className="relative flex items-center justify-between">
                         <span className="text-3xl">{feature.emoji}</span>
                         <IconComp className="size-6 text-white/40 group-hover:text-white/70 transition-colors" />
                       </div>
+                      <h3 className="relative text-base font-bold text-white mt-3">
+                        {feature.title}
+                      </h3>
                     </div>
                     <div className="p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <div
-                          className={`w-8 h-8 rounded-lg ${feature.iconBg} flex items-center justify-center`}
-                        >
-                          <IconComp className="size-4 text-white" />
-                        </div>
-                        <h3 className="text-sm font-bold text-gray-800 group-hover:text-[#1A237E] transition-colors">
-                          {feature.title}
-                        </h3>
-                      </div>
-                      <p className="text-xs text-gray-500 leading-relaxed">
+                      <p className="text-xs text-gray-500 leading-relaxed mb-3">
                         {feature.description}
                       </p>
-                      <div className="mt-3 flex items-center gap-1 text-xs text-[#1A237E] font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                        Open <ArrowRight className="size-3" />
+                      <div className="flex items-center gap-1.5 text-xs text-[#1A237E] font-semibold">
+                        {feature.featured ? (
+                          <>
+                            <span>Enter</span>
+                            <ChevronRight className="size-3.5" />
+                          </>
+                        ) : (
+                          <>
+                            <span>Open</span>
+                            <ChevronRight className="size-3.5" />
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -402,21 +309,14 @@ export function SocialLandingPage() {
             <p className="text-blue-200/50 mb-8 text-xs max-w-md mx-auto">
               You don&rsquo;t have to wait until the next church service.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Link
-                href="/social/family-chat"
-                className="inline-flex items-center gap-2 bg-[#D32F2F] hover:bg-[#B71C1C] text-white px-8 py-3.5 rounded-xl font-bold transition-colors shadow-lg text-sm"
-              >
-                <MessageCircle className="size-4" />
-                Enter FamilyChat
-              </Link>
-              <Link
-                href="/social/todays-question"
-                className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-white/20 transition-colors text-sm"
-              >
-                💬 Today&rsquo;s Question
-              </Link>
-            </div>
+            <Link
+              href="/social/family-chat"
+              className="inline-flex items-center gap-2 bg-[#D32F2F] hover:bg-[#B71C1C] text-white px-8 py-3.5 rounded-xl font-bold transition-colors shadow-lg text-sm"
+            >
+              <MessageCircle className="size-4" />
+              Enter FamilyChat
+              <ArrowRight className="size-4" />
+            </Link>
           </motion.div>
         </div>
       </section>

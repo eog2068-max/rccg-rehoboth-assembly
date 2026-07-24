@@ -306,11 +306,13 @@ export function FamilyChat() {
   // Loading state
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#F8FAFF] flex items-center justify-center">
+      <div className="h-screen bg-[#F8FAFF] flex flex-col">
         <BackToSocial />
-        <div className="text-center">
-          <Loader2 className="size-8 text-[#1A237E] animate-spin mx-auto mb-3" />
-          <p className="text-sm text-gray-500">Loading FamilyChat...</p>
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <Loader2 className="size-8 text-[#1A237E] animate-spin mx-auto mb-3" />
+            <p className="text-sm text-gray-500">Loading FamilyChat...</p>
+          </div>
         </div>
       </div>
     );
@@ -319,10 +321,12 @@ export function FamilyChat() {
   const greeting = WARM_GREETINGS[Math.floor(Date.now() / 86400000) % WARM_GREETINGS.length];
 
   return (
-    <div className="min-h-screen bg-[#F8FAFF]">
-      <BackToSocial />
+    <div className="h-screen bg-[#F8FAFF] flex flex-col overflow-hidden">
+      <div className="shrink-0 px-4 pt-4 max-w-5xl mx-auto w-full">
+        <BackToSocial />
+      </div>
 
-      <div className="flex h-[calc(100vh-60px)] max-w-5xl mx-auto">
+      <div className="flex flex-1 min-h-0 max-w-5xl mx-auto w-full px-0 md:px-0">
         {/* ===== CHANNEL SIDEBAR ===== */}
         <AnimatePresence>
           {showSidebar && (
