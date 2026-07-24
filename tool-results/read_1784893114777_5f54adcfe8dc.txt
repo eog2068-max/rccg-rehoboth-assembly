@@ -1,0 +1,602 @@
+   293→   293→    if (val.length <= MAX_CHARS) {
+   294→   294→      setInputText(val);
+   295→   295→      setCharCount(val.length);
+   296→   296→    }
+   297→   297→  };
+   298→   298→
+   299→   299→  const handleKeyDown = (e: React.KeyboardEvent) => {
+   300→   300→    if (e.key === "Enter" && !e.shiftKey) {
+   301→   301→      e.preventDefault();
+   302→   302→      sendMessage();
+   303→   303→    }
+   304→   304→  };
+   305→   305→
+   306→   306→  // Loading state
+   307→   307→  if (loading) {
+   308→   308→    return (
+   309→   309→      <div className="min-h-screen bg-[#F8FAFF] flex items-center justify-center">
+   310→   310→        <BackToSocial />
+   311→   311→        <div className="text-center">
+   312→   312→          <Loader2 className="size-8 text-[#1A237E] animate-spin mx-auto mb-3" />
+   313→   313→          <p className="text-sm text-gray-500">Loading FamilyChat...</p>
+   314→   314→        </div>
+   315→   315→      </div>
+   316→   316→    );
+   317→   317→  }
+   318→   318→
+   319→   319→  const greeting = WARM_GREETINGS[Math.floor(Date.now() / 86400000) % WARM_GREETINGS.length];
+   320→   320→
+   321→   321→  return (
+   322→   322→    <div className="min-h-screen bg-[#F8FAFF]">
+   323→   323→      <BackToSocial />
+   324→   324→
+   325→   325→      <div className="flex h-[calc(100vh-60px)] max-w-5xl mx-auto">
+   326→   326→        {/* ===== CHANNEL SIDEBAR ===== */}
+   327→   327→        <AnimatePresence>
+   328→   328→          {showSidebar && (
+   329→   329→            <motion.aside
+   330→   330→              initial={{ x: -280, opacity: 0 }}
+   331→   331→              animate={{ x: 0, opacity: 1 }}
+   332→   332→              exit={{ x: -280, opacity: 0 }}
+   333→   333→              transition={{ duration: 0.2 }}
+   334→   334→              className="w-64 md:w-72 bg-white border-r border-gray-100 flex flex-col shrink-0 shadow-sm"
+   335→   335→            >
+   336→   336→              {/* Sidebar Header */}
+   337→   337→              <div className="p-4 border-b border-gray-100 bg-gradient-to-br from-[#F8FAFF] to-white">
+   338→   338→                <div className="flex items-center gap-2.5">
+   339→   339→                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#1A237E] to-[#283593] flex items-center justify-center">
+   340→   340→                    <MessageCircle className="size-4 text-white" />
+   341→   341→                  </div>
+   342→   342→                  <div>
+   343→   343→                    <h2 className="text-sm font-bold text-[#1A237E]">
+   344→   344→                      FamilyChat
+   345→   345→                    </h2>
+   346→   346→                    <p className="text-[9px] text-gray-400 leading-tight mt-0.5">
+   347→   347→                      I Remain Connected To My Church Family
+   348→   348→                    </p>
+   349→   349→                  </div>
+   350→   350→                </div>
+   351→   351→              </div>
+   352→   352→
+   353→   353→              {/* Channel List */}
+   354→   354→              <div className="flex-1 overflow-y-auto py-1">
+   355→   355→                {channels.map((ch) => (
+   356→   356→                  <button
+   357→   357→                    key={ch.id}
+   358→   358→                    onClick={() => {
+   359→   359→                      setActiveChannel(ch);
+   360→   360→                      if (window.innerWidth < 768) setShowSidebar(false);
+   361→   361→                    }}
+   362→   362→                    className={`w-full text-left px-4 py-3 flex items-center gap-3 transition-all duration-150 ${
+   363→   363→                      activeChannel?.id === ch.id
+   364→   364→                        ? "bg-[#1A237E]/5 border-l-[3px] border-[#1A237E]"
+   365→   365→                        : "hover:bg-gray-50/80 border-l-[3px] border-transparent"
+   366→   366→                    }`}
+   367→   367→                  >
+   368→   368→                    <span className="text-lg shrink-0">{ch.emoji}</span>
+   369→   369→                    <div className="min-w-0 flex-1">
+   370→   370→                      <p
+   371→   371→                        className={`text-[13px] font-medium truncate ${
+   372→   372→                          activeChannel?.id === ch.id
+   373→   373→                            ? "text-[#1A237E]"
+   374→   374→                            : "text-gray-600"
+   375→   375→                        }`}
+   376→   376→                      >
+   377→   377→                        {ch.name}
+   378→   378→                      </p>
+   379→   379→                      <p className="text-[10px] text-gray-400 truncate">
+   380→   380→                        {ch.isAnnouncement
+   381→   381→                          ? `${ch.messageCount} announcements`
+   382→   382→                          : `${ch.messageCount} messages`}
+   383→   383→                      </p>
+   384→   384→                    </div>
+   385→   385→                  </button>
+   386→   386→                ))}
+   387→   387→              </div>
+   388→   388→
+   389→   389→              {/* Community Guidelines */}
+   390→   390→              <div className="p-3 border-t border-gray-100 bg-gray-50/50">
+   391→   391→                <div className="flex items-center gap-1.5 mb-1.5">
+   392→   392→                  <Users className="size-3 text-gray-400" />
+   393→   393→                  <p className="text-[10px] font-medium text-gray-500">
+   394→   394→                    Community Guidelines
+   395→   395→                  </p>
+   396→   396→                </div>
+   397→   397→                <p className="text-[9px] text-gray-400 leading-relaxed">
+   398→   398→                  Be kind. Be respectful. Be Christ-like. This is your church
+   399→   399→                  family.
+   400→   400→                </p>
+   401→   401→              </div>
+   402→   402→            </motion.aside>
+   403→   403→          )}
+   404→   404→        </AnimatePresence>
+   405→   405→
+   406→   406→        {/* ===== CHAT AREA ===== */}
+   407→   407→        <div className="flex-1 flex flex-col min-w-0 bg-white">
+   408→   408→          {/* Chat Header */}
+   409→   409→          <div className="bg-white border-b border-gray-100 px-4 py-3 flex items-center gap-3 shadow-sm shrink-0">
+   410→   410→            {!showSidebar && (
+   411→   411→              <button
+   412→   412→                onClick={() => setShowSidebar(true)}
+   413→   413→                className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors"
+   414→   414→                aria-label="Show channels"
+   415→   415→              >
+   416→   416→                <ChevronLeft className="size-5 text-gray-500" />
+   417→   417→              </button>
+   418→   418→            )}
+   419→   419→            {activeChannel ? (
+   420→   420→              <>
+   421→   421→                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#F0F4FF] to-[#E8EDFF] flex items-center justify-center text-xl">
+   422→   422→                  {activeChannel.emoji}
+   423→   423→                </div>
+   424→   424→                <div className="min-w-0">
+   425→   425→                  <h3 className="text-sm font-bold text-gray-800 flex items-center gap-1.5">
+   426→   426→                    {activeChannel.name}
+   427→   427→                    {activeChannel.isAnnouncement && (
+   428→   428→                      <Megaphone className="size-3 text-amber-500" />
+   429→   429→                    )}
+   430→   430→                  </h3>
+   431→   431→                  <p className="text-[10px] text-gray-400 truncate">
+   432→   432→                    {activeChannel.description}
+   433→   433→                  </p>
+   434→   434→                </div>
+   435→   435→              </>
+   436→   436→            ) : (
+   437→   437→              <p className="text-sm text-gray-500">Select a channel</p>
+   438→   438→            )}
+   439→   439→          </div>
+   440→   440→
+   441→   441→          {/* Messages Area */}
+   442→   442→          <div
+   443→   443→            ref={messagesContainerRef}
+   444→   444→            onScroll={handleScroll}
+   445→   445→            className="flex-1 overflow-y-auto px-4 py-4"
+   446→   446→          >
+   447→   447→            {/* Announcement channel banner */}
+   448→   448→            {activeChannel?.isAnnouncement && (
+   449→   449→              <div className="bg-amber-50 border border-amber-200/80 rounded-xl p-3 flex items-start gap-2.5 mb-4">
+   450→   450→                <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center shrink-0">
+   451→   451→                  <Megaphone className="size-4 text-amber-600" />
+   452→   452→                </div>
+   453→   453→                <div>
+   454→   454→                  <p className="text-xs font-semibold text-amber-800">
+   455→   455→                    Official Announcements
+   456→   456→                  </p>
+   457→   457→                  <p className="text-[10px] text-amber-600/80 mt-0.5 leading-relaxed">
+   458→   458→                    Updates from church leadership appear here. This channel is
+   459→   459→                    read-only for members.
+   460→   460→                  </p>
+   461→   461→                </div>
+   462→   462→              </div>
+   463→   463→            )}
+   464→   464→
+   465→   465→            {/* Empty state */}
+   466→   466→            {activeChannel && messages.length === 0 && !activeChannel.isAnnouncement && (
+   467→   467→              <div className="text-center py-16">
+   468→   468→                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#F0F4FF] to-[#E8EDFF] flex items-center justify-center mx-auto mb-4">
+   469→   469→                  <span className="text-3xl">{activeChannel.emoji}</span>
+   470→   470→                </div>
+   471→   471→                <p className="text-sm font-medium text-gray-600 mb-1">
+   472→   472→                  {activeChannel.name}
+   473→   473→                </p>
+   474→   474→                <p className="text-xs text-gray-400 mb-4">
+   475→   475→                  No messages yet. Start the conversation!
+   476→   476→                </p>
+   477→   477→                <p className="text-[10px] text-gray-300 italic">{greeting}</p>
+   478→   478→              </div>
+   479→   479→            )}
+   480→   480→
+   481→   481→            {/* Messages */}
+   482→   482→            <div className="space-y-1">
+   483→   483→              {messages.map((msg, idx) => {
+   484→   484→                const isFirst = idx === 0 || messages[idx - 1]?.displayName !== msg.displayName;
+   485→   485→                const showAvatar = isFirst || msg.isAnnouncement;
+   486→   486→
+   487→   487→                return (
+   488→   488→                  <div key={msg.id} className="group relative py-0.5">
+   489→   489→                    {msg.isAnnouncement ? (
+   490→   490→                      /* === ANNOUNCEMENT MESSAGE === */
+   491→   491→                      <div className="bg-gradient-to-r from-[#1A237E]/[0.04] to-[#283593]/[0.04] border border-[#1A237E]/10 rounded-xl p-3.5 my-1">
+   492→   492→                        <div className="flex items-center gap-2 mb-1.5">
+   493→   493→                          <div className="w-6 h-6 rounded-md bg-[#1A237E]/10 flex items-center justify-center">
+   494→   494→                            <Megaphone className="size-3 text-[#1A237E]/70" />
+   495→   495→                          </div>
+   496→   496→                          <span className="text-[11px] font-bold text-[#1A237E]">
+   497→   497→                            {msg.displayName}
+   498→   498→                          </span>
+   499→   499→                          <span className="text-[10px] text-gray-400 ml-auto">
+   500→   500→                            {formatTimeAgo(msg.createdAt)}
+   501→   501→                          </span>
+   502→   502→                        </div>
+   503→   503→                        <p className="text-[13px] text-gray-700 leading-relaxed pl-8">
+   504→   504→                          {msg.content}
+   505→   505→                        </p>
+   506→   506→                        <MessageReactions
+   507→   507→                          reactions={msg.reactions}
+   508→   508→                          onReact={(r) => addReaction(msg.id, r)}
+   509→   509→                          showPicker={showReactions === msg.id}
+   510→   510→                          onTogglePicker={() =>
+   511→   511→                            setShowReactions(showReactions === msg.id ? null : msg.id)
+   512→   512→                          }
+   513→   513→                        />
+   514→   514→                      </div>
+   515→   515→                    ) : (
+   516→   516→                      /* === REGULAR MESSAGE === */
+   517→   517→                      <div className="flex gap-2.5">
+   518→   518→                        {/* Avatar */}
+   519→   519→                        <div className="w-8 h-8 rounded-full bg-gradient-to-br {getAvatarColor(msg.displayName)} flex items-center justify-center shrink-0 mt-0.5">
+   520→   520→                          <span className="text-white text-[11px] font-bold">
+   521→   521→                            {msg.displayName.charAt(0).toUpperCase()}
+   522→   522→                          </span>
+   523→   523→                        </div>
+   524→   524→
+   525→   525→                        <div className="min-w-0 flex-1">
+   526→   526→                          {/* Name + time (only show on first message in group) */}
+   527→   527→                          {showAvatar && (
+   528→   528→                            <div className="flex items-baseline gap-2 mb-0.5">
+   529→   529→                              <span className="text-[11px] font-semibold text-gray-700">
+   530→   530→                                {msg.displayName}
+   531→   531→                              </span>
+   532→   532→                              <span className="text-[10px] text-gray-400">
+   533→   533→                                {formatTimeAgo(msg.createdAt)}
+   534→   534→                              </span>
+   535→   535→                            </div>
+   536→   536→                          )}
+   537→   537→
+   538→   538→                          {/* Reply reference */}
+   539→   539→                          {msg.replyToId && (
+   540→   540→                            <div className="mt-1 bg-[#F0F4FF] border-l-2 border-[#1A237E]/25 rounded-r-lg px-2.5 py-1.5">
+   541→   541→                              {msg.replyToDisplayName && (
+   542→   542→                                <p className="text-[10px] font-semibold text-[#1A237E]/60">
+   543→   543→                                  {msg.replyToDisplayName}
+   544→   544→                                </p>
+   545→   545→                              )}
+   546→   546→                              <p className="text-[10px] text-gray-500 italic truncate max-w-xs">
+   547→   547→                                {msg.replyToContent || "Original message"}
+   548→   548→                              </p>
+   549→   549→                            </div>
+   550→   550→                          )}
+   551→   551→
+   552→   552→                          {/* Message bubble */}
+   553→   553→                          <div className="mt-0.5 group-hover:bg-gray-50/80 rounded-xl px-0.5 py-0.5 -mx-0.5 transition-colors">
+   554→   554→                            <p className="text-[13px] text-gray-700 leading-relaxed break-words pr-16">
+   555→   555→                              {msg.content}
+   556→   556→                            </p>
+   557→   557→                          </div>
+   558→   558→
+   559→   559→                          {/* Reactions */}
+   560→   560→                          <MessageReactions
+   561→   561→                            reactions={msg.reactions}
+   562→   562→                            onReact={(r) => addReaction(msg.id, r)}
+   563→   563→                            showPicker={showReactions === msg.id}
+   564→   564→                            onTogglePicker={() =>
+   565→   565→                              setShowReactions(showReactions === msg.id ? null : msg.id)
+   566→   566→                            }
+   567→   567→                          />
+   568→   568→
+   569→   569→                          {/* Hover actions */}
+   570→   570→                          <div className="flex items-center gap-0.5 mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+   571→   571→                            <button
+   572→   572→                              onClick={() => setReplyingTo(msg)}
+   573→   573→                              className="p-1 hover:bg-gray-100 rounded-md text-gray-400 hover:text-[#1A237E] transition-colors"
+   574→   574→                              title="Reply"
+   575→   575→                            >
+   576→   576→                              <Reply className="size-3" />
+   577→   577→                            </button>
+   578→   578→                            <button
+   579→   579→                              onClick={() => setShowReactions(showReactions === msg.id ? null : msg.id)}
+   580→   580→                              className="p-1 hover:bg-gray-100 rounded-md text-gray-400 hover:text-[#1A237E] transition-colors"
+   581→   581→                              title="React"
+   582→   582→                            >
+   583→   583→                              <SmilePlus className="size-3" />
+   584→   584→                            </button>
+   585→   585→                            <button
+   586→   586→                              onClick={() => setReportingMsg(msg)}
+   587→   587→                              className="p-1 hover:bg-red-50 rounded-md text-gray-400 hover:text-red-500 transition-colors"
+   588→   588→                              title="Report"
+   589→   589→                            >
+   590→   590→                              <Flag className="size-3" />
+   591→   591→                            </button>
+   592→   592→                          </div>
+   593→   593→                        </div>
+   594→   594→                      </div>
+   595→   595→                    )}
+   596→   596→                  </div>
+   597→   597→                );
+   598→   598→              })}
+   599→   599→            </div>
+   600→   600→            <div ref={messagesEndRef} />
+   601→   601→          </div>
+   602→   602→
+   603→   603→          {/* Error banner */}
+   604→   604→          <AnimatePresence>
+   605→   605→            {error && (
+   606→   606→              <motion.div
+   607→   607→                initial={{ opacity: 0, height: 0 }}
+   608→   608→                animate={{ opacity: 1, height: "auto" }}
+   609→   609→                exit={{ opacity: 0, height: 0 }}
+   610→   610→                className="bg-red-50 border-t border-red-100 px-4 py-2 flex items-center gap-2 shrink-0"
+   611→   611→              >
+   612→   612→                <AlertTriangle className="size-3.5 text-red-500 shrink-0" />
+   613→   613→                <p className="text-xs text-red-600 flex-1">{error}</p>
+   614→   614→                <button
+   615→   615→                  onClick={() => setError("")}
+   616→   616→                  className="text-red-400 hover:text-red-600"
+   617→   617→                >
+   618→   618→                  <X className="size-3" />
+   619→   619→                </button>
+   620→   620→              </motion.div>
+   621→   621→            )}
+   622→   622→          </AnimatePresence>
+   623→   623→
+   624→   624→          {/* Input Area */}
+   625→   625→          {activeChannel && (
+   626→   626→            <div className="bg-white border-t border-gray-100 p-3 shrink-0">
+   627→   627→              {/* Replying to indicator */}
+   628→   628→              <AnimatePresence>
+   629→   629→                {replyingTo && (
+   630→   630→                  <motion.div
+   631→   631→                    initial={{ opacity: 0, height: 0 }}
+   632→   632→                    animate={{ opacity: 1, height: "auto" }}
+   633→   633→                    exit={{ opacity: 0, height: 0 }}
+   634→   634→                    className="overflow-hidden"
+   635→   635→                  >
+   636→   636→                    <div className="flex items-center gap-2 bg-[#F0F4FF] border border-[#1A237E]/10 rounded-lg px-3 py-2 mb-2">
+   637→   637→                      <Reply className="size-3 text-[#1A237E] shrink-0" />
+   638→   638→                      <div className="min-w-0 flex-1">
+   639→   639→                        <p className="text-[10px] font-semibold text-[#1A237E]/60">
+   640→   640→                          Replying to {replyingTo.displayName}
+   641→   641→                        </p>
+   642→   642→                        <p className="text-[10px] text-gray-500 truncate">
+   643→   643→                          {replyingTo.content.substring(0, 80)}
+   644→   644→                        </p>
+   645→   645→                      </div>
+   646→   646→                      <button
+   647→   647→                        onClick={() => setReplyingTo(null)}
+   648→   648→                        className="text-gray-400 hover:text-gray-600 shrink-0"
+   649→   649→                      >
+   650→   650→                        <X className="size-3.5" />
+   651→   651→                      </button>
+   652→   652→                    </div>
+   653→   653→                  </motion.div>
+   654→   654→                )}
+   655→   655→              </AnimatePresence>
+   656→   656→
+   657→   657→              {/* Composer */}
+   658→   658→              <div className="flex items-end gap-2">
+   659→   659→                <div className="flex-1 relative">
+   660→   660→                  <textarea
+   661→   661→                    ref={inputRef}
+   662→   662→                    value={inputText}
+   663→   663→                    onChange={handleInputChange}
+   664→   664→                    onKeyDown={handleKeyDown}
+   665→   665→                    placeholder={
+   666→   666→                      activeChannel.isAnnouncement
+   667→   667→                        ? "This channel is for announcements only."
+   668→   668→                        : `Message ${activeChannel.name}...`
+   669→   669→                    }
+   670→   670→                    disabled={activeChannel.isAnnouncement}
+   671→   671→                    rows={1}
+   672→   672→                    className="w-full resize-none rounded-xl border border-gray-200 bg-[#FAFBFF] px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A237E]/15 focus:border-[#1A237E]/25 transition-all min-h-[42px] max-h-24 disabled:opacity-50 disabled:cursor-not-allowed"
+   673→   673→                    style={{ lineHeight: "1.5" }}
+   674→   674→                  />
+   675→   675→                  {/* Character counter */}
+   676→   676→                  {charCount > 0 && (
+   677→   677→                    <span
+   678→   678→                      className={`absolute bottom-1.5 right-3 text-[9px] ${
+   679→   679→                        charCount > MAX_CHARS * 0.9
+   680→   680→                          ? "text-red-400"
+   681→   681→                          : "text-gray-300"
+   682→   682→                      }`}
+   683→   683→                    >
+   684→   684→                      {charCount}/{MAX_CHARS}
+   685→   685→                    </span>
+   686→   686→                  )}
+   687→   687→                </div>
+   688→   688→                <button
+   689→   689→                  onClick={sendMessage}
+   690→   690→                  disabled={!inputText.trim() || sending || activeChannel.isAnnouncement}
+   691→   691→                  className="shrink-0 w-10 h-[42px] rounded-xl bg-[#1A237E] hover:bg-[#283593] text-white flex items-center justify-center transition-colors disabled:opacity-30 disabled:cursor-not-allowed shadow-sm"
+   692→   692→                >
+   693→   693→                  {sending ? (
+   694→   694→                    <Loader2 className="size-4 animate-spin" />
+   695→   695→                  ) : (
+   696→   696→                    <Send className="size-4" />
+   697→   697→                  )}
+   698→   698→                </button>
+   699→   699→              </div>
+   700→   700→            </div>
+   701→   701→          )}
+   702→   702→        </div>
+   703→   703→      </div>
+   704→   704→
+   705→   705→      {/* ===== REPORT MODAL ===== */}
+   706→   706→      <AnimatePresence>
+   707→   707→        {reportingMsg && (
+   708→   708→          <motion.div
+   709→   709→            initial={{ opacity: 0 }}
+   710→   710→            animate={{ opacity: 1 }}
+   711→   711→            exit={{ opacity: 0 }}
+   712→   712→            className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4"
+   713→   713→            onClick={() => {
+   714→   714→              setReportingMsg(null);
+   715→   715→              setReportReason("");
+   716→   716→              setReportExplanation("");
+   717→   717→            }}
+   718→   718→          >
+   719→   719→            <motion.div
+   720→   720→              initial={{ scale: 0.95, opacity: 0, y: 10 }}
+   721→   721→              animate={{ scale: 1, opacity: 1, y: 0 }}
+   722→   722→              exit={{ scale: 0.95, opacity: 0, y: 10 }}
+   723→   723→              className="bg-white rounded-2xl p-5 max-w-sm w-full shadow-xl"
+   724→   724→              onClick={(e) => e.stopPropagation()}
+   725→   725→            >
+   726→   726→              {/* Header */}
+   727→   727→              <div className="flex items-center gap-3 mb-4">
+   728→   728→                <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center">
+   729→   729→                  <Flag className="size-5 text-red-500" />
+   730→   730→                </div>
+   731→   731→                <div>
+   732→   732→                  <h3 className="text-sm font-bold text-gray-800">
+   733→   733→                    Report Message
+   734→   734→                  </h3>
+   735→   735→                  <p className="text-[10px] text-gray-500">
+   736→   736→                    Reviewed confidentially by a church moderator
+   737→   737→                  </p>
+   738→   738→                </div>
+   739→   739→              </div>
+   740→   740→
+   741→   741→              {/* Reported message preview */}
+   742→   742→              <div className="bg-gray-50 rounded-lg p-2.5 mb-4 border border-gray-100">
+   743→   743→                <p className="text-[11px] text-gray-600 italic line-clamp-2">
+   744→   744→                  &ldquo;{reportingMsg.content.substring(0, 120)}&rdquo;
+   745→   745→                </p>
+   746→   746→              </div>
+   747→   747→
+   748→   748→              {/* Reason selection */}
+   749→   749→              <div className="mb-4">
+   750→   750→                <p className="text-xs font-medium text-gray-700 mb-2">
+   751→   751→                  What is the reason?
+   752→   752→                </p>
+   753→   753→                <div className="space-y-1.5 max-h-48 overflow-y-auto">
+   754→   754→                  {REPORT_REASONS.map((r) => (
+   755→   755→                    <label
+   756→   756→                      key={r.value}
+   757→   757→                      className={`flex items-center gap-2.5 px-3 py-2 rounded-lg border cursor-pointer transition-colors ${
+   758→   758→                        reportReason === r.value
+   759→   759→                          ? "border-[#1A237E] bg-[#1A237E]/5"
+   760→   760→                          : "border-gray-100 hover:bg-gray-50"
+   761→   761→                      }`}
+   762→   762→                    >
+   763→   763→                      <div
+   764→   764→                        className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${
+   765→   765→                          reportReason === r.value
+   766→   766→                            ? "border-[#1A237E]"
+   767→   767→                            : "border-gray-300"
+   768→   768→                        }`}
+   769→   769→                      >
+   770→   770→                        {reportReason === r.value && (
+   771→   771→                          <div className="w-2 h-2 rounded-full bg-[#1A237E]" />
+   772→   772→                        )}
+   773→   773→                      </div>
+   774→   774→                      <span className="text-xs text-gray-700">{r.label}</span>
+   775→   775→                    </label>
+   776→   776→                  ))}
+   777→   777→                </div>
+   778→   778→              </div>
+   779→   779→
+   780→   780→              {/* Optional explanation */}
+   781→   781→              {reportReason && (
+   782→   782→                <div className="mb-4">
+   783→   783→                  <p className="text-xs font-medium text-gray-700 mb-1.5">
+   784→   784→                    Additional details (optional)
+   785→   785→                  </p>
+   786→   786→                  <textarea
+   787→   787→                    value={reportExplanation}
+   788→   788→                    onChange={(e) => setReportExplanation(e.target.value)}
+   789→   789→                    placeholder="Provide any helpful context..."
+   790→   790→                    rows={2}
+   791→   791→                    className="w-full resize-none rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#1A237E]/15 focus:border-[#1A237E]/25 transition-colors"
+   792→   792→                  />
+   793→   793→                </div>
+   794→   794→              )}
+   795→   795→
+   796→   796→              {/* Actions */}
+   797→   797→              <div className="flex gap-3">
+   798→   798→                <button
+   799→   799→                  onClick={() => {
+   800→   800→                    setReportingMsg(null);
+   801→   801→                    setReportReason("");
+   802→   802→                    setReportExplanation("");
+   803→   803→                  }}
+   804→   804→                  className="flex-1 py-2.5 rounded-xl border border-gray-200 text-xs font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+   805→   805→                >
+   806→   806→                  Cancel
+   807→   807→                </button>
+   808→   808→                <button
+   809→   809→                  onClick={submitReport}
+   810→   810→                  disabled={!reportReason || reportSubmitting}
+   811→   811→                  className="flex-1 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-xs font-medium text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-1.5"
+   812→   812→                >
+   813→   813→                  {reportSubmitting ? (
+   814→   814→                    <Loader2 className="size-3 animate-spin" />
+   815→   815→                  ) : (
+   816→   816→                    <Flag className="size-3" />
+   817→   817→                  )}
+   818→   818→                  Submit Report
+   819→   819→                </button>
+   820→   820→              </div>
+   821→   821→            </motion.div>
+   822→   822→          </motion.div>
+   823→   823→        )}
+   824→   824→      </AnimatePresence>
+   825→   825→    </div>
+   826→   826→  );
+   827→   827→}
+   828→   828→
+   829→   829→/* ============ REACTIONS SUB-COMPONENT ============ */
+   830→   830→function MessageReactions({
+   831→   831→  reactions,
+   832→   832→  onReact,
+   833→   833→  showPicker,
+   834→   834→  onTogglePicker,
+   835→   835→}: {
+   836→   836→  reactions: Record<string, number>;
+   837→   837→  onReact: (r: string) => void;
+   838→   838→  showPicker: boolean;
+   839→   839→  onTogglePicker: () => void;
+   840→   840→}) {
+   841→   841→  const hasReactions = Object.values(reactions).some((c) => c > 0);
+   842→   842→
+   843→   843→  return (
+   844→   844→    <div className="flex items-center gap-1 mt-1 flex-wrap">
+   845→   845→      {Object.entries(reactions)
+   846→   846→        .filter(([, count]) => count > 0)
+   847→   847→        .map(([emoji, count]) => (
+   848→   848→          <button
+   849→   849→            key={emoji}
+   850→   850→            onClick={() => onReact(emoji)}
+   851→   851→            className="inline-flex items-center gap-0.5 bg-gray-100/80 hover:bg-gray-200 rounded-full px-1.5 py-0.5 text-[11px] transition-colors"
+   852→   852→          >
+   853→   853→            <span className="text-[10px]">{emoji}</span>
+   854→   854→            <span className="text-gray-500 text-[9px]">{count}</span>
+   855→   855→          </button>
+   856→   856→        ))}
+   857→   857→
+   858→   858→      <button
+   859→   859→        onClick={onTogglePicker}
+   860→   860→        className={`inline-flex items-center justify-center hover:bg-gray-100 rounded-full p-0.5 transition-colors ${
+   861→   861→          showPicker ? "bg-gray-100" : ""
+   862→   862→        }`}
+   863→   863→        title="Add reaction"
+   864→   864→      >
+   865→   865→        <SmilePlus
+   866→   866→          className={`size-3 transition-colors ${showPicker ? "text-[#1A237E]" : "text-gray-400"}`}
+   867→   867→        />
+   868→   868→      </button>
+   869→   869→
+   870→   870→      <AnimatePresence>
+   871→   871→        {showPicker && (
+   872→   872→          <motion.div
+   873→   873→            initial={{ opacity: 0, scale: 0.9, y: 4 }}
+   874→   874→            animate={{ opacity: 1, scale: 1, y: 0 }}
+   875→   875→            exit={{ opacity: 0, scale: 0.9, y: 4 }}
+   876→   876→            className="flex items-center gap-0.5 bg-white border border-gray-200 rounded-full px-2 py-1 shadow-md"
+   877→   877→          >
+   878→   878→            {REACTION_OPTIONS.map((emoji) => (
+   879→   879→              <button
+   880→   880→                key={emoji}
+   881→   881→                onClick={() => onReact(emoji)}
+   882→   882→                className="hover:scale-125 transition-transform p-0.5 rounded-full hover:bg-gray-50"
+   883→   883→              >
+   884→   884→                {emoji}
+   885→   885→              </button>
+   886→   886→            ))}
+   887→   887→          </motion.div>
+   888→   888→        )}
+   889→   889→      </AnimatePresence>
+   890→   890→    </div>
+   891→   891→  );
+   892→   892→}
+
+[showing lines 293-892 of 893; use offset=893 with limit to continue reading]
