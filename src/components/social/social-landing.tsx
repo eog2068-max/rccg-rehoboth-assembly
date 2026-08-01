@@ -95,7 +95,12 @@ export function SocialLandingPage() {
             className="relative block mb-8"
           >
             <div className="absolute inset-0 bg-blue-400/25 rounded-full blur-3xl scale-[2]" />
-            <div className="relative text-[6rem] sm:text-[7rem] md:text-[9rem] leading-none">💬</div>
+            <div className="relative leading-none" style={{ fontSize: 'clamp(6rem, 15vw, 9rem)' }}>
+              <svg viewBox="0 0 64 64" width="1em" height="1em" className="inline-block drop-shadow-2xl">
+                <rect x="4" y="6" width="56" height="36" rx="10" fill="white" />
+                <polygon points="16,42 6,58 26,42" fill="white" />
+              </svg>
+            </div>
           </motion.div>
 
           {/* Pill badge */}
@@ -250,7 +255,14 @@ export function SocialLandingPage() {
                       <div className="absolute bottom-0 left-0 w-16 h-16 bg-white/[0.05] rounded-full blur-lg translate-y-8 -translate-x-6" />
                       <div className="relative flex items-center justify-between">
                         <span className="text-3xl drop-shadow-sm">
-                          {feature.emoji}
+                          {feature.id === "family-chat" ? (
+                            <svg viewBox="0 0 64 64" width="1em" height="1em" className="inline-block">
+                              <rect x="4" y="6" width="56" height="36" rx="10" fill="white" />
+                              <polygon points="16,42 6,58 26,42" fill="white" />
+                            </svg>
+                          ) : (
+                            feature.emoji
+                          )}
                         </span>
                         <IconComp className="size-6 text-white/30 group-hover:text-white/60 group-hover:scale-110 transition-all duration-300" />
                       </div>
@@ -310,7 +322,7 @@ export function SocialLandingPage() {
               },
               {
                 step: "Participate",
-                emoji: "💬",
+                emoji: "📝",
                 desc: "Send a message, share a prayer request, or answer the question.",
               },
               {
