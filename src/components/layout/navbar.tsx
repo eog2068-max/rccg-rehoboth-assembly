@@ -598,32 +598,34 @@ export function Navbar() {
             </DropdownMenu>
           </div>
 
-          {/* Right side: Mobile Hamburger + Watch Live before it */}
-          <div className="flex items-center gap-2">
-            {/* DONATIONS — two-line red button with money-bag icon */}
-            <Button
-              asChild
-              className="inline-flex flex-col items-center justify-center bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-lg px-2.5 h-8 sm:h-9 shadow-md"
-            >
-              <Link href="/giving" className="flex flex-col items-center justify-center leading-tight w-full">
-                <span className="flex items-center gap-1">
-                  <DonationBagIcon className="size-3 sm:size-3.5" />
-                  <span className="text-[9px] sm:text-[10px] font-bold tracking-wider">DONATIONS</span>
-                </span>
-                <span className="text-[7px] sm:text-[8px] font-light opacity-90 mt-px">Give 2d Lord</span>
-              </Link>
-            </Button>
+          {/* Right side: Buttons + Mobile Hamburger */}
+          <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
+              {/* DONATIONS — icon full-height left, text right */}
+              <Button
+                asChild
+                className="inline-flex items-center bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-lg h-8 sm:h-9 shadow-md"
+              >
+                <Link href="/giving" className="flex items-center gap-1 px-1.5 h-full">
+                  <DonationBagIcon className="h-full w-auto shrink-0" />
+                  <div className="flex flex-col items-center justify-center h-full leading-[1.15]">
+                    <span className="text-[9px] sm:text-[10px] font-bold tracking-wider">DONATIONS</span>
+                    <span className="text-[8px] sm:text-[9px]">Give To The Lord</span>
+                  </div>
+                </Link>
+              </Button>
 
-            {/* Watch Live — icon + text always visible together, shorter height */}
-            <Button
-              asChild
-              className="inline-flex items-center gap-1.5 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-lg px-2.5 py-1 h-8 sm:h-9 font-semibold shadow-md text-xs"
-            >
-              <Link href="/live" className="flex items-center gap-1.5">
-                <Radio className="size-3.5" />
-                <span>Watch Live</span>
-              </Link>
-            </Button>
+              {/* Watch Live — icon + text always visible together */}
+              <Button
+                asChild
+                className="inline-flex items-center gap-1.5 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-lg px-2.5 py-1 h-8 sm:h-9 font-semibold shadow-md text-xs"
+              >
+                <Link href="/live" className="flex items-center gap-1.5">
+                  <Radio className="size-3.5" />
+                  <span>Watch Live</span>
+                </Link>
+              </Button>
+            </div>
 
             {/* Mobile Hamburger — categorized four-section menu */}
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
