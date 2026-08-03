@@ -618,7 +618,7 @@ export function Navbar() {
               {/* Watch Live — icon + text always visible together */}
               <Button
                 asChild
-                className="inline-flex items-center gap-1.5 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-lg px-2.5 py-1 h-8 sm:h-9 font-semibold shadow-md text-xs"
+                className="inline-flex items-center gap-1.5 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-lg px-2.5 h-8 sm:h-9 font-semibold shadow-md text-xs"
               >
                 <Link href="/live" className="flex items-center gap-1.5">
                   <Radio className="size-3.5" />
