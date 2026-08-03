@@ -601,19 +601,17 @@ export function Navbar() {
           {/* Right side: Buttons + Mobile Hamburger */}
           <div className="flex items-center gap-1">
             <div className="flex items-center gap-2">
-              {/* DONATIONS — icon full-height left, text right */}
-              <Button
-                asChild
-                className="inline-flex items-center bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-lg h-8 sm:h-9 shadow-md"
+              {/* DONATIONS — plain Link to bypass shadcn has-[>svg]:px-3 */}
+              <Link
+                href="/giving"
+                className="inline-flex items-center gap-1 pl-1 pr-1.5 h-8 sm:h-9 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-lg shadow-md transition-colors"
               >
-                <Link href="/giving" className="flex items-center gap-1 px-1.5 h-full">
-                  <DonationBagIcon className="h-full w-auto shrink-0" />
-                  <div className="flex flex-col items-center justify-center h-full leading-[1.15]">
-                    <span className="text-[9px] sm:text-[10px] font-bold tracking-wider">DONATIONS</span>
-                    <span className="text-[8px] sm:text-[9px]">Give To The Lord</span>
-                  </div>
-                </Link>
-              </Button>
+                <DonationBagIcon className="h-full w-auto shrink-0" />
+                <div className="flex flex-col items-center justify-center h-full leading-[1.15]">
+                  <span className="text-[9px] sm:text-[10px] font-bold tracking-wider">DONATIONS</span>
+                  <span className="text-[8px] sm:text-[9px]">Give To The Lord</span>
+                </div>
+              </Link>
 
               {/* Watch Live — icon + text always visible together */}
               <Button
