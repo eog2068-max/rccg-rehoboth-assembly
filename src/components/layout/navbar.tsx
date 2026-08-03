@@ -606,7 +606,7 @@ export function Navbar() {
                 href="/giving"
                 className="inline-flex items-center gap-1 pl-1 pr-1.5 h-8 sm:h-9 bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-lg shadow-md transition-colors"
               >
-                <DonationBagIcon className="h-full w-auto shrink-0" />
+                <DonationBagIcon className="h-[85%] w-auto shrink-0" />
                 <div className="flex flex-col items-center justify-center h-full leading-[1.15]">
                   <span className="text-[9px] sm:text-[10px] font-bold tracking-wider">DONATIONS</span>
                   <span className="text-[8px] sm:text-[9px]">Give To The Lord</span>
