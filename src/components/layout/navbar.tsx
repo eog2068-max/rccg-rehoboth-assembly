@@ -385,6 +385,32 @@ function MenuCategorySection({
 }
 
 // ──────────────────────────────────────────────────────────────
+// Money-bag donation icon (inline SVG — never mutated by any pkg)
+// ──────────────────────────────────────────────────────────────
+function DonationBagIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {/* Tie / knot at top of bag */}
+      <path d="M10 6V4.5A2 2 0 1 1 14 4.5V6" />
+      {/* Bag body — rounded pouch */}
+      <path d="M7 10l3-4h4l3 4c1.5 1.5 2 3 2 5 0 3.5-2.5 6-7 6s-7-2.5-7-6c0-2 .5-3.5 2-5z" />
+      {/* Currency symbol on bag */}
+      <path d="M12 9v10" />
+      <path d="M10 12.5h4" />
+      <path d="M10 15.5h4" />
+    </svg>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
 // Main Navbar component
 // ──────────────────────────────────────────────────────────────
 export function Navbar() {
@@ -573,7 +599,21 @@ export function Navbar() {
           </div>
 
           {/* Right side: Mobile Hamburger + Watch Live before it */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            {/* DONATIONS — two-line red button with money-bag icon */}
+            <Button
+              asChild
+              className="inline-flex flex-col items-center justify-center bg-[#D32F2F] hover:bg-[#B71C1C] text-white rounded-lg px-2.5 h-8 sm:h-9 shadow-md"
+            >
+              <Link href="/giving" className="flex flex-col items-center justify-center leading-tight w-full">
+                <span className="flex items-center gap-1">
+                  <DonationBagIcon className="size-3 sm:size-3.5" />
+                  <span className="text-[9px] sm:text-[10px] font-bold tracking-wider">DONATIONS</span>
+                </span>
+                <span className="text-[7px] sm:text-[8px] font-light opacity-90 mt-px">Give 2d Lord</span>
+              </Link>
+            </Button>
+
             {/* Watch Live — icon + text always visible together, shorter height */}
             <Button
               asChild
